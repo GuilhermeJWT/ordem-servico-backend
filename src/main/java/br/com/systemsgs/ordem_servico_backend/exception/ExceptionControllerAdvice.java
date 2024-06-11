@@ -32,5 +32,4 @@ public class ExceptionControllerAdvice {
 
         return new ApiRestErrors(errors);
     }
-
 }
