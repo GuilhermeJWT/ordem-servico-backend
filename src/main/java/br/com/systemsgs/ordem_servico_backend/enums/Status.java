@@ -4,7 +4,7 @@ public enum Status {
 
     ORCAMENTO,
     ABERTO,
-    Em_Andamento,
+    EM_ANDAMENTO,
     FINALIZADO,
     CANCELADO
 }
