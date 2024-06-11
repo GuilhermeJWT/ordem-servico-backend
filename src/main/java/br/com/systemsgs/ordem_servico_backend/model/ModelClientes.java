@@ -10,7 +10,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "clientes")
-@Entity
+@Entity(name = "clientes")
 public class ModelClientes implements Serializable {
 
     private static final long serialVersionUID = 1L;
