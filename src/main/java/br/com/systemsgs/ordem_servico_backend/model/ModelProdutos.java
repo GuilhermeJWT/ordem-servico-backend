@@ -22,8 +22,8 @@ public class ModelProdutos implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "id_gen",strategy = GenerationType.AUTO)
-    @SequenceGenerator(name = "id_gen", sequenceName = "produtos_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(generator = "id_produto_gen",strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "id_produto_gen", sequenceName = "produtos_seq", initialValue = 1, allocationSize = 1)
     private Long id;
 
     @NotBlank(message = "Descrição deve ser Informada.")
