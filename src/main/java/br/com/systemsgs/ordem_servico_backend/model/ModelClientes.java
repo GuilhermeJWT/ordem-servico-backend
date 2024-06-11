@@ -11,14 +11,15 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "clientes")
-@Entity(name = "clientes")
 public class ModelClientes implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "id_gen",strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "id_gen", sequenceName = "clientes_seq", initialValue = 2, allocationSize = 1)
     private Long id;
 
     @NotBlank(message = "Nome deve ser Informado.")
