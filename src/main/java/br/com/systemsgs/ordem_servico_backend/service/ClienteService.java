@@ -14,4 +14,6 @@ public interface ClienteService {
 
     void deletarCliente(Long id);
 
+    ModelClientes updateClientes(Long id, ModelClientes modelClientes);
+
 }

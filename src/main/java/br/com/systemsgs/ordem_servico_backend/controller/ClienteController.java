@@ -46,4 +46,12 @@ public class ClienteController {
     public void deletarCliente(@PathVariable Long id){
         clienteService.deletarCliente(id);
     }
+
+    @Operation(summary = "Atualizar Clientes", description = "Api para Atualizar um Cliente pelo Id e Entidade")
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<ModelClientes> atualizarClientes(@PathVariable Long id, @RequestBody @Valid ModelClientes modelClientes){
+        ModelClientes clienteAtualizado = clienteService.updateClientes(id, modelClientes);
+
+        return ResponseEntity.ok(clienteAtualizado);
+    }
 }

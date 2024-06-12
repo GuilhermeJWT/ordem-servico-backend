@@ -2,7 +2,6 @@ package br.com.systemsgs.ordem_servico_backend.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
