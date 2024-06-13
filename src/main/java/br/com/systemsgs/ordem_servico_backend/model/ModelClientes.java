@@ -7,6 +7,9 @@ import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -41,4 +44,11 @@ public class ModelClientes implements Serializable {
     private String estado;
 
     private String cep;
+
+    @OneToMany(mappedBy = "cliente",
+               cascade = CascadeType.ALL,
+               fetch = FetchType.LAZY,
+               orphanRemoval = true
+    )
+    private List<ModelOrdemServico> ordemServicos = new ArrayList<>();
 }
