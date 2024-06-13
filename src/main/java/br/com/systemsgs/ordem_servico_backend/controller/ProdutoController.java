@@ -47,4 +47,12 @@ public class ProdutoController {
         produtoService.deletarProduto(id);
     }
 
+    @Operation(summary = "Atualizar Produto", description = "Api para Atualizar um Produto por ID e Entidade")
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<ModelProdutos> atualizarProdutos(@PathVariable Long id, @RequestBody @Valid ModelProdutos modelProdutos){
+        ModelProdutos produtoAtualizado = produtoService.atualizarProduto(id, modelProdutos);
+
+        return ResponseEntity.ok(produtoAtualizado);
+    }
+
 }

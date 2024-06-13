@@ -14,4 +14,6 @@ public interface ProdutoService {
 
     void deletarProduto(Long id);
 
+    ModelProdutos atualizarProduto(Long id, ModelProdutos modelProdutos);
+
 }

@@ -4,9 +4,9 @@ import br.com.systemsgs.ordem_servico_backend.exception.RecursoNaoEncontradoExce
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class UtilClientes {
 
     @Autowired
