@@ -1,6 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.util;
 
-import br.com.systemsgs.ordem_servico_backend.exception.RecursoNaoEncontradoException;
+import br.com.systemsgs.ordem_servico_backend.exception.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,8 @@ public class UtilClientes {
 
     public ModelClientes pesquisarClientePeloId(Long id){
          ModelClientes pesquisaCliente = clienteRepository.findById(id).
-                 orElseThrow(() -> new RecursoNaoEncontradoException());
+                 orElseThrow(() -> new ClienteNaoEncontradoException());
+
         return pesquisaCliente;
     }
 

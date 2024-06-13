@@ -48,7 +48,8 @@ public class ModelOrdemServico implements Serializable {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
     private Date data_final;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "Informe um Cliente.")
+    @ManyToOne
     @JoinColumn(name = "cliente_id")
     private ModelClientes cliente;
 

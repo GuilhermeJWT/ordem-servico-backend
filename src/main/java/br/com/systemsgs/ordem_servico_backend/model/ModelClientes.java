@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -50,5 +51,6 @@ public class ModelClientes implements Serializable {
                fetch = FetchType.LAZY,
                orphanRemoval = true
     )
+    @JsonIgnore
     private List<ModelOrdemServico> ordemServicos = new ArrayList<>();
 }
