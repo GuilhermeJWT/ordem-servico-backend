@@ -6,11 +6,16 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Tag(name = "Api de Produtos - v1")
 @RestController
@@ -19,6 +24,21 @@ public class ProdutoController {
 
     @Autowired
     private ProdutoService produtoService;
+
+    @Operation(summary = "Listar Produtos - HATEOAS", description = "Api para listar todos os Produtos com Link (HATEOAS)")
+    @GetMapping("/listar/v2/link")
+    public CollectionModel<ModelProdutos> listarProdutosComLink(){
+        List<ModelProdutos> listaProdutos = produtoService.listarProdutos();
+
+        for (ModelProdutos modelProdutos : listaProdutos) {
+            Long produtoID = modelProdutos.getId();
+            Link produtoLink = linkTo(methodOn(ProdutoController.class).pesquisarPorId(produtoID)).withRel("Pesquisa Produto pelo ID");
+            modelProdutos.add(produtoLink);
+        }
+
+        CollectionModel<ModelProdutos> result = CollectionModel.of(listaProdutos);
+        return result;
+    }
 
     @Operation(summary = "Listar Produtos", description = "Api para listar todos os registro de Produtos")
     @GetMapping("/listar")

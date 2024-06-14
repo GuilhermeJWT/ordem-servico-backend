@@ -6,11 +6,16 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Tag(name = "Api de Clientes - v1")
 @RestController
@@ -19,6 +24,21 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Operation(summary = "Listar Clientes - HATEOAS", description = "Api para listar todos os Clientes com Link (HATEOAS)")
+    @GetMapping("/listar/v2/link")
+    public CollectionModel<ModelClientes> listarCLientesComLink(){
+        List<ModelClientes> listaCLientes = clienteService.listarClientes();
+
+        for (ModelClientes modelClientes : listaCLientes) {
+            Long clienteID = modelClientes.getId();
+            Link clienteLink = linkTo(methodOn(ClienteController.class).pesquisarPorId(clienteID)).withRel("Pesquisa Cliente pelo ID");
+            modelClientes.add(clienteLink);
+        }
+
+        CollectionModel<ModelClientes> result = CollectionModel.of(listaCLientes);
+        return result;
+    }
 
     @Operation(summary = "Listar Clientes", description = "Api para listar todos os registro de Clientes")
     @GetMapping("/listar")

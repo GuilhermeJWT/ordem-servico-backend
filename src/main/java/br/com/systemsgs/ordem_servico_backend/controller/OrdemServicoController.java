@@ -6,11 +6,16 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Tag(name = "Api de Ordem de Serviço - v1")
 @RestController
@@ -20,9 +25,24 @@ public class OrdemServicoController {
     @Autowired
     private OrdemServicoService ordemServicoService;
 
+    @Operation(summary = "Listar OS - HATEOAS", description = "Api para listar todos os registro de Ordem de Serviço com Link (HATEOAS)")
+    @GetMapping("/listar/v2/link")
+    public CollectionModel<ModelOrdemServico> listarOsComLink(){
+        List<ModelOrdemServico> listaOS = ordemServicoService.listarOS();
+
+        for (ModelOrdemServico modelOrdemServico : listaOS) {
+            Long osID = modelOrdemServico.getId();
+            Link osLink = linkTo(methodOn(OrdemServicoController.class).pesquisarPorId(osID)).withRel("Pesquisa OS pelo ID");
+            modelOrdemServico.add(osLink);
+        }
+
+        CollectionModel<ModelOrdemServico> result = CollectionModel.of(listaOS);
+        return result;
+    }
+
     @Operation(summary = "Listar OS", description = "Api para listar todos os registro de Ordem de Serviço")
     @GetMapping("/listar")
-    public ResponseEntity<List<ModelOrdemServico>> listarOS(){
+    public ResponseEntity<List<ModelOrdemServico>> listaTodasOS(){
         return ResponseEntity.ok().body(ordemServicoService.listarOS());
     }
 
@@ -54,5 +74,4 @@ public class OrdemServicoController {
 
         return ResponseEntity.ok(osAtualizada);
     }
-
 }
