@@ -1,0 +1,17 @@
+version: '3'
+services:
+  jenkins:
+    image: jenkinsci/blueocean
+    ports:
+      - '8083:8083'
+    volumes:
+      - 'jenkins_home:/var/jenkins_home'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+volumes:
+  jenkins_home:
+    driver: local
+
+
+#Intalação manual do Container - Ubuntu
+#docker pull jenkins/jenkins:lts
+#docker run --name jenkins -v myvoll:/var/jenkins_home -p 8080:8080 -p 50000:50000 jenkins/jenkins
