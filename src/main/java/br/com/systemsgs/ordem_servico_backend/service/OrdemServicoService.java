@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.service;
 
+import br.com.systemsgs.ordem_servico_backend.dto.ModelOrdemServicoDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
 
 import java.util.List;
@@ -10,10 +11,10 @@ public interface OrdemServicoService {
 
     List<ModelOrdemServico> listarOS();
 
-    ModelOrdemServico salvarOS(ModelOrdemServico modelOrdemServico);
+    ModelOrdemServico salvarOS(ModelOrdemServicoDTO modelOrdemServicoDTO);
 
     void deletarOS(Long id);
 
-    ModelOrdemServico atualizarOS(Long id, ModelOrdemServico modelOrdemServico);
+    ModelOrdemServico atualizarOS(Long id, ModelOrdemServicoDTO modelOrdemServicoDTO);
 
 }
