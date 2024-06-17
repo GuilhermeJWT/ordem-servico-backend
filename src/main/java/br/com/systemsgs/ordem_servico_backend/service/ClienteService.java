@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.service;
 
+import br.com.systemsgs.ordem_servico_backend.dto.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 
 import java.util.List;
@@ -10,10 +11,10 @@ public interface ClienteService {
 
     List<ModelClientes> listarClientes();
 
-    ModelClientes salvarClientes(ModelClientes modelClientes);
+    ModelClientes salvarClientes(ModelClientesDTO modelClientesDTO);
 
     void deletarCliente(Long id);
 
-    ModelClientes updateClientes(Long id, ModelClientes modelClientes);
+    ModelClientes updateClientes(Long id, ModelClientesDTO modelClientesDTO);
 
 }
