@@ -15,7 +15,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id")
 @Table(name = "ordemservico")
 @Entity
 public class ModelOrdemServico extends RepresentationModel<ModelOrdemServico> implements Serializable{
