@@ -8,8 +8,7 @@ pipeline {
 		}
 		stage('Build') {
 		    steps {
-		        def mvnHome = tool name: 'GUI_MAVEN_JENKINS', type: 'maven'
-		        sh "${mvnHome}/bin/mvn package"
+		        sh "mvn package"
 		    }
 		}
 	}
