@@ -39,8 +39,8 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ModelClientes salvarClientes(ModelClientesDTO modelClientesDTO) {
-        ModelClientes clienteSalvo = mapper.map(modelClientesDTO, ModelClientes.class);
-        return clienteRepository.save(clienteSalvo);
+        ModelClientes clienteConvertido = mapper.map(modelClientesDTO, ModelClientes.class);
+        return clienteRepository.save(clienteConvertido);
     }
 
     @Override

@@ -1,10 +1,12 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
+import br.com.systemsgs.ordem_servico_backend.dto.ModelProdutosDTO;
 import br.com.systemsgs.ordem_servico_backend.exception.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 import br.com.systemsgs.ordem_servico_backend.repository.ProdutoRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ProdutoService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilProdutos;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class ProdutoServiceImpl implements ProdutoService {
     @Autowired
     private UtilProdutos utilProdutos;
 
+    @Autowired
+    private ModelMapper mapper;
+
     @Override
     public ModelProdutos pesquisaPorId(Long id) {
         Optional<ModelProdutos> modelProdutos = produtoRepository.findById(id);
@@ -33,8 +38,9 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public ModelProdutos salvarProdutos(ModelProdutos modelProdutos) {
-        return produtoRepository.save(modelProdutos);
+    public ModelProdutos salvarProdutos(ModelProdutosDTO modelProdutosDTO) {
+        ModelProdutos produtoConvertido = mapper.map(modelProdutosDTO, ModelProdutos.class);
+        return produtoRepository.save(produtoConvertido);
     }
 
     @Override
@@ -43,9 +49,10 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public ModelProdutos atualizarProduto(Long id, ModelProdutos modelProdutos) {
+    public ModelProdutos atualizarProduto(Long id, ModelProdutosDTO modelProdutosDTO) {
         ModelProdutos produtoPesquisado = utilProdutos.pesquisaProdutoPorId(id);
-        BeanUtils.copyProperties(modelProdutos, produtoPesquisado, "id");
+        mapper.map(modelProdutosDTO, ModelProdutos.class);
+        BeanUtils.copyProperties(modelProdutosDTO, produtoPesquisado, "id");
 
         return produtoRepository.save(produtoPesquisado);
     }

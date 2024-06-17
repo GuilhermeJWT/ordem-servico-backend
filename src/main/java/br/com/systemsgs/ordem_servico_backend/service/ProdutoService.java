@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.service;
 
+import br.com.systemsgs.ordem_servico_backend.dto.ModelProdutosDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 
 import java.util.List;
@@ -10,10 +11,10 @@ public interface ProdutoService {
 
     List<ModelProdutos> listarProdutos();
 
-    ModelProdutos salvarProdutos(ModelProdutos modelProdutos);
+    ModelProdutos salvarProdutos(ModelProdutosDTO modelProdutosDTO);
 
     void deletarProduto(Long id);
 
-    ModelProdutos atualizarProduto(Long id, ModelProdutos modelProdutos);
+    ModelProdutos atualizarProduto(Long id, ModelProdutosDTO modelProdutosDTO);
 
 }
