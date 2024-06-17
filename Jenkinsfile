@@ -8,8 +8,8 @@ pipeline {
 		}
 		stage('Build') {
 		    steps {
-		        def mvnHome = tool name: 'GUI_MAVEN_JENKINS', type: 'maven'
-		        sh "${mvnHome} -B -DskipTests clean package"
+		        tool name: 'GUI_MAVEN_JENKINS', type: 'maven'
+		        sh "mvn -B -DskipTests clean package"
 		    }
 		}
 	}
