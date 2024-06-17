@@ -1,14 +1,9 @@
 pipeline {
 	agent any
 	stages {
-		stage('Build do Projeto'){
+		stage('Clonando o Projeto'){
 			steps {
-				sh "mvn clean install -DskipTests"
-			}
-		}
-		stage('Execução dos Testes'){
-			steps{
-				sh "mvn test"
+				git branch: 'main', url: 'https://github.com/GuilhermeJWT/ordem-servico-backend.git'
 			}
 		}
 	}
