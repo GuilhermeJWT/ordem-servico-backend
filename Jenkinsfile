@@ -1,7 +1,5 @@
 pipeline {
 	agent any
-	tool = name: 'JDK_LOCAL', type: 'jdk'
-	tool name: 'GUI_MAVEN_JENKINS', type: 'maven'
 	stages {
 		stage('Clonando o Projeto'){
 			steps {
