@@ -2,8 +2,10 @@ package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelOrdemServicoDTO;
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
+import br.com.systemsgs.ordem_servico_backend.exception.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
+import br.com.systemsgs.ordem_servico_backend.repository.OrdemServicoRepository;
 import br.com.systemsgs.ordem_servico_backend.service.OrdemServicoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +24,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 @SpringBootTest
 class OrdemServicoControllerTest {
@@ -45,6 +49,9 @@ class OrdemServicoControllerTest {
 
     @Mock
     private OrdemServicoService ordemServicoService;
+
+    @Mock
+    private OrdemServicoRepository ordemServicoRepository;
 
     @Mock
     private ModelMapper mapper;
@@ -80,7 +87,7 @@ class OrdemServicoControllerTest {
         assertEquals(CLIENTE, response.getBody().get(INDEX_0).getCliente());
     }
 
-    @DisplayName("Pesquisa umA os pelo ID e testa o Retorno do Body - retorna 200")
+    @DisplayName("Pesquisa uma OS pelo ID e testa o Retorno do Body - retorna 200")
     @Test
     void pesquisarPorId() {
         when(ordemServicoService.listarOS()).thenReturn(List.of(modelOrdemServico));
@@ -102,6 +109,67 @@ class OrdemServicoControllerTest {
         assertEquals(DATA_INICIAL, response.getBody().getData_inicial());
         assertEquals(DATA_FINAL, response.getBody().getData_final());
         assertEquals(CLIENTE, response.getBody().getCliente());
+    }
+
+    @DisplayName("Pesquisa uma OS inexistente e retorna 404")
+    @Test
+    void pesquisaOsRetorna404(){
+        when(ordemServicoRepository.findById(anyLong())).thenThrow(new RecursoNaoEncontradoException());
+
+        try{
+            ordemServicoService.pesquisaPorId(ID);
+        }catch (Exception exception){
+            assertEquals(RecursoNaoEncontradoException.class, exception.getClass());
+            assertEquals("Recurso não Encontrado!", exception.getMessage());
+        }
+    }
+
+    @DisplayName("Salva uma OS e retorna 201")
+    @Test
+    void salvaOsRetorna201(){
+        when(ordemServicoService.salvarOS(any())).thenReturn(modelOrdemServico);
+
+        ResponseEntity<ModelOrdemServicoDTO> response = ordemServicoController.salvarOS(modelOrdemServicoDTO);
+
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getHeaders().get("Location"));
+    }
+
+    @DisplayName("Atualiza uma OS e retorna 200")
+    @Test
+    void atualizaOsRetorna200(){
+        when(ordemServicoService.atualizarOS(ID,modelOrdemServicoDTO)).thenReturn(modelOrdemServico);
+        when(mapper.map(any(), any())).thenReturn(modelOrdemServicoDTO);
+
+        ResponseEntity<ModelOrdemServicoDTO> response = ordemServicoController.atualizarOS(ID, modelOrdemServicoDTO);
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(ModelOrdemServicoDTO.class, response.getBody().getClass());
+
+        assertEquals(ID, response.getBody().getId());
+        assertEquals(DEFEITO, response.getBody().getDefeito());
+        assertEquals(DESCRICAO, response.getBody().getDescricao());
+        assertEquals(LAUDO_TECNICO, response.getBody().getLaudo_tecnico());
+        assertEquals(STATUS, response.getBody().getStatus());
+        assertEquals(DATA_INICIAL, response.getBody().getData_inicial());
+        assertEquals(DATA_FINAL, response.getBody().getData_final());
+        assertEquals(CLIENTE, response.getBody().getCliente());
+    }
+
+    @DisplayName("Deleta uma OS e retorna 204")
+    @Test
+    void deletaOsRetorna204(){
+        doNothing().when(ordemServicoService).deletarOS(anyLong());
+
+        ResponseEntity<ModelOrdemServicoDTO> response = ordemServicoController.deletarOS(ID);
+
+        assertNotNull(response);
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        verify(ordemServicoService, times(1)).deletarOS(anyLong());
     }
 
     private void startOrdemServico(){

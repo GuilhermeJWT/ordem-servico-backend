@@ -85,7 +85,8 @@ public class OrdemServicoController {
     @Operation(summary = "Deletar OS", description = "Api para Deletar uma OS por ID")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/deletar/{id}")
-    public void deletarOS(@PathVariable Long id){
+    public ResponseEntity<ModelOrdemServicoDTO> deletarOS(@PathVariable Long id){
         ordemServicoService.deletarOS(id);
+        return ResponseEntity.noContent().build();
     }
 }
