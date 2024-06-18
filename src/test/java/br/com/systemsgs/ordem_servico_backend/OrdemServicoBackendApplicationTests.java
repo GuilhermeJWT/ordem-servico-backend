@@ -8,6 +8,7 @@ class OrdemServicoBackendApplicationTests {
 
 	@Test
 	void contextLoads() {
+		OrdemServicoBackendApplication.main(new String[] {});
 	}
 
 }

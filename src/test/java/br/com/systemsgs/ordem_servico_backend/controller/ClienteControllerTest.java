@@ -1,8 +1,10 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelClientesDTO;
+import br.com.systemsgs.ordem_servico_backend.exception.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
+import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ClienteService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +22,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class ClienteControllerTest {
@@ -46,6 +48,9 @@ class ClienteControllerTest {
 
     @Mock
     private ClienteService clienteService;
+
+    @Mock
+    private ClienteRepository clienteRepository;
 
     @Mock
     private ModelMapper mapper;
@@ -105,6 +110,68 @@ class ClienteControllerTest {
         assertEquals(CIDADE, response.getBody().getCidade());
         assertEquals(ESTADO, response.getBody().getEstado());
         assertEquals(CEP, response.getBody().getCep());
+    }
+
+    @DisplayName("Pesquisa um Cliente inexistente e retorna 404")
+    @Test
+    void pesquisaClienteRetorna404(){
+        when(clienteRepository.findById(anyLong())).thenThrow(new ClienteNaoEncontradoException());
+
+        try{
+            clienteService.pesquisaPorId(ID);
+        }catch (Exception exception){
+            assertEquals(ClienteNaoEncontradoException.class, exception.getClass());
+            assertEquals("Cliente não Encontrado!", exception.getMessage());
+        }
+    }
+
+    @DisplayName("Salva um Cliente e retorna 201")
+    @Test
+    void salvaClienteRetorna201(){
+        when(clienteService.salvarClientes(any())).thenReturn(modelClientes);
+
+        ResponseEntity<ModelClientesDTO> response = clienteController.salvarCliente(modelClientesDTO);
+
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getHeaders().get("Location"));
+    }
+
+    @DisplayName("Atualiza um Cliente e retorna 200")
+    @Test
+    void atualizaClienteRetorna200(){
+        when(clienteService.updateClientes(ID,modelClientesDTO)).thenReturn(modelClientes);
+        when(mapper.map(any(), any())).thenReturn(modelClientesDTO);
+
+        ResponseEntity<ModelClientesDTO> response = clienteController.atualizarClientes(ID, modelClientesDTO);
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(ModelClientesDTO.class, response.getBody().getClass());
+
+        assertEquals(ID, response.getBody().getId());
+        assertEquals(NOME, response.getBody().getNome());
+        assertEquals(CELULAR, response.getBody().getCelular());
+        assertEquals(CPF, response.getBody().getCpf());
+        assertEquals(EMAIL, response.getBody().getEmail());
+        assertEquals(ENDERECO, response.getBody().getEndereco());
+        assertEquals(CIDADE, response.getBody().getCidade());
+        assertEquals(ESTADO, response.getBody().getEstado());
+        assertEquals(CEP, response.getBody().getCep());
+    }
+
+    @DisplayName("Deleta um Cliente e retorna 204")
+    @Test
+    void deletaClienteRetorna204(){
+        doNothing().when(clienteService).deletarCliente(anyLong());
+
+        ResponseEntity<ModelClientesDTO> response = clienteController.delete(ID);
+
+        assertNotNull(response);
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        verify(clienteService, times(1)).deletarCliente(anyLong());
     }
 
     private void startCliente(){
