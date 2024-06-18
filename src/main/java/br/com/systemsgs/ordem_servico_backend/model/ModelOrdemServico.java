@@ -3,7 +3,6 @@ package br.com.systemsgs.ordem_servico_backend.model;
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
