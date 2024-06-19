@@ -148,6 +148,7 @@ class ClienteServiceImplTest {
         verify(clienteRepository, times(1)).deleteById(anyLong());
     }
 
+    @DisplayName("Atualiza um Cliente com Sucesso")
     @Test
     void updateClientes() {
         when(clienteRepository.save(any())).thenReturn(modelClientes);

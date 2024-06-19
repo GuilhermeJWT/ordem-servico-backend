@@ -35,16 +35,17 @@ public class OrdemServicoController {
 
     @Operation(summary = "Listar OS - HATEOAS", description = "Api para listar todos os registro de Ordem de Serviço com Link (HATEOAS)")
     @GetMapping("/listar/v2/link")
-    public CollectionModel<ModelOrdemServico> listarOsComLink(){
-        List<ModelOrdemServico> listaOS = ordemServicoService.listarOS();
+    public CollectionModel<ModelOrdemServicoDTO> listarOsComLink(){
+        List<ModelOrdemServicoDTO> listaOS = ordemServicoService.listarOS()
+                .stream().map(x -> mapper.map(x, ModelOrdemServicoDTO.class)).collect(Collectors.toList());
 
-        for (ModelOrdemServico modelOrdemServico : listaOS) {
-            Long osID = modelOrdemServico.getId();
+        for (ModelOrdemServicoDTO modelOrdemServicoDTO : listaOS) {
+            Long osID = modelOrdemServicoDTO.getId();
             Link osLink = linkTo(methodOn(OrdemServicoController.class).pesquisarPorId(osID)).withRel("Pesquisa OS pelo ID");
-            modelOrdemServico.add(osLink);
+            modelOrdemServicoDTO.add(osLink);
         }
 
-        CollectionModel<ModelOrdemServico> result = CollectionModel.of(listaOS);
+        CollectionModel<ModelOrdemServicoDTO> result = CollectionModel.of(listaOS);
         return result;
     }
 

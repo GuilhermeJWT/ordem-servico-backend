@@ -34,16 +34,17 @@ public class ClienteController {
 
     @Operation(summary = "Listar Clientes - HATEOAS", description = "Api para listar todos os Clientes com Link (HATEOAS)")
     @GetMapping("/listar/v2/link")
-    public CollectionModel<ModelClientes> listarCLientesComLink(){
-        List<ModelClientes> listaCLientes = clienteService.listarClientes();
+    public CollectionModel<ModelClientesDTO> listarCLientesComLink(){
+        List<ModelClientesDTO> listaCLientes = clienteService.listarClientes().
+                stream().map(x -> mapper.map(x, ModelClientesDTO.class)).collect(Collectors.toList());
 
-        for (ModelClientes modelClientes : listaCLientes) {
-            Long clienteID = modelClientes.getId();
+        for (ModelClientesDTO modelClientesDTO : listaCLientes) {
+            Long clienteID = modelClientesDTO.getId();
             Link clienteLink = linkTo(methodOn(ClienteController.class).pesquisarPorId(clienteID)).withRel("Pesquisa Cliente pelo ID");
-            modelClientes.add(clienteLink);
+            modelClientesDTO.add(clienteLink);
         }
 
-        CollectionModel<ModelClientes> result = CollectionModel.of(listaCLientes);
+        CollectionModel<ModelClientesDTO> result = CollectionModel.of(listaCLientes);
         return result;
     }
 

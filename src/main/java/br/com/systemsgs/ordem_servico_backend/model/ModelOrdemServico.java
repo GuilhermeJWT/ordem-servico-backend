@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,7 +16,7 @@ import java.util.Date;
 @EqualsAndHashCode(of = "id")
 @Table(name = "ordemservico")
 @Entity
-public class ModelOrdemServico extends RepresentationModel<ModelOrdemServico> implements Serializable{
+public class ModelOrdemServico implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

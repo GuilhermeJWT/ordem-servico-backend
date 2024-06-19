@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Date;
 
@@ -17,7 +18,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ModelOrdemServicoDTO {
+public class ModelOrdemServicoDTO extends RepresentationModel<ModelOrdemServicoDTO> {
 
     private Long id;
 

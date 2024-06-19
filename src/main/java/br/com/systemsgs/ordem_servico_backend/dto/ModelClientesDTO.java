@@ -7,12 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.hateoas.RepresentationModel;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ModelClientesDTO {
+public class ModelClientesDTO extends RepresentationModel<ModelClientesDTO> {
 
     private Long id;
 

@@ -35,16 +35,17 @@ public class ProdutoController {
 
     @Operation(summary = "Listar Produtos - HATEOAS", description = "Api para listar todos os Produtos com Link (HATEOAS)")
     @GetMapping("/listar/v2/link")
-    public CollectionModel<ModelProdutos> listarProdutosComLink(){
-        List<ModelProdutos> listaProdutos = produtoService.listarProdutos();
+    public CollectionModel<ModelProdutosDTO> listarProdutosComLink(){
+        List<ModelProdutosDTO> listaProdutos = produtoService.listarProdutos()
+                .stream().map(x -> mapper.map(x, ModelProdutosDTO.class)).collect(Collectors.toList());
 
-        for (ModelProdutos modelProdutos : listaProdutos) {
+        for (ModelProdutosDTO modelProdutos : listaProdutos) {
             Long produtoID = modelProdutos.getId();
             Link produtoLink = linkTo(methodOn(ProdutoController.class).pesquisarPorId(produtoID)).withRel("Pesquisa Produto pelo ID");
             modelProdutos.add(produtoLink);
         }
 
-        CollectionModel<ModelProdutos> result = CollectionModel.of(listaProdutos);
+        CollectionModel<ModelProdutosDTO> result = CollectionModel.of(listaProdutos);
         return result;
     }
 

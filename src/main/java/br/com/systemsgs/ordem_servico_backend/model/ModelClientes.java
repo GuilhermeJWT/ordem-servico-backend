@@ -3,7 +3,6 @@ package br.com.systemsgs.ordem_servico_backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "clientes")
-public class ModelClientes extends RepresentationModel<ModelClientes> implements Serializable {
+public class ModelClientes implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
