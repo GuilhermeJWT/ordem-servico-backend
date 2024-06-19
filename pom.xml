@@ -99,6 +99,8 @@
 			<version>2.4.4</version>
 		</dependency>
 
+
+
 		<!--<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
@@ -132,6 +134,11 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.4.0.905</version>
 			</plugin>
 		</plugins>
 	</build>

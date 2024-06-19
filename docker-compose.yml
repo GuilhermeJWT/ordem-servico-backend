@@ -7,11 +7,41 @@ services:
     volumes:
       - 'jenkins_home:/var/jenkins_home'
       - '/var/run/docker.sock:/var/run/docker.sock'
+  sonarqube:
+    image: sonarqube:community
+    depends_on:
+      - db
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    ports:
+      - "9000:9000"
+  db:
+    image: postgres:12
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
 volumes:
   jenkins_home:
     driver: local
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  postgresql:
+  postgresql_data:
 
 
-#Intalação manual do Container - Ubuntu
+#Intalação manual do Jenkins Container - Ubuntu
 #docker pull jenkins/jenkins:lts
 #docker run --name jenkins -v myvoll:/var/jenkins_home -p 8080:8080 -p 50000:50000 jenkins/jenkins
+
+#Instalação do Sonarqube localmente:
+#docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
