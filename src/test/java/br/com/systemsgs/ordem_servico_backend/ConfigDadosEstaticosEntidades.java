@@ -65,9 +65,9 @@ public class ConfigDadosEstaticosEntidades {
         ordemServicoResponse.setDescricao("Descricao OS");
         ordemServicoResponse.setLaudo_tecnico("Precisa trocar a tela");
         ordemServicoResponse.setStatus(Status.ORCAMENTO);
-        ordemServicoResponse.setData_inicial(new Date());
-        ordemServicoResponse.setData_final(new Date());
-        ordemServicoResponse.setCliente(new ModelClientes());
+        ordemServicoResponse.setData_inicial(new Date("2024/06/21"));
+        ordemServicoResponse.setData_final(new Date("2024/06/22"));
+        ordemServicoResponse.setCliente(dadosClientes());
 
         return ordemServicoResponse;
     }
