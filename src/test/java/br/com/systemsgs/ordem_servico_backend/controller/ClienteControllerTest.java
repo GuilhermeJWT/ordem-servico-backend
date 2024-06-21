@@ -1,9 +1,9 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
+import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.dto.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.exception.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
-import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ClienteService;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,21 +27,10 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class ClienteControllerTest {
 
-    public static final Long ID = 1L;
-    public static final String NOME = "Guilherme";
-    public static final String CELULAR = "999999999";
-    public static final String CPF = "819.945.180-73"; //gerado no GERADOR DE CPF
-    public static final String EMAIL = "guilherme@gmail.com";
-    public static final String ENDERECO = "Rua 1";
-    public static final String CIDADE = "Caconde";
-    public static final String ESTADO = "SP";
-    public static final String CEP = "13770-000";
-    public static final List<ModelOrdemServico> ORDEM_SERVICO = new ArrayList<>();
-    public static final Integer INDEX_0 = 0;
-    public static final Long CLIENTE_INEXISTENTE = 0L;
-
     private ModelClientes modelClientes;
     private ModelClientesDTO modelClientesDTO;
+
+    private ConfigDadosEstaticosEntidades getDadosEstaticosCliente = new ConfigDadosEstaticosEntidades();
 
     @InjectMocks
     private ClienteController clienteController;
@@ -74,17 +63,17 @@ class ClienteControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(ArrayList.class, response.getBody().getClass());
-        assertEquals(ModelClientesDTO.class, response.getBody().get(INDEX_0).getClass());
+        assertEquals(ModelClientesDTO.class, response.getBody().get(0).getClass());
 
-        assertEquals(ID, response.getBody().get(INDEX_0).getId());
-        assertEquals(NOME, response.getBody().get(INDEX_0).getNome());
-        assertEquals(CELULAR, response.getBody().get(INDEX_0).getCelular());
-        assertEquals(CPF, response.getBody().get(INDEX_0).getCpf());
-        assertEquals(EMAIL, response.getBody().get(INDEX_0).getEmail());
-        assertEquals(ENDERECO, response.getBody().get(INDEX_0).getEndereco());
-        assertEquals(CIDADE, response.getBody().get(INDEX_0).getCidade());
-        assertEquals(ESTADO, response.getBody().get(INDEX_0).getEstado());
-        assertEquals(CEP, response.getBody().get(INDEX_0).getCep());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getId(), response.getBody().get(0).getId());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getNome(), response.getBody().get(0).getNome());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCelular(), response.getBody().get(0).getCelular());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCpf(), response.getBody().get(0).getCpf());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getEmail(), response.getBody().get(0).getEmail());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getEndereco(), response.getBody().get(0).getEndereco());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCidade(), response.getBody().get(0).getCidade());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getEstado(), response.getBody().get(0).getEstado());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCep(), response.getBody().get(0).getCep());
     }
 
     @DisplayName("Pesquisa um Cliente pelo ID e testa o Retorno do Body - retorna 200")
@@ -93,7 +82,8 @@ class ClienteControllerTest {
         when(clienteService.listarClientes()).thenReturn(List.of(modelClientes));
         when(mapper.map(any(), any())).thenReturn(modelClientesDTO);
 
-        ResponseEntity<ModelClientesDTO> response = clienteController.pesquisarPorId(CLIENTE_INEXISTENTE);
+        ResponseEntity<ModelClientesDTO> response = clienteController.
+                pesquisarPorId(getDadosEstaticosCliente.dadosClientes().getId());
 
         assertNotNull(response);
         assertNotNull(response.getBody());
@@ -101,15 +91,15 @@ class ClienteControllerTest {
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(ModelClientesDTO.class, response.getBody().getClass());
 
-        assertEquals(ID, response.getBody().getId());
-        assertEquals(NOME, response.getBody().getNome());
-        assertEquals(CELULAR, response.getBody().getCelular());
-        assertEquals(CPF, response.getBody().getCpf());
-        assertEquals(EMAIL, response.getBody().getEmail());
-        assertEquals(ENDERECO, response.getBody().getEndereco());
-        assertEquals(CIDADE, response.getBody().getCidade());
-        assertEquals(ESTADO, response.getBody().getEstado());
-        assertEquals(CEP, response.getBody().getCep());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getId(), response.getBody().getId());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getNome(), response.getBody().getNome());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCelular(), response.getBody().getCelular());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCpf(), response.getBody().getCpf());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getEmail(), response.getBody().getEmail());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getEndereco(), response.getBody().getEndereco());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCidade(), response.getBody().getCidade());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getEstado(), response.getBody().getEstado());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCep(), response.getBody().getCep());
     }
 
     @DisplayName("Pesquisa um Cliente inexistente e retorna 404")
@@ -118,7 +108,7 @@ class ClienteControllerTest {
         when(clienteRepository.findById(anyLong())).thenThrow(new ClienteNaoEncontradoException());
 
         try{
-            clienteService.pesquisaPorId(ID);
+            clienteService.pesquisaPorId(getDadosEstaticosCliente.dadosClientes().getId());
         }catch (Exception exception){
             assertEquals(ClienteNaoEncontradoException.class, exception.getClass());
             assertEquals("Cliente não Encontrado!", exception.getMessage());
@@ -140,25 +130,29 @@ class ClienteControllerTest {
     @DisplayName("Atualiza um Cliente e retorna 200")
     @Test
     void atualizaClienteRetorna200(){
-        when(clienteService.updateClientes(ID,modelClientesDTO)).thenReturn(modelClientes);
+        when(clienteService.updateClientes(getDadosEstaticosCliente.dadosClientes().getId(),modelClientesDTO))
+                .thenReturn(modelClientes);
+
         when(mapper.map(any(), any())).thenReturn(modelClientesDTO);
 
-        ResponseEntity<ModelClientesDTO> response = clienteController.atualizarClientes(ID, modelClientesDTO);
+        ResponseEntity<ModelClientesDTO> response = clienteController.
+                atualizarClientes(getDadosEstaticosCliente.dadosClientes().getId(), modelClientesDTO);
+
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(ModelClientesDTO.class, response.getBody().getClass());
 
-        assertEquals(ID, response.getBody().getId());
-        assertEquals(NOME, response.getBody().getNome());
-        assertEquals(CELULAR, response.getBody().getCelular());
-        assertEquals(CPF, response.getBody().getCpf());
-        assertEquals(EMAIL, response.getBody().getEmail());
-        assertEquals(ENDERECO, response.getBody().getEndereco());
-        assertEquals(CIDADE, response.getBody().getCidade());
-        assertEquals(ESTADO, response.getBody().getEstado());
-        assertEquals(CEP, response.getBody().getCep());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getId(), response.getBody().getId());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getNome(), response.getBody().getNome());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCelular(), response.getBody().getCelular());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCpf(), response.getBody().getCpf());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getEmail(), response.getBody().getEmail());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getEndereco(), response.getBody().getEndereco());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCidade(), response.getBody().getCidade());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getEstado(), response.getBody().getEstado());
+        assertEquals(getDadosEstaticosCliente.dadosClientes().getCep(), response.getBody().getCep());
     }
 
     @DisplayName("Deleta um Cliente e retorna 204")
@@ -166,7 +160,7 @@ class ClienteControllerTest {
     void deletaClienteRetorna204(){
         doNothing().when(clienteService).deletarCliente(anyLong());
 
-        ResponseEntity<ModelClientesDTO> response = clienteController.delete(ID);
+        ResponseEntity<ModelClientesDTO> response = clienteController.delete(getDadosEstaticosCliente.dadosClientes().getId());
 
         assertNotNull(response);
         assertEquals(ResponseEntity.class, response.getClass());
@@ -175,8 +169,28 @@ class ClienteControllerTest {
     }
 
     private void startCliente(){
-        modelClientes = new ModelClientes(ID, NOME, CPF, CELULAR, EMAIL, ENDERECO, CIDADE, ESTADO, CEP, ORDEM_SERVICO);
-        modelClientesDTO = new ModelClientesDTO(ID, NOME, CPF, CELULAR, EMAIL, ENDERECO, CIDADE, ESTADO, CEP);
+        modelClientes = new ModelClientes(
+                getDadosEstaticosCliente.dadosClientes().getId(),
+                getDadosEstaticosCliente.dadosClientes().getNome(),
+                getDadosEstaticosCliente.dadosClientes().getCpf(),
+                getDadosEstaticosCliente.dadosClientes().getCelular(),
+                getDadosEstaticosCliente.dadosClientes().getEmail(),
+                getDadosEstaticosCliente.dadosClientes().getEndereco(),
+                getDadosEstaticosCliente.dadosClientes().getCidade(),
+                getDadosEstaticosCliente.dadosClientes().getEstado(),
+                getDadosEstaticosCliente.dadosClientes().getCep(),
+                getDadosEstaticosCliente.dadosClientes().getOrdemServicos()
+        );
+        modelClientesDTO = new ModelClientesDTO(
+                getDadosEstaticosCliente.dadosClientes().getId(),
+                getDadosEstaticosCliente.dadosClientes().getNome(),
+                getDadosEstaticosCliente.dadosClientes().getCpf(),
+                getDadosEstaticosCliente.dadosClientes().getCelular(),
+                getDadosEstaticosCliente.dadosClientes().getEmail(),
+                getDadosEstaticosCliente.dadosClientes().getEndereco(),
+                getDadosEstaticosCliente.dadosClientes().getCidade(),
+                getDadosEstaticosCliente.dadosClientes().getEstado(),
+                getDadosEstaticosCliente.dadosClientes().getCep()
+        );
     }
-
 }
