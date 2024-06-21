@@ -10,7 +10,6 @@ import br.com.systemsgs.ordem_servico_backend.service.OrdemServicoService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
 import br.com.systemsgs.ordem_servico_backend.util.UtilOrdemServico;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +60,6 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
         validaCliente(modelOrdemServicoDTO);
 
         mapper.map(modelOrdemServicoDTO, ModelClientes.class);
-        BeanUtils.copyProperties(modelOrdemServicoDTO, osPesquisada, "id");
 
         return ordemServicoRepository.save(osPesquisada);
     }
