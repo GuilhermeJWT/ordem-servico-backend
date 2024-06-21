@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.util;
 
+import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.exception.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 import br.com.systemsgs.ordem_servico_backend.repository.ProdutoRepository;
@@ -11,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,17 +21,9 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 class UtilProdutosTest {
 
-    public static final Long ID = 1L;
-    public static final String DESCRICAO = "Notebook Gamer";
-    public static final Integer QUANTIDADE = 5;
-    public static final Integer QUANTIDADE_MINIMA = 1;
-    public static final BigDecimal PRECO_COMPRA = BigDecimal.valueOf(1000L);
-    public static final BigDecimal PRECO_VENDA = BigDecimal.valueOf(2000L);
-    public static final String CODIGO_BARRAS = "789835741123";
-    public static final String RECURSO_NAO_ENCONTRADO = "Recurso não Encontrado!";
-
-    private ModelProdutos modelProdutos;
     private Optional<ModelProdutos> modelProdutosOptional;
+
+    private ConfigDadosEstaticosEntidades getDadosEstaticosProduto = new ConfigDadosEstaticosEntidades();
 
     @InjectMocks
     private UtilProdutos utilProdutos;
@@ -42,7 +34,7 @@ class UtilProdutosTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        startProduto();
+        startProdutoOptional();
     }
 
     @DisplayName("Pesquisa um Produto por ID e retorna a Entidade para Validação")
@@ -50,16 +42,17 @@ class UtilProdutosTest {
     void pesquisarProdutoPeloId() {
         when(produtoRepository.findById(anyLong())).thenReturn(modelProdutosOptional);
 
-        ModelProdutos response = utilProdutos.pesquisaProdutoPorId(ID);
+        ModelProdutos response = utilProdutos.pesquisaProdutoPorId(getDadosEstaticosProduto.dadosProdutos().getId());
 
         assertNotNull(response);
-        assertEquals(ID, response.getId());
-        assertEquals(DESCRICAO, response.getDescricao());
-        assertEquals(QUANTIDADE, response.getQuantidade());
-        assertEquals(QUANTIDADE_MINIMA, response.getQuantidade_minima());
-        assertEquals(PRECO_COMPRA, response.getPreco_compra());
-        assertEquals(PRECO_VENDA, response.getPreco_venda());
-        assertEquals(CODIGO_BARRAS, response.getCodigo_barras());
+
+        assertEquals(getDadosEstaticosProduto.dadosProdutos().getId(), response.getId());
+        assertEquals(getDadosEstaticosProduto.dadosProdutos().getDescricao(), response.getDescricao());
+        assertEquals(getDadosEstaticosProduto.dadosProdutos().getQuantidade(), response.getQuantidade());
+        assertEquals(getDadosEstaticosProduto.dadosProdutos().getQuantidade_minima(), response.getQuantidade_minima());
+        assertEquals(getDadosEstaticosProduto.dadosProdutos().getPreco_compra(), response.getPreco_compra());
+        assertEquals(getDadosEstaticosProduto.dadosProdutos().getPreco_venda(), response.getPreco_venda());
+        assertEquals(getDadosEstaticosProduto.dadosProdutos().getCodigo_barras(), response.getCodigo_barras());
     }
 
     @DisplayName("Pesquisa um Produto por ID e retorna Not Found")
@@ -68,16 +61,22 @@ class UtilProdutosTest {
         when(produtoRepository.findById(anyLong())).thenThrow(new RecursoNaoEncontradoException());
 
         try{
-            utilProdutos.pesquisaProdutoPorId(ID);
+            utilProdutos.pesquisaProdutoPorId(getDadosEstaticosProduto.dadosProdutos().getId());
         }catch (Exception exception){
             assertEquals(RecursoNaoEncontradoException.class, exception.getClass());
-            assertEquals(RECURSO_NAO_ENCONTRADO, exception.getMessage());
+            assertEquals(getDadosEstaticosProduto.mensagemErro().get(1), exception.getMessage());
         }
     }
 
-    private void startProduto(){
-        modelProdutos = new ModelProdutos(ID, DESCRICAO, QUANTIDADE, QUANTIDADE_MINIMA, PRECO_COMPRA, PRECO_VENDA, CODIGO_BARRAS);
-        modelProdutosOptional = Optional.of(new ModelProdutos(ID, DESCRICAO, QUANTIDADE, QUANTIDADE_MINIMA, PRECO_COMPRA, PRECO_VENDA, CODIGO_BARRAS));
+    private void startProdutoOptional(){
+        modelProdutosOptional = Optional.of(new ModelProdutos(
+                getDadosEstaticosProduto.dadosProdutos().getId(),
+                getDadosEstaticosProduto.dadosProdutos().getDescricao(),
+                getDadosEstaticosProduto.dadosProdutos().getQuantidade(),
+                getDadosEstaticosProduto.dadosProdutos().getQuantidade_minima(),
+                getDadosEstaticosProduto.dadosProdutos().getPreco_compra(),
+                getDadosEstaticosProduto.dadosProdutos().getPreco_venda(),
+                getDadosEstaticosProduto.dadosProdutos().getCodigo_barras()
+        ));
     }
-
 }
