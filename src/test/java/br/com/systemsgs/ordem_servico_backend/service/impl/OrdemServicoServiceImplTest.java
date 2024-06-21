@@ -167,7 +167,6 @@ class OrdemServicoServiceImplTest {
     @Test
     void salvarOS() {
         when(utilClientes.pesquisarClientePeloId(anyLong())).thenReturn(modelClientes);
-        //when(utilClientes.pesquisarClientePeloId(getDadosEstaticosOS.dadosOrdemServico().getId())).thenReturn(modelClientes);
         when(ordemServicoRepository.save(any())).thenReturn(modelOrdemServico);
 
         ModelOrdemServico response = ordemServicoServiceImpl.salvarOS(modelOrdemServicoDTO);
