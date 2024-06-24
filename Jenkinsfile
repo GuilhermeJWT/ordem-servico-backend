@@ -13,8 +13,10 @@ pipeline {
 		}
 		stage('Sonarqube Analysis'){
 		    steps {
-		        withSonarQubeEnv('Sonarqube') {
-                    sh './mvnw clean package sonar:sonar'
+		        script {
+		            withCredentials([string(credentialsId: 'ordem-servico-backend', variable: 'SONAR_TOKEN')]){
+		                sh './mvnw clean package sonar:sonar -Dsonar.host.url=http://localhost:9000/ -Dsonar.login=${ONAR_TOKEN}'
+		            }
 		        }
 		    }
 		}
