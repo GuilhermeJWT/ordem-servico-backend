@@ -22,10 +22,11 @@ pipeline {
 		}
 		stage('Quality Gate'){
 		    steps {
-		        withSonarQubeEnv(installationName: 'Sonarqube', credentialsId: 'ordem-servico-backend') {
-		            timeout(time: 1, unit: 'HOURS') {
-                     waitForQualityGate abortPipeline: true
-                  }
+		           timeout(time: 1, unit: 'HOURS') {
+                   def qg = waitForQualityGate()
+                   if (qg.status != 'OK') {
+                         error "Pipeline encerrada devido a falha no Quality Gate: ${qg.status}"
+                   }
                }
 		    }
 		}
