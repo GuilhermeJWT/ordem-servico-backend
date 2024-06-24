@@ -22,7 +22,7 @@ pipeline {
 		}
 		stage('Quality Gate'){
 		    steps {
-		        withSonarQubeEnv('ordem-servico-backend') {
+		        withSonarQubeEnv('Sonarqube') {
 		            timeout(time: 1, unit: 'HOURS') {
                      waitForQualityGate abortPipeline: true
                   }
