@@ -1,22 +1,14 @@
 pipeline {
 	agent any
-	tools {
-	    maven 'Maven 3.8.7'
-	}
 	stages {
-		stage('Clonando o Projeto'){
+		stage('Build Backend'){
 			steps {
-				git branch: 'main', url: 'https://github.com/GuilhermeJWT/ordem-servico-backend.git'
+				sh "./mvnw package"
 			}
 		}
-		stage('Build') {
+		stage('Unit Test') {
 		    steps {
-		        sh "mvn package"
-		    }
-		}
-		stage('Tests') {
-		    steps {
-		        sh "mvn test"
+		       sh "./mvnw test"
 		    }
 		}
 	}
