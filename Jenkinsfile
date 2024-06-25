@@ -23,6 +23,7 @@ pipeline {
 		stage('Quality Gate'){
 		    steps {
 		        script {
+		            withSonarQubeEnv()
 		            waitForQualityGate abortPipeline: false, credentialsId: 'ordem-servico-backend'
 		        }
 		    }
