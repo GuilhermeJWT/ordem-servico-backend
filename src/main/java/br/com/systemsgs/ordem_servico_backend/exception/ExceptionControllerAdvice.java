@@ -24,6 +24,12 @@ public class ExceptionControllerAdvice {
         return new ApiRestErrors(clienteNaoEncontradoException.getMessage());
     }
 
+    @ExceptionHandler(UsuarioNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiRestErrors clienteNaoEncontradoException(UsuarioNaoEncontradoException usuarioNaoEncontradoException){
+        return new ApiRestErrors(usuarioNaoEncontradoException.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestErrors handlerMethodNotValidException(MethodArgumentNotValidException methodArgumentNotValidException){
