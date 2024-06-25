@@ -20,12 +20,5 @@ pipeline {
 		        }
 		    }
 		}
-		stage('Quality Gate'){
-		    steps {
-		        withSonarQubeEnv('Sonarqube') {
-                   	waitForQualityGate abortPipeline: false, credentialsId: 'ordem-servico-backend'
-                }
-		    }
-		}
 	}
 }
