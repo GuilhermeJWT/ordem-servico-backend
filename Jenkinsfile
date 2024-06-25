@@ -22,10 +22,11 @@ pipeline {
 		}
 		stage('Quality Gate'){
 		    steps {
-		        withSonarQubeEnv()
-		        script {
-		            waitForQualityGate abortPipeline: false, credentialsId: 'ordem-servico-backend'
-		        }
+		        withSonarQubeEnv('Sonarqube') {
+                   script {
+                   		waitForQualityGate abortPipeline: false, credentialsId: 'ordem-servico-backend'
+                   }
+                }
 		    }
 		}
 	}
