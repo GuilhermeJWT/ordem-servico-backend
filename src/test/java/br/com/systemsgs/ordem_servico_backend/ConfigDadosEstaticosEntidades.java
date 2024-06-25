@@ -1,9 +1,11 @@
 package br.com.systemsgs.ordem_servico_backend;
 
+import br.com.systemsgs.ordem_servico_backend.dto.ModelUserDTO;
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
+import br.com.systemsgs.ordem_servico_backend.model.ModelRoles;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -71,5 +73,23 @@ public class ConfigDadosEstaticosEntidades {
 
         return ordemServicoResponse;
     }
+
+    public ModelUserDTO dadosUsuariosDTO(){
+        ModelUserDTO userResponse = new ModelUserDTO();
+
+        userResponse.setId(1L);
+        userResponse.setNome("Guilherme");
+        userResponse.setEmail("guilherme@teste.com.br");
+        userResponse.setPassword("12345678");
+        userResponse.setEndereco("Rua 1");
+        userResponse.setCidade("Caconde");
+        userResponse.setEstado("SP");
+        userResponse.setCep("13770-000");
+        userResponse.setRoles(new ArrayList<ModelRoles>());
+
+        return userResponse;
+    }
+
+
 
 }
