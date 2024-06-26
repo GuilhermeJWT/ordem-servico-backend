@@ -39,4 +39,10 @@ public class ExceptionControllerAdvice {
 
         return new ApiRestErrors(errors);
     }
+
+    @ExceptionHandler(EmailDuplicadoException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestErrors emailDuplicadoException(EmailDuplicadoException emailDuplicadoException){
+        return new ApiRestErrors(emailDuplicadoException.getMessage());
+    }
 }

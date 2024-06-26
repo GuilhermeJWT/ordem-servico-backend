@@ -5,7 +5,7 @@ public class UsuarioNaoEncontradoException extends RuntimeException{
     private static final long serialVersionUID = 1L;
 
     public UsuarioNaoEncontradoException() {
-        super("Usuario não Encontrado, Forneca um Login e Senha Válidos.");
+        super("Usuario não Encontrado!");
     }
 
 }

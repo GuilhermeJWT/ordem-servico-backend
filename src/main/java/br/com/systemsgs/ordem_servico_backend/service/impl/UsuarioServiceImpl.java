@@ -40,7 +40,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public ModelUser salvarUsuarios(ModelUserDTO modelUsuariosDTO) {
+        utilUsuarios.validaEmailDuplicado(modelUsuariosDTO.getEmail());
         ModelUser usuarioConvertido = mapper.map(modelUsuariosDTO, ModelUser.class);
+
         return usuarioRepository.save(usuarioConvertido);
     }
 
@@ -52,6 +54,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public ModelUser updateUsuarios(Long id, ModelUserDTO modelUsuariosDTO) {
         ModelUser usuarioPesquisado = utilUsuarios.pesquisarUsuarioPeloId(id);
+        utilUsuarios.validaEmailDuplicado(modelUsuariosDTO.getEmail());
+
         mapper.map(modelUsuariosDTO, ModelUser.class);
         BeanUtils.copyProperties(modelUsuariosDTO, usuarioPesquisado, "id");
 
