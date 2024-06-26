@@ -1,11 +1,11 @@
 package br.com.systemsgs.ordem_servico_backend;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelUserDTO;
+import br.com.systemsgs.ordem_servico_backend.enums.Role;
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
-import br.com.systemsgs.ordem_servico_backend.model.ModelRoles;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -85,7 +85,7 @@ public class ConfigDadosEstaticosEntidades {
         userResponse.setCidade("Caconde");
         userResponse.setEstado("SP");
         userResponse.setCep("13770-000");
-        userResponse.setRoles(new ArrayList<ModelRoles>());
+        userResponse.setRoles(Role.ROLE_ADMIN);
 
         return userResponse;
     }

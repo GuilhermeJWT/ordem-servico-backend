@@ -1,6 +1,8 @@
 package br.com.systemsgs.ordem_servico_backend.dto;
 
-import br.com.systemsgs.ordem_servico_backend.model.ModelRoles;
+import br.com.systemsgs.ordem_servico_backend.enums.Role;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -37,6 +39,7 @@ public class ModelUserDTO {
 
     private String cep;
 
+    @Enumerated(EnumType.STRING)
     @NotNull(message = "Informe a Permissão do Usuário!")
-    private List<ModelRoles> roles;
+    private Role roles;
 }

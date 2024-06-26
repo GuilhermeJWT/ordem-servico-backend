@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.model;
 
+import br.com.systemsgs.ordem_servico_backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,8 +37,7 @@ public class ModelUser implements Serializable {
 
     private String cep;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinTable(name="users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name="role_id"))
-    private List<ModelRoles> roles;
+    @Enumerated(EnumType.STRING)
+    private Role roles;
 
 }

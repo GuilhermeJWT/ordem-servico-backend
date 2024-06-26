@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.dto;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
+import br.com.systemsgs.ordem_servico_backend.enums.Role;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,9 +39,7 @@ class ModelUserDTOTest {
                 "    \"cidade\" : \"Caconde\",\n" +
                 "    \"estado\" : \"SP\",\n" +
                 "    \"cep\" : \"13770-000\",\n" +
-                "    \"roles\" : [\n" +
-                "        \n" +
-                "    ]\n" +
+                "    \"roles\" : \"ROLE_ADMIN\" \n" +
                 "}";
 
         ModelUserDTO dtoResponse = objectMapper.readValue(json, ModelUserDTO.class);
@@ -75,7 +74,7 @@ class ModelUserDTOTest {
         assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getCidade()));
         assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getEstado()));
         assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getCep()));
-        assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getRoles().toString()));
+        assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getRoles().name()));
 
     }
 
