@@ -174,6 +174,9 @@
 				</executions>
 			</plugin>
 		</plugins>
+
+		<finalName>ordem-servico-backend</finalName>
+
 	</build>
 
 </project>
