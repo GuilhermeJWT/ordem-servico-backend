@@ -22,10 +22,8 @@ pipeline {
 		}
 		stage ('Build Docker Image'){
 		    steps{
-		        withDockerContainer(image: 'ordem-servico-backend.jar', toolName: 'DOCKER_LOCAL') {
-                    script{
-                        sh 'docker build -t guilhermesantosdocker/ordem-servico-backend .'
-                    }
+                script{
+                   sh './docker build -t guilhermesantosdocker/ordem-servico-backend .'
                 }
 		    }
 		}
