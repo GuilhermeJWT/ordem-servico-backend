@@ -1,7 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelUserDTO;
-import br.com.systemsgs.ordem_servico_backend.enums.Role;
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
