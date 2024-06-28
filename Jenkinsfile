@@ -20,5 +20,12 @@ pipeline {
 		        }
 		    }
 		}
+		stage ('Build Docker Image'){
+		    steps{
+		        script{
+		            sh 'docker build -t guilhermesantosdocker/ordem-servico-backend .'
+		        }
+		    }
+		}
 	}
 }
