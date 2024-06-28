@@ -37,8 +37,7 @@ class ModelUserDTOTest {
                 "    \"endereco\" : \"Rua 1\",\n" +
                 "    \"cidade\" : \"Caconde\",\n" +
                 "    \"estado\" : \"SP\",\n" +
-                "    \"cep\" : \"13770-000\",\n" +
-                "    \"roles\" : \"ROLE_ADMIN\" \n" +
+                "    \"cep\" : \"13770-000\"\n" +
                 "}";
 
         ModelUserDTO dtoResponse = objectMapper.readValue(json, ModelUserDTO.class);
@@ -53,7 +52,6 @@ class ModelUserDTOTest {
         assertEquals(dtoResponse.getCidade(), getDadosUser.dadosUsuariosDTO().getCidade());
         assertEquals(dtoResponse.getEstado(), getDadosUser.dadosUsuariosDTO().getEstado());
         assertEquals(dtoResponse.getCep(), getDadosUser.dadosUsuariosDTO().getCep());
-        assertEquals(dtoResponse.getRoles(), getDadosUser.dadosUsuariosDTO().getRoles());
     }
 
     @DisplayName("Testa se existe os campos da entidade ModelUserDTO no Json")
@@ -73,7 +71,6 @@ class ModelUserDTOTest {
         assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getCidade()));
         assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getEstado()));
         assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getCep()));
-        assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getRoles().name()));
 
     }
 
@@ -86,8 +83,7 @@ class ModelUserDTOTest {
                 getDadosUser.dadosUsuariosDTO().getEndereco(),
                 getDadosUser.dadosUsuariosDTO().getCidade(),
                 getDadosUser.dadosUsuariosDTO().getEstado(),
-                getDadosUser.dadosUsuariosDTO().getCep(),
-                getDadosUser.dadosUsuariosDTO().getRoles()
+                getDadosUser.dadosUsuariosDTO().getCep()
         );
     }
 }

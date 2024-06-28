@@ -84,7 +84,6 @@ public class ConfigDadosEstaticosEntidades {
         userResponse.setCidade("Caconde");
         userResponse.setEstado("SP");
         userResponse.setCep("13770-000");
-        userResponse.setRoles(Role.ROLE_ADMIN);
 
         return userResponse;
     }
