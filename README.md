@@ -7,9 +7,11 @@
   <li>Observabilidade - Prometheus/Grafana e Spring Admin</li>
   <li>Deploy da imagem no Docker Hub</li>
 </ol>
-<H3>CI/CD - Jenkins</h3>
+<H2>CI/CD - Jenkins</h2>
 <img src="https://github.com/GuilhermeJWT/ordem-servico-backend/assets/63434009/7c7ccfef-7449-445c-9e7c-f0e02852571f)](https://github.com/GuilhermeJWT/ordem-servico-backend/assets/63434009/7c7ccfef-7449-445c-9e7c-f0e02852571f">
-<H3>Análise do Código com Sonar Qube:</H3>
+<H2>Monitoramento e Métricas: Prometheus/Grafana</H2>
+<img src="https://github.com/GuilhermeJWT/ordem-servico-backend/assets/63434009/ca9fbdd9-5d3d-4c32-9a00-2a8fa6d9db6f">
+<H2>Análise do Código com SonarQube:</H2>
 <p>Foram realizados 2 testes, pré e pós a Cobertura de Testes:</p>
 <ol>
   <li>Testes Unitários: Junit</li>
