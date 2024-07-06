@@ -8,6 +8,7 @@
   <li>Deploy da imagem no Docker Hub</li>
 </ol>
 <H2>CI/CD - Jenkins</h2>
+<p>No diretório raiz do projeto, possui o arquivo: Jenkinsfile, contendo todos os Stages da Pipeline</p>
 <img src="https://github.com/GuilhermeJWT/ordem-servico-backend/assets/63434009/7c7ccfef-7449-445c-9e7c-f0e02852571f)](https://github.com/GuilhermeJWT/ordem-servico-backend/assets/63434009/7c7ccfef-7449-445c-9e7c-f0e02852571f">
 <H2>Monitoramento e Métricas: Prometheus/Grafana</H2>
 <img src="https://github.com/GuilhermeJWT/ordem-servico-backend/assets/63434009/ca9fbdd9-5d3d-4c32-9a00-2a8fa6d9db6f">
