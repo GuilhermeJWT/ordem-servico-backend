@@ -27,5 +27,14 @@ pipeline {
                 }
 		    }
 		}
+		stage ('Deploy Docker Hub'){
+		    steps {
+		        script {
+		            docker.withRegistry('', registryCredential){
+		                dockerImage.push()
+		            }
+		        }
+		    }
+		}
 	}
 }
