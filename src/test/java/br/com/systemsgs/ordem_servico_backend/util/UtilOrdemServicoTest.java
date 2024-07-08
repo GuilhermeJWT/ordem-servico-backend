@@ -87,7 +87,8 @@ class UtilOrdemServicoTest {
                 getDadosEstaticosOS.dadosOrdemServico().getStatus(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_inicial(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_final(),
-                getDadosEstaticosOS.dadosOrdemServico().getCliente()
+                getDadosEstaticosOS.dadosOrdemServico().getCliente(),
+                getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel()
         ));
     }
 }

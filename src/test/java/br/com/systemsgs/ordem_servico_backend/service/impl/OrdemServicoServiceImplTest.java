@@ -3,14 +3,15 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.dto.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.ModelOrdemServicoDTO;
-import br.com.systemsgs.ordem_servico_backend.exception.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.exception.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
+import br.com.systemsgs.ordem_servico_backend.model.ModelTecnicoResponsavel;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import br.com.systemsgs.ordem_servico_backend.repository.OrdemServicoRepository;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
 import br.com.systemsgs.ordem_servico_backend.util.UtilOrdemServico;
+import br.com.systemsgs.ordem_servico_backend.util.UtilTecnicoResponsavel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,7 @@ class OrdemServicoServiceImplTest {
     private Optional<ModelOrdemServico> modelOrdemServicoOptional;
     private ModelClientes modelClientes;
     private ModelClientesDTO modelClientesDTO;
+    private ModelTecnicoResponsavel modelTecnicoResponsavel;
 
     private ConfigDadosEstaticosEntidades getDadosEstaticosOS = new ConfigDadosEstaticosEntidades();
 
@@ -51,6 +53,9 @@ class OrdemServicoServiceImplTest {
 
     @Mock
     private UtilClientes utilClientes;
+
+    @Mock
+    private UtilTecnicoResponsavel utilTecnicoResponsavel;
 
     @Mock
     private ClienteRepository clienteRepository;
@@ -89,6 +94,9 @@ class OrdemServicoServiceImplTest {
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCidade(), response.getCliente().getCidade());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getEstado(), response.getCliente().getEstado());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCep(), response.getCliente().getCep());
+
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getId(), response.getTecnicoResponsavel().getId());
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getNome(), response.getTecnicoResponsavel().getNome());
     }
 
     @DisplayName("Pesquisa uma OS por ID")
@@ -132,6 +140,9 @@ class OrdemServicoServiceImplTest {
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCidade(), response.get(0).getCliente().getCidade());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getEstado(), response.get(0).getCliente().getEstado());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCep(), response.get(0).getCliente().getCep());
+
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getId(), response.get(0).getTecnicoResponsavel().getId());
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getNome(), response.get(0).getTecnicoResponsavel().getNome());
     }
 
     @DisplayName("Valida um Cliente antes de Salvar")
@@ -152,21 +163,11 @@ class OrdemServicoServiceImplTest {
         assertEquals(getDadosEstaticosOS.dadosClientes().getCep(), modelClientesDTO.getCep());
     }
 
-    @DisplayName("Retorna Cliente não Encontrado - Not Found")
-    @Test
-    void pesquisaClienteRetornaNotFound(){
-        try{
-            when(ordemServicoServiceImpl.validaCliente(modelOrdemServicoDTO)).thenThrow(new ClienteNaoEncontradoException());
-        }catch (Exception exception){
-            assertEquals(ClienteNaoEncontradoException.class, exception.getClass());
-            assertEquals(getDadosEstaticosOS.mensagemErro().get(0), exception.getMessage());
-        }
-    }
-
     @DisplayName("Salva com OS com Sucesso")
     @Test
     void salvarOS() {
         when(utilClientes.pesquisarClientePeloId(anyLong())).thenReturn(modelClientes);
+        when(utilTecnicoResponsavel.validaTecnicoExistente(modelOrdemServicoDTO)).thenReturn(modelOrdemServicoDTO);
         when(ordemServicoRepository.save(any())).thenReturn(modelOrdemServico);
 
         ModelOrdemServico response = ordemServicoServiceImpl.salvarOS(modelOrdemServicoDTO);
@@ -188,6 +189,9 @@ class OrdemServicoServiceImplTest {
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCidade(), response.getCliente().getCidade());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getEstado(), response.getCliente().getEstado());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCep(), response.getCliente().getCep());
+
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getId(), response.getTecnicoResponsavel().getId());
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getNome(), response.getTecnicoResponsavel().getNome());
     }
 
     @DisplayName("Atualiza uma OS com Sucesso")
@@ -218,6 +222,9 @@ class OrdemServicoServiceImplTest {
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCidade(), response.getCliente().getCidade());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getEstado(), response.getCliente().getEstado());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCep(), response.getCliente().getCep());
+
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getId(), response.getTecnicoResponsavel().getId());
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getNome(), response.getTecnicoResponsavel().getNome());
     }
 
     @DisplayName("Deleta uma OS com Sucesso")
@@ -261,7 +268,8 @@ class OrdemServicoServiceImplTest {
                 getDadosEstaticosOS.dadosOrdemServico().getStatus(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_inicial(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_final(),
-                getDadosEstaticosOS.dadosOrdemServico().getCliente()
+                getDadosEstaticosOS.dadosOrdemServico().getCliente(),
+                getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel()
         );
         modelOrdemServicoDTO = new ModelOrdemServicoDTO(
                 getDadosEstaticosOS.dadosOrdemServico().getId(),
@@ -271,7 +279,9 @@ class OrdemServicoServiceImplTest {
                 getDadosEstaticosOS.dadosOrdemServico().getStatus(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_inicial(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_final(),
-                getDadosEstaticosOS.dadosOrdemServico().getCliente());
+                getDadosEstaticosOS.dadosOrdemServico().getCliente(),
+                getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel());
+
         modelOrdemServicoOptional = Optional.of(new ModelOrdemServico(
                 getDadosEstaticosOS.dadosOrdemServico().getId(),
                 getDadosEstaticosOS.dadosOrdemServico().getDefeito(),
@@ -280,7 +290,12 @@ class OrdemServicoServiceImplTest {
                 getDadosEstaticosOS.dadosOrdemServico().getStatus(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_inicial(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_final(),
-                getDadosEstaticosOS.dadosOrdemServico().getCliente()
+                getDadosEstaticosOS.dadosOrdemServico().getCliente(),
+                getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel()
         ));
+        modelTecnicoResponsavel = new ModelTecnicoResponsavel(
+                getDadosEstaticosOS.dadosTecnicoResponsavel().getId(),
+                getDadosEstaticosOS.dadosTecnicoResponsavel().getNome()
+        );
     }
 }

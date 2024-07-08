@@ -84,6 +84,9 @@ class OrdemServicoControllerTest {
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCidade(), response.getBody().get(0).getCliente().getCidade());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getEstado(), response.getBody().get(0).getCliente().getEstado());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCep(), response.getBody().get(0).getCliente().getCep());
+
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getId(), response.getBody().get(0).getTecnicoResponsavel().getId());
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getNome(), response.getBody().get(0).getTecnicoResponsavel().getNome());
     }
 
     @DisplayName("Pesquisa uma OS pelo ID e testa o Retorno do Body - retorna 200")
@@ -118,6 +121,9 @@ class OrdemServicoControllerTest {
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCidade(), response.getBody().getCliente().getCidade());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getEstado(), response.getBody().getCliente().getEstado());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCep(), response.getBody().getCliente().getCep());
+
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getId(), response.getBody().getTecnicoResponsavel().getId());
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getNome(), response.getBody().getTecnicoResponsavel().getNome());
     }
 
     @DisplayName("Pesquisa uma OS inexistente e retorna 404")
@@ -179,6 +185,9 @@ class OrdemServicoControllerTest {
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCidade(), response.getBody().getCliente().getCidade());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getEstado(), response.getBody().getCliente().getEstado());
         assertEquals(getDadosEstaticosOS.dadosOrdemServico().getCliente().getCep(), response.getBody().getCliente().getCep());
+
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getId(), response.getBody().getTecnicoResponsavel().getId());
+        assertEquals(getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel().getNome(), response.getBody().getTecnicoResponsavel().getNome());
     }
 
     @DisplayName("Deleta uma OS e retorna 204")
@@ -203,7 +212,8 @@ class OrdemServicoControllerTest {
                 getDadosEstaticosOS.dadosOrdemServico().getStatus(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_inicial(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_final(),
-                getDadosEstaticosOS.dadosOrdemServico().getCliente()
+                getDadosEstaticosOS.dadosOrdemServico().getCliente(),
+                getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel()
         );
         modelOrdemServicoDTO = new ModelOrdemServicoDTO(
                 getDadosEstaticosOS.dadosOrdemServico().getId(),
@@ -213,7 +223,8 @@ class OrdemServicoControllerTest {
                 getDadosEstaticosOS.dadosOrdemServico().getStatus(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_inicial(),
                 getDadosEstaticosOS.dadosOrdemServico().getData_final(),
-                getDadosEstaticosOS.dadosOrdemServico().getCliente()
+                getDadosEstaticosOS.dadosOrdemServico().getCliente(),
+                getDadosEstaticosOS.dadosOrdemServico().getTecnicoResponsavel()
         );
     }
 }

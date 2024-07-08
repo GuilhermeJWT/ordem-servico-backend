@@ -5,6 +5,7 @@ import br.com.systemsgs.ordem_servico_backend.enums.Status;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
+import br.com.systemsgs.ordem_servico_backend.model.ModelTecnicoResponsavel;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -58,6 +59,15 @@ public class ConfigDadosEstaticosEntidades {
         return produtoResponse;
     }
 
+    public ModelTecnicoResponsavel dadosTecnicoResponsavel(){
+        ModelTecnicoResponsavel tecnicoResponse = new ModelTecnicoResponsavel();
+
+        tecnicoResponse.setId(1L);
+        tecnicoResponse.setNome("Guilherme Técnico");
+
+        return tecnicoResponse;
+    }
+
     public ModelOrdemServico dadosOrdemServico(){
         ModelOrdemServico ordemServicoResponse = new ModelOrdemServico();
 
@@ -69,6 +79,7 @@ public class ConfigDadosEstaticosEntidades {
         ordemServicoResponse.setData_inicial(new Date("2024/06/21"));
         ordemServicoResponse.setData_final(new Date("2024/06/22"));
         ordemServicoResponse.setCliente(dadosClientes());
+        ordemServicoResponse.setTecnicoResponsavel(dadosTecnicoResponsavel());
 
         return ordemServicoResponse;
     }
