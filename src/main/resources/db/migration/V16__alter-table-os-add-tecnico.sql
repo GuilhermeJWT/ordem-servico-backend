@@ -1,0 +1,1 @@
+ALTER TABLE ordemservico ADD tecnico_id int;
