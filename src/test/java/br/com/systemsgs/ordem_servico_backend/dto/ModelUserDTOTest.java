@@ -12,12 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class ModelUserDTOTest {
+class ModelUserDTOTest extends ConfigDadosEstaticosEntidades{
 
     ModelUserDTO modelUserDTO = new ModelUserDTO();
     ObjectMapper objectMapper = new ObjectMapper();
-
-    ConfigDadosEstaticosEntidades getDadosUser = new ConfigDadosEstaticosEntidades();
 
     @BeforeEach
     void setUp() {
@@ -44,46 +42,46 @@ class ModelUserDTOTest {
 
         assertNotNull(dtoResponse);
 
-        assertEquals(dtoResponse.getId(), getDadosUser.dadosUsuariosDTO().getId());
-        assertEquals(dtoResponse.getNome(), getDadosUser.dadosUsuariosDTO().getNome());
-        assertEquals(dtoResponse.getEmail(), getDadosUser.dadosUsuariosDTO().getEmail());
-        assertEquals(dtoResponse.getPassword(), getDadosUser.dadosUsuariosDTO().getPassword());
-        assertEquals(dtoResponse.getEndereco(), getDadosUser.dadosUsuariosDTO().getEndereco());
-        assertEquals(dtoResponse.getCidade(), getDadosUser.dadosUsuariosDTO().getCidade());
-        assertEquals(dtoResponse.getEstado(), getDadosUser.dadosUsuariosDTO().getEstado());
-        assertEquals(dtoResponse.getCep(), getDadosUser.dadosUsuariosDTO().getCep());
+        assertEquals(dtoResponse.getId(), dadosUsuariosDTO().getId());
+        assertEquals(dtoResponse.getNome(), dadosUsuariosDTO().getNome());
+        assertEquals(dtoResponse.getEmail(), dadosUsuariosDTO().getEmail());
+        assertEquals(dtoResponse.getPassword(), dadosUsuariosDTO().getPassword());
+        assertEquals(dtoResponse.getEndereco(), dadosUsuariosDTO().getEndereco());
+        assertEquals(dtoResponse.getCidade(), dadosUsuariosDTO().getCidade());
+        assertEquals(dtoResponse.getEstado(), dadosUsuariosDTO().getEstado());
+        assertEquals(dtoResponse.getCep(), dadosUsuariosDTO().getCep());
     }
 
     @DisplayName("Testa se existe os campos da entidade ModelUserDTO no Json")
     @Test
     void testCamposNoCorpoJson() throws JsonProcessingException {
 
-        ModelUserDTO response = getDadosUser.dadosUsuariosDTO();
+        ModelUserDTO response = dadosUsuariosDTO();
         String json = objectMapper.writeValueAsString(response);
 
         assertNotNull(json);
 
-        assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getId().toString()));
-        assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getNome()));
-        assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getEmail()));
-        assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getPassword()));
-        assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getEndereco()));
-        assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getCidade()));
-        assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getEstado()));
-        assertTrue(json.contains(getDadosUser.dadosUsuariosDTO().getCep()));
+        assertTrue(json.contains(dadosUsuariosDTO().getId().toString()));
+        assertTrue(json.contains(dadosUsuariosDTO().getNome()));
+        assertTrue(json.contains(dadosUsuariosDTO().getEmail()));
+        assertTrue(json.contains(dadosUsuariosDTO().getPassword()));
+        assertTrue(json.contains(dadosUsuariosDTO().getEndereco()));
+        assertTrue(json.contains(dadosUsuariosDTO().getCidade()));
+        assertTrue(json.contains(dadosUsuariosDTO().getEstado()));
+        assertTrue(json.contains(dadosUsuariosDTO().getCep()));
 
     }
 
     private void startUser(){
         modelUserDTO = new ModelUserDTO(
-                getDadosUser.dadosUsuariosDTO().getId(),
-                getDadosUser.dadosUsuariosDTO().getNome(),
-                getDadosUser.dadosUsuariosDTO().getEmail(),
-                getDadosUser.dadosUsuariosDTO().getPassword(),
-                getDadosUser.dadosUsuariosDTO().getEndereco(),
-                getDadosUser.dadosUsuariosDTO().getCidade(),
-                getDadosUser.dadosUsuariosDTO().getEstado(),
-                getDadosUser.dadosUsuariosDTO().getCep()
+                dadosUsuariosDTO().getId(),
+                dadosUsuariosDTO().getNome(),
+                dadosUsuariosDTO().getEmail(),
+                dadosUsuariosDTO().getPassword(),
+                dadosUsuariosDTO().getEndereco(),
+                dadosUsuariosDTO().getCidade(),
+                dadosUsuariosDTO().getEstado(),
+                dadosUsuariosDTO().getCep()
         );
     }
 }

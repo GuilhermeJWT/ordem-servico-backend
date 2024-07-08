@@ -1,6 +1,5 @@
 package br.com.systemsgs.ordem_servico_backend.exception;
 
-import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,12 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class ExceptionControllerAdviceTest {
+class ExceptionControllerAdviceTest{
 
     @InjectMocks
     private ExceptionControllerAdvice exceptionControllerAdvice;
-
-    private ConfigDadosEstaticosEntidades getErros = new ConfigDadosEstaticosEntidades();
 
     @BeforeEach
     void setUp() {
@@ -40,6 +37,18 @@ class ExceptionControllerAdviceTest {
     void clienteNaoEncontradoException() {
         ApiRestErrors apiRestErrors = exceptionControllerAdvice.
                 clienteNaoEncontradoException(new ClienteNaoEncontradoException());
+
+        assertNotNull(apiRestErrors);
+        assertNotNull(apiRestErrors.getErros());
+
+        assertEquals(ApiRestErrors.class, apiRestErrors.getClass());
+    }
+
+    @DisplayName("Retorna Exception - Técnico Responsavel não Encontrado!")
+    @Test
+    void tecnicoNaoEncontradoException() {
+        ApiRestErrors apiRestErrors = exceptionControllerAdvice.
+                tecnicoNaoEncontradoException(new TecnicoResponsavelNaoEncontradoException());
 
         assertNotNull(apiRestErrors);
         assertNotNull(apiRestErrors.getErros());

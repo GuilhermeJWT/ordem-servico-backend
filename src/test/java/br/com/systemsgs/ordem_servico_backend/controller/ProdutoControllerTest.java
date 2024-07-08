@@ -27,12 +27,10 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
 @SpringBootTest
-class ProdutoControllerTest {
+class ProdutoControllerTest extends ConfigDadosEstaticosEntidades{
 
     private ModelProdutos modelProdutos;
     private ModelProdutosDTO modelProdutosDTO;
-
-    private ConfigDadosEstaticosEntidades getDadosEstaticosProduto = new ConfigDadosEstaticosEntidades();
 
     @InjectMocks
     private ProdutoController produtoController;
@@ -67,13 +65,13 @@ class ProdutoControllerTest {
         assertEquals(ArrayList.class, response.getBody().getClass());
         assertEquals(ModelProdutosDTO.class, response.getBody().get(0).getClass());
 
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getId(), response.getBody().get(0).getId());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getDescricao(), response.getBody().get(0).getDescricao());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getQuantidade(), response.getBody().get(0).getQuantidade());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getQuantidade_minima(), response.getBody().get(0).getQuantidade_minima());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getPreco_compra(), response.getBody().get(0).getPreco_compra());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getPreco_venda(), response.getBody().get(0).getPreco_venda());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getCodigo_barras(), response.getBody().get(0).getCodigo_barras());
+        assertEquals(dadosProdutos().getId(), response.getBody().get(0).getId());
+        assertEquals(dadosProdutos().getDescricao(), response.getBody().get(0).getDescricao());
+        assertEquals(dadosProdutos().getQuantidade(), response.getBody().get(0).getQuantidade());
+        assertEquals(dadosProdutos().getQuantidade_minima(), response.getBody().get(0).getQuantidade_minima());
+        assertEquals(dadosProdutos().getPreco_compra(), response.getBody().get(0).getPreco_compra());
+        assertEquals(dadosProdutos().getPreco_venda(), response.getBody().get(0).getPreco_venda());
+        assertEquals(dadosProdutos().getCodigo_barras(), response.getBody().get(0).getCodigo_barras());
     }
 
     @DisplayName("Pesquisa um Produto pelo ID e testa o Retorno do Body - retorna 200")
@@ -83,7 +81,7 @@ class ProdutoControllerTest {
         when(mapper.map(any(), any())).thenReturn(modelProdutosDTO);
 
         ResponseEntity<ModelProdutosDTO> response = produtoController.
-                pesquisarPorId(getDadosEstaticosProduto.dadosProdutos().getId());
+                pesquisarPorId(dadosProdutos().getId());
 
         assertNotNull(response);
         assertNotNull(response.getBody());
@@ -91,13 +89,13 @@ class ProdutoControllerTest {
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(ModelProdutosDTO.class, response.getBody().getClass());
 
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getId(), response.getBody().getId());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getDescricao(), response.getBody().getDescricao());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getQuantidade(), response.getBody().getQuantidade());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getQuantidade_minima(), response.getBody().getQuantidade_minima());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getPreco_compra(), response.getBody().getPreco_compra());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getPreco_venda(), response.getBody().getPreco_venda());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getCodigo_barras(), response.getBody().getCodigo_barras());
+        assertEquals(dadosProdutos().getId(), response.getBody().getId());
+        assertEquals(dadosProdutos().getDescricao(), response.getBody().getDescricao());
+        assertEquals(dadosProdutos().getQuantidade(), response.getBody().getQuantidade());
+        assertEquals(dadosProdutos().getQuantidade_minima(), response.getBody().getQuantidade_minima());
+        assertEquals(dadosProdutos().getPreco_compra(), response.getBody().getPreco_compra());
+        assertEquals(dadosProdutos().getPreco_venda(), response.getBody().getPreco_venda());
+        assertEquals(dadosProdutos().getCodigo_barras(), response.getBody().getCodigo_barras());
     }
 
     @DisplayName("Pesquisa um Produto inexistente e retorna 404")
@@ -106,7 +104,7 @@ class ProdutoControllerTest {
         when(produtoRepository.findById(anyLong())).thenThrow(new RecursoNaoEncontradoException());
 
         try{
-            produtoService.pesquisaPorId(getDadosEstaticosProduto.dadosProdutos().getId());
+            produtoService.pesquisaPorId(dadosProdutos().getId());
         }catch (Exception exception){
             assertEquals(RecursoNaoEncontradoException.class, exception.getClass());
             assertEquals("Recurso não Encontrado!", exception.getMessage());
@@ -128,12 +126,12 @@ class ProdutoControllerTest {
     @DisplayName("Atualiza um Produto e retorna 200")
     @Test
     void atualizaProdutoRetorna200(){
-        when(produtoService.atualizarProduto(getDadosEstaticosProduto.
+        when(produtoService.atualizarProduto(
                 dadosProdutos().getId(),modelProdutosDTO)).thenReturn(modelProdutos);
         when(mapper.map(any(), any())).thenReturn(modelProdutosDTO);
 
         ResponseEntity<ModelProdutosDTO> response = produtoController.
-                atualizarProdutos(getDadosEstaticosProduto.dadosProdutos().getId(), modelProdutosDTO);
+                atualizarProdutos(dadosProdutos().getId(), modelProdutosDTO);
 
         assertNotNull(response);
         assertNotNull(response.getBody());
@@ -141,13 +139,13 @@ class ProdutoControllerTest {
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(ModelProdutosDTO.class, response.getBody().getClass());
 
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getId(), response.getBody().getId());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getDescricao(), response.getBody().getDescricao());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getQuantidade(), response.getBody().getQuantidade());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getQuantidade_minima(), response.getBody().getQuantidade_minima());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getPreco_compra(), response.getBody().getPreco_compra());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getPreco_venda(), response.getBody().getPreco_venda());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getCodigo_barras(), response.getBody().getCodigo_barras());
+        assertEquals(dadosProdutos().getId(), response.getBody().getId());
+        assertEquals(dadosProdutos().getDescricao(), response.getBody().getDescricao());
+        assertEquals(dadosProdutos().getQuantidade(), response.getBody().getQuantidade());
+        assertEquals(dadosProdutos().getQuantidade_minima(), response.getBody().getQuantidade_minima());
+        assertEquals(dadosProdutos().getPreco_compra(), response.getBody().getPreco_compra());
+        assertEquals(dadosProdutos().getPreco_venda(), response.getBody().getPreco_venda());
+        assertEquals(dadosProdutos().getCodigo_barras(), response.getBody().getCodigo_barras());
     }
 
     @DisplayName("Deleta um Produto e retorna 204")
@@ -156,7 +154,7 @@ class ProdutoControllerTest {
         doNothing().when(produtoService).deletarProduto(anyLong());
 
         ResponseEntity<ModelProdutosDTO> response = produtoController.
-                delete(getDadosEstaticosProduto.dadosProdutos().getId());
+                delete(dadosProdutos().getId());
 
         assertNotNull(response);
         assertEquals(ResponseEntity.class, response.getClass());
@@ -166,22 +164,22 @@ class ProdutoControllerTest {
 
     private void startProduto(){
         modelProdutos = new ModelProdutos(
-                getDadosEstaticosProduto.dadosProdutos().getId(),
-                getDadosEstaticosProduto.dadosProdutos().getDescricao(),
-                getDadosEstaticosProduto.dadosProdutos().getQuantidade(),
-                getDadosEstaticosProduto.dadosProdutos().getQuantidade_minima(),
-                getDadosEstaticosProduto.dadosProdutos().getPreco_compra(),
-                getDadosEstaticosProduto.dadosProdutos().getPreco_venda(),
-                getDadosEstaticosProduto.dadosProdutos().getCodigo_barras()
+                dadosProdutos().getId(),
+                dadosProdutos().getDescricao(),
+                dadosProdutos().getQuantidade(),
+                dadosProdutos().getQuantidade_minima(),
+                dadosProdutos().getPreco_compra(),
+                dadosProdutos().getPreco_venda(),
+                dadosProdutos().getCodigo_barras()
         );
         modelProdutosDTO = new ModelProdutosDTO(
-                getDadosEstaticosProduto.dadosProdutos().getId(),
-                getDadosEstaticosProduto.dadosProdutos().getDescricao(),
-                getDadosEstaticosProduto.dadosProdutos().getQuantidade(),
-                getDadosEstaticosProduto.dadosProdutos().getQuantidade_minima(),
-                getDadosEstaticosProduto.dadosProdutos().getPreco_compra(),
-                getDadosEstaticosProduto.dadosProdutos().getPreco_venda(),
-                getDadosEstaticosProduto.dadosProdutos().getCodigo_barras()
+                dadosProdutos().getId(),
+                dadosProdutos().getDescricao(),
+                dadosProdutos().getQuantidade(),
+                dadosProdutos().getQuantidade_minima(),
+                dadosProdutos().getPreco_compra(),
+                dadosProdutos().getPreco_venda(),
+                dadosProdutos().getCodigo_barras()
         );
     }
 }

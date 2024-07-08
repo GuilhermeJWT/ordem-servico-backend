@@ -19,11 +19,9 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class UtilProdutosTest {
+class UtilProdutosTest extends ConfigDadosEstaticosEntidades{
 
     private Optional<ModelProdutos> modelProdutosOptional;
-
-    private ConfigDadosEstaticosEntidades getDadosEstaticosProduto = new ConfigDadosEstaticosEntidades();
 
     @InjectMocks
     private UtilProdutos utilProdutos;
@@ -42,17 +40,17 @@ class UtilProdutosTest {
     void pesquisarProdutoPeloId() {
         when(produtoRepository.findById(anyLong())).thenReturn(modelProdutosOptional);
 
-        ModelProdutos response = utilProdutos.pesquisaProdutoPorId(getDadosEstaticosProduto.dadosProdutos().getId());
+        ModelProdutos response = utilProdutos.pesquisaProdutoPorId(dadosProdutos().getId());
 
         assertNotNull(response);
 
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getId(), response.getId());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getDescricao(), response.getDescricao());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getQuantidade(), response.getQuantidade());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getQuantidade_minima(), response.getQuantidade_minima());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getPreco_compra(), response.getPreco_compra());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getPreco_venda(), response.getPreco_venda());
-        assertEquals(getDadosEstaticosProduto.dadosProdutos().getCodigo_barras(), response.getCodigo_barras());
+        assertEquals(dadosProdutos().getId(), response.getId());
+        assertEquals(dadosProdutos().getDescricao(), response.getDescricao());
+        assertEquals(dadosProdutos().getQuantidade(), response.getQuantidade());
+        assertEquals(dadosProdutos().getQuantidade_minima(), response.getQuantidade_minima());
+        assertEquals(dadosProdutos().getPreco_compra(), response.getPreco_compra());
+        assertEquals(dadosProdutos().getPreco_venda(), response.getPreco_venda());
+        assertEquals(dadosProdutos().getCodigo_barras(), response.getCodigo_barras());
     }
 
     @DisplayName("Pesquisa um Produto por ID e retorna Not Found")
@@ -61,22 +59,22 @@ class UtilProdutosTest {
         when(produtoRepository.findById(anyLong())).thenThrow(new RecursoNaoEncontradoException());
 
         try{
-            utilProdutos.pesquisaProdutoPorId(getDadosEstaticosProduto.dadosProdutos().getId());
+            utilProdutos.pesquisaProdutoPorId(dadosProdutos().getId());
         }catch (Exception exception){
             assertEquals(RecursoNaoEncontradoException.class, exception.getClass());
-            assertEquals(getDadosEstaticosProduto.mensagemErro().get(1), exception.getMessage());
+            assertEquals(mensagemErro().get(1), exception.getMessage());
         }
     }
 
     private void startProdutoOptional(){
         modelProdutosOptional = Optional.of(new ModelProdutos(
-                getDadosEstaticosProduto.dadosProdutos().getId(),
-                getDadosEstaticosProduto.dadosProdutos().getDescricao(),
-                getDadosEstaticosProduto.dadosProdutos().getQuantidade(),
-                getDadosEstaticosProduto.dadosProdutos().getQuantidade_minima(),
-                getDadosEstaticosProduto.dadosProdutos().getPreco_compra(),
-                getDadosEstaticosProduto.dadosProdutos().getPreco_venda(),
-                getDadosEstaticosProduto.dadosProdutos().getCodigo_barras()
+                dadosProdutos().getId(),
+                dadosProdutos().getDescricao(),
+                dadosProdutos().getQuantidade(),
+                dadosProdutos().getQuantidade_minima(),
+                dadosProdutos().getPreco_compra(),
+                dadosProdutos().getPreco_venda(),
+                dadosProdutos().getCodigo_barras()
         ));
     }
 }

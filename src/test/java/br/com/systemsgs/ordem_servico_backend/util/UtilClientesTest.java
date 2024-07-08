@@ -20,11 +20,9 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-class UtilClientesTest {
+class UtilClientesTest extends ConfigDadosEstaticosEntidades{
 
     private Optional<ModelClientes> modelClientesOptional;
-
-    private ConfigDadosEstaticosEntidades getDadosEstaticosCliente = new ConfigDadosEstaticosEntidades();
 
     @InjectMocks
     private UtilClientes utilClientes;
@@ -43,19 +41,19 @@ class UtilClientesTest {
     void pesquisarClientePeloId() {
         when(clienteRepository.findById(anyLong())).thenReturn(modelClientesOptional);
 
-        ModelClientes response = utilClientes.pesquisarClientePeloId(getDadosEstaticosCliente.dadosClientes().getId());
+        ModelClientes response = utilClientes.pesquisarClientePeloId(dadosClientes().getId());
 
         assertNotNull(response);
 
-        assertEquals(getDadosEstaticosCliente.dadosClientes().getId(), response.getId());
-        assertEquals(getDadosEstaticosCliente.dadosClientes().getNome(), response.getNome());
-        assertEquals(getDadosEstaticosCliente.dadosClientes().getCpf(), response.getCpf());
-        assertEquals(getDadosEstaticosCliente.dadosClientes().getCelular(), response.getCelular());
-        assertEquals(getDadosEstaticosCliente.dadosClientes().getEmail(), response.getEmail());
-        assertEquals(getDadosEstaticosCliente.dadosClientes().getEndereco(), response.getEndereco());
-        assertEquals(getDadosEstaticosCliente.dadosClientes().getCidade(), response.getCidade());
-        assertEquals(getDadosEstaticosCliente.dadosClientes().getEstado(), response.getEstado());
-        assertEquals(getDadosEstaticosCliente.dadosClientes().getCep(), response.getCep());
+        assertEquals(dadosClientes().getId(), response.getId());
+        assertEquals(dadosClientes().getNome(), response.getNome());
+        assertEquals(dadosClientes().getCpf(), response.getCpf());
+        assertEquals(dadosClientes().getCelular(), response.getCelular());
+        assertEquals(dadosClientes().getEmail(), response.getEmail());
+        assertEquals(dadosClientes().getEndereco(), response.getEndereco());
+        assertEquals(dadosClientes().getCidade(), response.getCidade());
+        assertEquals(dadosClientes().getEstado(), response.getEstado());
+        assertEquals(dadosClientes().getCep(), response.getCep());
     }
 
     @DisplayName("Pesquisa um Cliente por ID e retorna Not Found")
@@ -64,25 +62,25 @@ class UtilClientesTest {
         when(clienteRepository.findById(anyLong())).thenThrow(new ClienteNaoEncontradoException());
 
         try{
-            utilClientes.pesquisarClientePeloId(getDadosEstaticosCliente.dadosClientes().getId());
+            utilClientes.pesquisarClientePeloId(dadosClientes().getId());
         }catch (Exception exception){
             assertEquals(ClienteNaoEncontradoException.class, exception.getClass());
-            assertEquals(getDadosEstaticosCliente.mensagemErro().get(0), exception.getMessage());
+            assertEquals(mensagemErro().get(0), exception.getMessage());
         }
     }
 
     private void startClienteOptional(){
         modelClientesOptional = Optional.of(new ModelClientes(
-                getDadosEstaticosCliente.dadosClientes().getId(),
-                getDadosEstaticosCliente.dadosClientes().getNome(),
-                getDadosEstaticosCliente.dadosClientes().getCpf(),
-                getDadosEstaticosCliente.dadosClientes().getCelular(),
-                getDadosEstaticosCliente.dadosClientes().getEmail(),
-                getDadosEstaticosCliente.dadosClientes().getEndereco(),
-                getDadosEstaticosCliente.dadosClientes().getCidade(),
-                getDadosEstaticosCliente.dadosClientes().getEstado(),
-                getDadosEstaticosCliente.dadosClientes().getCep(),
-                getDadosEstaticosCliente.dadosClientes().getOrdemServicos())
+                dadosClientes().getId(),
+                dadosClientes().getNome(),
+                dadosClientes().getCpf(),
+                dadosClientes().getCelular(),
+                dadosClientes().getEmail(),
+                dadosClientes().getEndereco(),
+                dadosClientes().getCidade(),
+                dadosClientes().getEstado(),
+                dadosClientes().getCep(),
+                dadosClientes().getOrdemServicos())
         );
     }
 }
