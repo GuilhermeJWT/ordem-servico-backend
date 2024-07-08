@@ -2,7 +2,9 @@ package br.com.systemsgs.ordem_servico_backend.dto;
 
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
+import br.com.systemsgs.ordem_servico_backend.model.ModelTecnicoResponsavel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -46,4 +48,8 @@ public class ModelOrdemServicoDTO extends RepresentationModel<ModelOrdemServicoD
 
     @NotNull(message = "Informe um Cliente.")
     private ModelClientes cliente;
+
+    @NotNull(message = "Informe o Técnico Responsavel")
+    @JsonProperty("tecnico_responsavel")
+    private ModelTecnicoResponsavel tecnicoResponsavel;
 }

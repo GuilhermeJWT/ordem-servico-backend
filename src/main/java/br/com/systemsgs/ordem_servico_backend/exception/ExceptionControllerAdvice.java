@@ -23,6 +23,12 @@ public class ExceptionControllerAdvice {
     public ApiRestErrors clienteNaoEncontradoException(ClienteNaoEncontradoException clienteNaoEncontradoException){
         return new ApiRestErrors(clienteNaoEncontradoException.getMessage());
     }
+    @ExceptionHandler(TecnicoResponsavelNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiRestErrors tecnicoNaoEncontradoException(TecnicoResponsavelNaoEncontradoException tecnicoResponsavelNaoEncontradoException){
+        return new ApiRestErrors(tecnicoResponsavelNaoEncontradoException.getMessage());
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

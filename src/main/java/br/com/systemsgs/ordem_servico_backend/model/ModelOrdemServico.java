@@ -47,4 +47,8 @@ public class ModelOrdemServico implements Serializable{
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private ModelClientes cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "tecnico_id")
+    private ModelTecnicoResponsavel tecnicoResponsavel;
 }
