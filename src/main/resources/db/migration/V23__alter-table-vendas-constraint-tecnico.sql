@@ -1,0 +1,1 @@
+alter table if exists vendas add constraint FK9rl6wk0bb6etwhmjre8sknuij foreign key (id_tecnico_responsavel) references tecnico_responsavel
