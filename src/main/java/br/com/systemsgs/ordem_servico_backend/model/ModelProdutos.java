@@ -1,10 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,7 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "produtos")
-@Entity(name = "produtos")
+@Entity
 public class ModelProdutos implements Serializable {
 
     private static final long serialVersionUID = 1L;

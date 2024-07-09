@@ -6,6 +6,8 @@ import br.com.systemsgs.ordem_servico_backend.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UtilProdutos {
 
@@ -17,5 +19,15 @@ public class UtilProdutos {
                 orElseThrow(() -> new RecursoNaoEncontradoException());
 
         return pesquisaProduto;
+    }
+
+    public List<ModelProdutos> pesquisaListaProdutosPorIds(List<Long> id){
+        var pesquisaProduto = produtoRepository.findAllById(id);
+
+        if(pesquisaProduto.isEmpty()){
+            throw new RecursoNaoEncontradoException();
+        }
+
+        return pesquisaProduto.stream().toList();
     }
 }

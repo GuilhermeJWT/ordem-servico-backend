@@ -1,0 +1,1 @@
+alter table if exists vendas add constraint FK918q9nrmjkanralq0y8qgkkdx foreign key (id_cliente) references clientes
