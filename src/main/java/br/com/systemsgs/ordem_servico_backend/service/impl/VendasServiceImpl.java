@@ -1,8 +1,8 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelVendasDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.VendasResponseDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelItensVendas;
-import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 import br.com.systemsgs.ordem_servico_backend.model.ModelVendas;
 import br.com.systemsgs.ordem_servico_backend.repository.ItensVendaRepository;
 import br.com.systemsgs.ordem_servico_backend.repository.VendasRepository;
@@ -10,6 +10,7 @@ import br.com.systemsgs.ordem_servico_backend.service.VendaService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
 import br.com.systemsgs.ordem_servico_backend.util.UtilProdutos;
 import br.com.systemsgs.ordem_servico_backend.util.UtilTecnicoResponsavel;
+import br.com.systemsgs.ordem_servico_backend.util.UtilVendas;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class VendasServiceImpl implements VendaService {
 
     @Autowired
     private ItensVendaRepository itensVendaRepository;
+
+    @Autowired
+    private UtilVendas utilVendas;
 
     @Autowired
     private UtilTecnicoResponsavel utilTecnicoResponsavel;
@@ -70,6 +74,24 @@ public class VendasServiceImpl implements VendaService {
         return vendaSalva;
     }
 
+    @Override
+    public VendasResponseDTO pesquisaVendaPorId(Long id) {
+        VendasResponseDTO vendasResponseDTO = new VendasResponseDTO();
+
+        var pesquisaVenda = utilVendas.pesquisarVendaPeloId(id);
+
+        vendasResponseDTO.setIdVenda(pesquisaVenda.getIdVenda());
+        vendasResponseDTO.setTotalItens(pesquisaVenda.getTotalItens());
+        vendasResponseDTO.setTotalVenda(pesquisaVenda.getTotalVenda());
+        vendasResponseDTO.setDataVenda(pesquisaVenda.getDataVenda());
+        vendasResponseDTO.setDesconto(pesquisaVenda.getDesconto());
+        vendasResponseDTO.setNomeCliente(pesquisaVenda.getCliente().getNome());
+        vendasResponseDTO.setNomeTecnicoResponsavel(pesquisaVenda.getTecnicoResponsavel().getNome());
+        vendasResponseDTO.setDescricaoProdutos(pegaDescricaoPedidos(pesquisaVenda));
+
+        return vendasResponseDTO;
+    }
+
     /*Multiplicando o Preço com a Quantidade para gerar o Valor Total do Pedido - Caso não tenha retorna 0*/
     private BigDecimal calculaTotalVenda(ModelVendasDTO modelVendasDTO) {
         return modelVendasDTO.getItens().stream().
@@ -84,7 +106,6 @@ public class VendasServiceImpl implements VendaService {
 
     /*Pega os Itens da Venda*/
     private List<ModelItensVendas> itensVenda(ModelVendasDTO modelVendasDTO){
-        List<ModelProdutos> modelProdutos = new ArrayList<>();
         var quantidade = modelVendasDTO.getItens().stream().map(q -> q.getQuantidade()).collect(Collectors.toList());
         var valorProduto = modelVendasDTO.getItens().stream().map(v -> v.getValorProduto()).collect(Collectors.toList());
         var produto = modelVendasDTO.getItens().stream().map(p -> p.getId_produto()).collect(Collectors.toList());
@@ -93,5 +114,14 @@ public class VendasServiceImpl implements VendaService {
         List<ModelItensVendas> itensVendas = Arrays.asList(new ModelItensVendas(quantidade, valorProduto, listaIds));
 
         return itensVendas;
+    }
+
+    /*Pega a Descrição dos Produtos de uma Venda*/
+    private List<String> pegaDescricaoPedidos(ModelVendas modelVendas){
+        var idsProdutos = modelVendas.getItens().stream().map(p -> p.getProduto());
+
+        List<Long> listIds = idsProdutos.reduce(new ArrayList<>() , (integer, longs) -> longs);
+
+        return utilProdutos.pesquisaDescricaoProdutosPorIds(listIds);
     }
 }

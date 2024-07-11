@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelVendasDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.VendasResponseDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelVendas;
 import br.com.systemsgs.ordem_servico_backend.service.VendaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,5 +25,11 @@ public class VendasController {
         ModelVendas vendaSalva = vendaService.salvarVenda(modelVendasDTO);
 
         return ResponseEntity.ok().body(vendaSalva);
+    }
+
+    @Operation(summary = "Pesquisa Venda por ID", description = "Api para listar uma Venda por ID")
+    @GetMapping("/pesquisar/{id}")
+    public ResponseEntity<VendasResponseDTO> pesquisarPorId(@PathVariable Long id){
+        return ResponseEntity.ok().body(vendaService.pesquisaVendaPorId(id));
     }
 }
