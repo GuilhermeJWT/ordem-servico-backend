@@ -1,5 +1,5 @@
 <H1>Ordem Serviço Backend</h1>
-<p>Projeto simples contendo 3 Apis (Crud), com foco nas ferramentas como:</p>
+<p>Projeto simples contendo algumas apis, com foco nas ferramentas como:</p>
 <ol>
   <li>Pipeline CI/CD - Jenkins</li>
   <li>Qualidade do Código - SonarQube</li>
