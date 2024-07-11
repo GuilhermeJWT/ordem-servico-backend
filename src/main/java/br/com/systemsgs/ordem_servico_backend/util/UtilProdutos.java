@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UtilProdutos {
@@ -29,5 +30,16 @@ public class UtilProdutos {
         }
 
         return pesquisaProduto.stream().toList();
+    }
+
+    public List<String> pesquisaDescricaoProdutosPorIds(List<Long> id){
+
+        var pesquisaProdutos = produtoRepository.findAllById(id);
+
+        if(pesquisaProdutos.isEmpty()){
+            throw new RecursoNaoEncontradoException();
+        }
+
+        return pesquisaProdutos.stream().map(p -> p.getDescricao()).collect(Collectors.toList());
     }
 }
