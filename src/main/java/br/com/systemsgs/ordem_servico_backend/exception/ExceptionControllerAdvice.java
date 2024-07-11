@@ -19,6 +19,12 @@ public class ExceptionControllerAdvice {
         return new ApiRestErrors(new PayloadInexistenteException().getMessage());
     }
 
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestErrors internalServerErroException(){
+        return new ApiRestErrors(new ErroInternoException().getMessage());
+    }
+
     @ExceptionHandler(RecursoNaoEncontradoException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiRestErrors recursoNaoEncontradoException(RecursoNaoEncontradoException recursoNaoEncontradoException){
