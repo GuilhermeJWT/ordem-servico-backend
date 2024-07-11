@@ -1,6 +1,5 @@
 package br.com.systemsgs.ordem_servico_backend.dto;
 
-import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
