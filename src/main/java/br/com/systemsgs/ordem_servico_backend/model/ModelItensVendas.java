@@ -32,8 +32,6 @@ public class ModelItensVendas implements Serializable {
 
     private List<Long> produto;
 
-    private Long idVenda;
-
     public ModelItensVendas(List<Integer> quantidade, List<BigDecimal> valorProduto, List<Long> produto){
         this.quantidade = quantidade;
         this.valorProduto = valorProduto;

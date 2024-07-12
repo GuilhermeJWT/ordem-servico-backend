@@ -62,14 +62,11 @@ public class VendasServiceImpl implements VendaService {
         modelVendas.setTotalItens(calculaTotalItens(modelVendasDTO));
         modelVendas.setItens(itensVenda(modelVendasDTO));
 
-        var vendaSalva = vendasRepository.save(modelVendas);
-
-        modelItensVendas.setIdVenda(vendaSalva.getIdVenda());
         modelItensVendas.setProduto(produtos.stream().map(p -> p.getId()).collect(Collectors.toList()));
         modelItensVendas.setQuantidade(produtos.stream().map(p -> p.getQuantidade()).collect(Collectors.toList()));
         modelItensVendas.setValorProduto(produtos.stream().map(p -> p.getPreco_venda()).collect(Collectors.toList()));
 
-        itensVendaRepository.save(modelItensVendas);
+        var vendaSalva = vendasRepository.save(modelVendas);
 
         return vendaSalva;
     }

@@ -50,7 +50,7 @@ public class ModelVendas implements Serializable {
     @JoinColumn(name = "id_tecnico_responsavel")
     private ModelTecnicoResponsavel tecnicoResponsavel;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "idVenda", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ModelItensVendas> itens = new ArrayList<>();
 
 }
