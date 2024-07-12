@@ -61,7 +61,6 @@ public class VendasServiceImpl implements VendaService {
         modelVendas.setTotalVenda(calculaTotalVenda(modelVendasDTO));
         modelVendas.setTotalItens(calculaTotalItens(modelVendasDTO));
         modelVendas.setItens(itensVenda(modelVendasDTO));
-
         modelItensVendas.setProduto(produtos.stream().map(p -> p.getId()).collect(Collectors.toList()));
         modelItensVendas.setQuantidade(produtos.stream().map(p -> p.getQuantidade()).collect(Collectors.toList()));
         modelItensVendas.setValorProduto(produtos.stream().map(p -> p.getPreco_venda()).collect(Collectors.toList()));
