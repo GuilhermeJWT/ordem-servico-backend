@@ -1,4 +1,5 @@
 FROM openjdk:17-alpine
+WORKDIR /app
 EXPOSE 8081
-ADD target/ordem-servico-backend.jar ordem-servico-backend.jar
+COPY target/ordem-servico-backend.jar ordem-servico-backend.jar
 ENTRYPOINT ["java", "-jar", "/ordem-servico-backend.jar"]
