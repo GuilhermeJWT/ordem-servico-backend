@@ -1,0 +1,12 @@
+name: Pipeline - Ordem Serviço Backend
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout Code
+          uses: actions/checkout@v3
