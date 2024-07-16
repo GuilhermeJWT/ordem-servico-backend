@@ -7,7 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles(value = "test")
@@ -22,39 +21,72 @@ class ExceptionControllerAdviceTest{
         MockitoAnnotations.openMocks(this);
     }
 
-    @DisplayName("Retorna Exception - Recurso não Encontrado!")
+    @DisplayName("Retorna Exception - Recurso não Encontrado! - 404")
     @Test
-    void recursoNaoEncontradoException() {
+    void testRecursoNaoEncontradoException() {
         ApiRestErrors apiRestErrors = exceptionControllerAdvice.
                 recursoNaoEncontradoException(new RecursoNaoEncontradoException());
 
-        assertNotNull(apiRestErrors);
-        assertNotNull(apiRestErrors.getErros());
-
-        assertEquals(ApiRestErrors.class, apiRestErrors.getClass());
+        retornaAssertException(apiRestErrors);
     }
 
-    @DisplayName("Retorna Exception - Cliente não Encontrado!")
+    @DisplayName("Retorna Exception - Cliente não Encontrado! - 404")
     @Test
-    void clienteNaoEncontradoException() {
+    void testClienteNaoEncontradoException() {
         ApiRestErrors apiRestErrors = exceptionControllerAdvice.
                 clienteNaoEncontradoException(new ClienteNaoEncontradoException());
 
-        assertNotNull(apiRestErrors);
-        assertNotNull(apiRestErrors.getErros());
-
-        assertEquals(ApiRestErrors.class, apiRestErrors.getClass());
+        retornaAssertException(apiRestErrors);
     }
 
-    @DisplayName("Retorna Exception - Técnico Responsavel não Encontrado!")
+    @DisplayName("Retorna Exception - Técnico Responsavel não Encontrado! - 404")
     @Test
-    void tecnicoNaoEncontradoException() {
+    void testTecnicoNaoEncontradoException() {
         ApiRestErrors apiRestErrors = exceptionControllerAdvice.
                 tecnicoNaoEncontradoException(new TecnicoResponsavelNaoEncontradoException());
 
+        retornaAssertException(apiRestErrors);
+    }
+
+    @DisplayName("Retorna Exception - Venda não Encontrada! - 404")
+    @Test
+    void testVendaNaoEncontradaException() {
+        ApiRestErrors apiRestErrors = exceptionControllerAdvice.
+                vendaNaoEncontradaException(new VendaNaoEncontradaException());
+
+        retornaAssertException(apiRestErrors);
+    }
+
+    @DisplayName("Retorna Exception - E-mail Duplicado! - 400")
+    @Test
+    void testEmailDuplicadoException() {
+        ApiRestErrors apiRestErrors = exceptionControllerAdvice.
+                emailDuplicadoException(new EmailDuplicadoException());
+
+        retornaAssertException(apiRestErrors);
+    }
+
+    @DisplayName("Retorna Exception - Internal Server Error 500")
+    @Test
+    void testErroInternoServidorException() {
+        ApiRestErrors apiRestErrors = exceptionControllerAdvice.
+                internalServerErroException();
+
+        retornaAssertException(apiRestErrors);
+    }
+
+    @DisplayName("Retorna Exception - Body Vazio - 400")
+    @Test
+    void testPayloadVazioException() {
+        ApiRestErrors apiRestErrors = exceptionControllerAdvice.
+                httpMessageNotReadableException();
+
+        retornaAssertException(apiRestErrors);
+    }
+
+    private void retornaAssertException(ApiRestErrors apiRestErrors){
         assertNotNull(apiRestErrors);
         assertNotNull(apiRestErrors.getErros());
-
         assertEquals(ApiRestErrors.class, apiRestErrors.getClass());
     }
 }
