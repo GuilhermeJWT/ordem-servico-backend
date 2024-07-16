@@ -91,7 +91,7 @@ class VendasControllerTest extends ConfigDadosEstaticosEntidades {
             vendaService.pesquisaVendaPorId(dadosVenda().getIdVenda());
         }catch (Exception exception){
             assertEquals(VendaNaoEncontradaException.class, exception.getClass());
-            assertEquals("Venda não Encontrada!", exception.getMessage());
+            assertEquals(mensagemErro().get(2), exception.getMessage());
         }
     }
 

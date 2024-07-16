@@ -109,7 +109,7 @@ class ProdutoControllerTest extends ConfigDadosEstaticosEntidades{
             produtoService.pesquisaPorId(dadosProdutos().getId());
         }catch (Exception exception){
             assertEquals(RecursoNaoEncontradoException.class, exception.getClass());
-            assertEquals("Recurso não Encontrado!", exception.getMessage());
+            assertEquals(mensagemErro().get(1), exception.getMessage());
         }
     }
 

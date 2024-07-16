@@ -24,9 +24,11 @@ public class ConfigDadosEstaticosEntidades {
 
         String clienteNaoEncontrado = "Cliente não Encontrado!";
         String recursoNaoEncontrado = "Recurso não Encontrado!";
+        String vendaNaoEncontrada = "Venda não Encontrada!";
 
         msgErro.add(clienteNaoEncontrado);
         msgErro.add(recursoNaoEncontrado);
+        msgErro.add(vendaNaoEncontrada);
 
         return msgErro;
     }
