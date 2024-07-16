@@ -2,17 +2,16 @@ package br.com.systemsgs.ordem_servico_backend;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelUserDTO;
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
-import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
-import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
-import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
-import br.com.systemsgs.ordem_servico_backend.model.ModelTecnicoResponsavel;
+import br.com.systemsgs.ordem_servico_backend.model.*;
 import lombok.Getter;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@ActiveProfiles(value = "test")
 @Getter
 public class ConfigDadosEstaticosEntidades {
 
