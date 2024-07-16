@@ -10,6 +10,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @Tag(name = "Api de Vendas da Assistência Técnica - V1")
 @RestController
@@ -24,7 +27,10 @@ public class VendasController {
     public ResponseEntity<ModelVendas>salvarVenda(@RequestBody @Valid ModelVendasDTO modelVendasDTO){
         ModelVendas vendaSalva = vendaService.salvarVenda(modelVendasDTO);
 
-        return ResponseEntity.ok().body(vendaSalva);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
+                buildAndExpand(vendaService.pesquisaVendaPorId(vendaSalva.getIdVenda())).toUri();
+
+        return ResponseEntity.created(uri).body(vendaSalva);
     }
 
     @Operation(summary = "Pesquisa Venda por ID", description = "Api para listar uma Venda por ID")
