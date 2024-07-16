@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelOrdemServicoDTO;
+import br.com.systemsgs.ordem_servico_backend.exception.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.exception.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
@@ -47,7 +48,7 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
 
     @Override
     public ModelOrdemServico salvarOS(ModelOrdemServicoDTO modelOrdemServicoDTO) {
-         utilClientes.validaCliente(modelOrdemServicoDTO);
+         validaCliente(modelOrdemServicoDTO);
          utilTecnicoResponsavel.validaTecnicoExistente(modelOrdemServicoDTO);
          ModelOrdemServico osConvertida = mapper.map(modelOrdemServicoDTO, ModelOrdemServico.class);
 
@@ -62,11 +63,29 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     @Override
     public ModelOrdemServico atualizarOS(Long id, ModelOrdemServicoDTO modelOrdemServicoDTO) {
         ModelOrdemServico osPesquisada = utilOrdemServico.pesquisaOsPorId(id);
-        utilClientes.validaCliente(modelOrdemServicoDTO);
+        validaCliente(modelOrdemServicoDTO);
         utilTecnicoResponsavel.validaTecnicoExistente(modelOrdemServicoDTO);
 
         mapper.map(modelOrdemServicoDTO, ModelClientes.class);
 
         return ordemServicoRepository.save(osPesquisada);
+    }
+
+    public ModelOrdemServicoDTO validaCliente(ModelOrdemServicoDTO modelOrdemServicoDTO){
+        ModelClientes pesquisaCliente = utilClientes.pesquisarClientePeloId(modelOrdemServicoDTO.getCliente().getId());
+
+        if(pesquisaCliente == null){
+            throw new ClienteNaoEncontradoException();
+        }
+        modelOrdemServicoDTO.getCliente().setNome(pesquisaCliente.getNome());
+        modelOrdemServicoDTO.getCliente().setCpf(pesquisaCliente.getCpf());
+        modelOrdemServicoDTO.getCliente().setCelular(pesquisaCliente.getCelular());
+        modelOrdemServicoDTO.getCliente().setEmail(pesquisaCliente.getEmail());
+        modelOrdemServicoDTO.getCliente().setEndereco(pesquisaCliente.getEndereco());
+        modelOrdemServicoDTO.getCliente().setCidade(pesquisaCliente.getCidade());
+        modelOrdemServicoDTO.getCliente().setEstado(pesquisaCliente.getEstado());
+        modelOrdemServicoDTO.getCliente().setCep(pesquisaCliente.getCep());
+
+        return modelOrdemServicoDTO;
     }
 }
