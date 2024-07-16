@@ -71,7 +71,7 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosClientes().getOrdemServicos(), response.getOrdemServicos());
     }
 
-    @DisplayName("Pesquisa um Cliente por ID")
+    @DisplayName("Pesquisa um Cliente Inexistente por ID - retorna 404")
     @Test
     void pesquisaClienteInexistenteRetornaNotFound(){
         when(clienteRepository.findById(anyLong())).thenThrow(new ClienteNaoEncontradoException());

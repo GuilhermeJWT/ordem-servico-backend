@@ -135,7 +135,7 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
             ordemServicoService.pesquisaPorId(dadosOrdemServico().getId());
         }catch (Exception exception){
             assertEquals(RecursoNaoEncontradoException.class, exception.getClass());
-            assertEquals("Recurso não Encontrado!", exception.getMessage());
+            assertEquals(mensagemErro().get(1), exception.getMessage());
         }
     }
 

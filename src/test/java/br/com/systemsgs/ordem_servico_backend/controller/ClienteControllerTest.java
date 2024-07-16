@@ -111,7 +111,7 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
             clienteService.pesquisaPorId(dadosClientes().getId());
         }catch (Exception exception){
             assertEquals(ClienteNaoEncontradoException.class, exception.getClass());
-            assertEquals("Cliente não Encontrado!", exception.getMessage());
+            assertEquals(mensagemErro().get(0), exception.getMessage());
         }
     }
 
