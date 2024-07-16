@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend;
 
+import br.com.systemsgs.ordem_servico_backend.dto.ModelItensVendasDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.ModelUserDTO;
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
 import br.com.systemsgs.ordem_servico_backend.model.*;
@@ -7,7 +8,10 @@ import lombok.Getter;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +29,43 @@ public class ConfigDadosEstaticosEntidades {
         msgErro.add(recursoNaoEncontrado);
 
         return msgErro;
+    }
+
+    public ModelVendas dadosVenda(){
+        ModelVendas vendasResponse = new ModelVendas();
+
+        vendasResponse.setIdVenda(1L);
+        vendasResponse.setDataVenda(LocalDateTime.of(2024, Month.JULY, 16, 12, 57, 48, 123456789));
+        vendasResponse.setTotalVenda(BigDecimal.valueOf(1000));
+        vendasResponse.setDesconto(BigDecimal.valueOf(100));
+        vendasResponse.setTotalItens(10);
+        vendasResponse.setCliente(dadosClientes());
+        vendasResponse.setTecnicoResponsavel(dadosTecnicoResponsavel());
+        vendasResponse.setItens(dadosItensVendas());
+
+        return vendasResponse;
+    }
+
+    public List<ModelItensVendas> dadosItensVendas(){
+        List<Integer> quantidade = Arrays.asList(1, 25, 39);
+        List<BigDecimal> valorProduto = Arrays.asList(BigDecimal.valueOf(125), BigDecimal.valueOf(358));
+        List<Long> produto = Arrays.asList(1L, 2L, 3L);
+
+        List<ModelItensVendas> responseItensVendas =
+                Arrays.asList(new ModelItensVendas(quantidade, valorProduto, produto));
+
+        return responseItensVendas;
+    }
+
+    public List<ModelItensVendasDTO> dadosItensVendasDTO(){
+        Integer quantidade = 5;
+        BigDecimal valorProduto = BigDecimal.valueOf(100);
+        Long produto = 1L;
+
+        List<ModelItensVendasDTO> responseItensVendas =
+                Arrays.asList(new ModelItensVendasDTO(quantidade, valorProduto, produto));
+
+        return responseItensVendas;
     }
 
     public ModelClientes dadosClientes(){
@@ -96,5 +137,12 @@ public class ConfigDadosEstaticosEntidades {
         userResponse.setCep("13770-000");
 
         return userResponse;
+    }
+
+    public List<String> dadosDescricaoProdutos(){
+        List<String> descricaoProdutosResponse =
+                Arrays.asList("Notebook Gamer", "Capa para Celular Galaxy A55", "Carregador de Celular");
+
+        return descricaoProdutosResponse;
     }
 }
