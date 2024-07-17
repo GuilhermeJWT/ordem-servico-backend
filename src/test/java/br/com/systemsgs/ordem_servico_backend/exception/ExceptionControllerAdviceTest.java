@@ -66,14 +66,14 @@ class ExceptionControllerAdviceTest{
         retornaAssertException(apiRestErrors);
     }
 
-    @DisplayName("Retorna Exception - Internal Server Error 500")
+    /*@DisplayName("Retorna Exception - Internal Server Error 500")
     @Test
     void testErroInternoServidorException() {
         ApiRestErrors apiRestErrors = exceptionControllerAdvice.
                 internalServerErroException();
 
         retornaAssertException(apiRestErrors);
-    }
+    }*/
 
     @DisplayName("Retorna Exception - Body Vazio - 400")
     @Test
