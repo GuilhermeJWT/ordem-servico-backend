@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,10 +20,28 @@ public class ExceptionControllerAdvice {
         return new ApiRestErrors(new PayloadInexistenteException().getMessage());
     }
 
-    @ExceptionHandler(Exception.class)
+    /*@ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestErrors internalServerErroException(){
         return new ApiRestErrors(new ErroInternoException().getMessage());
+    }*/
+
+    @ExceptionHandler(TokenInvalidoException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiRestErrors tokenInvalidoExpirado(){
+        return new ApiRestErrors(new TokenInvalidoException().getMessage());
+    }
+
+    @ExceptionHandler(UsuarioNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiRestErrors usuarioSenhaInvalidosException(){
+        return new ApiRestErrors(new UsuarioNaoEncontradoException().getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ApiRestErrors camposDuplicadoException(){
+        return new ApiRestErrors(new CamposDuplicadosException().getMessage());
     }
 
     @ExceptionHandler(RecursoNaoEncontradoException.class)
@@ -63,5 +82,11 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestErrors emailDuplicadoException(EmailDuplicadoException emailDuplicadoException){
         return new ApiRestErrors(emailDuplicadoException.getMessage());
+    }
+
+    @ExceptionHandler(TokenInexistenteException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiRestErrors tokenInexistenteException(TokenInexistenteException tokenInexistenteException){
+        return new ApiRestErrors(tokenInexistenteException.getMessage());
     }
 }
