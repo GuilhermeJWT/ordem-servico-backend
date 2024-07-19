@@ -51,9 +51,9 @@ public class ClienteController {
     @Operation(summary = "Listar Clientes", description = "Api para listar todos os registro de Clientes")
     @GetMapping("/listar")
     public ResponseEntity<List<ModelClientesDTO>> listarClientes(){
-       return ResponseEntity.ok().body(clienteService.listarClientes().
-               stream().map(x -> mapper.map(x, ModelClientesDTO.class))
-               .collect(Collectors.toList()));
+        return ResponseEntity.ok().body(clienteService.listarClientes().
+                stream().map(x -> mapper.map(x, ModelClientesDTO.class))
+                .collect(Collectors.toList()));
     }
 
     @Operation(summary = "Pesquisa por ID", description = "Api para listar um Cliente por ID")
