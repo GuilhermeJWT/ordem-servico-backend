@@ -20,11 +20,27 @@ public class ExceptionControllerAdvice {
         return new ApiRestErrors(new PayloadInexistenteException().getMessage());
     }
 
-    /*@ExceptionHandler(Exception.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiRestErrors handlerMethodNotValidException(MethodArgumentNotValidException methodArgumentNotValidException){
+        List<String> errors =  methodArgumentNotValidException.getBindingResult().getAllErrors()
+                .stream().map(erro -> erro.getDefaultMessage())
+                .collect(Collectors.toList());
+
+        return new ApiRestErrors(errors);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ApiRestErrors camposDuplicadoException(){
+        return new ApiRestErrors(new CamposDuplicadosException().getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestErrors internalServerErroException(){
         return new ApiRestErrors(new ErroInternoException().getMessage());
-    }*/
+    }
 
     @ExceptionHandler(TokenInvalidoException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
@@ -38,10 +54,10 @@ public class ExceptionControllerAdvice {
         return new ApiRestErrors(new UsuarioNaoEncontradoException().getMessage());
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ApiRestErrors camposDuplicadoException(){
-        return new ApiRestErrors(new CamposDuplicadosException().getMessage());
+    @ExceptionHandler(FornecedorNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiRestErrors fornecedorNaoEncontradoException(){
+        return new ApiRestErrors(new FornecedorNaoEncontradoException().getMessage());
     }
 
     @ExceptionHandler(RecursoNaoEncontradoException.class)
@@ -68,14 +84,10 @@ public class ExceptionControllerAdvice {
         return new ApiRestErrors(vendaNaoEncontradaException.getMessage());
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiRestErrors handlerMethodNotValidException(MethodArgumentNotValidException methodArgumentNotValidException){
-        List<String> errors =  methodArgumentNotValidException.getBindingResult().getAllErrors()
-                .stream().map(erro -> erro.getDefaultMessage())
-                    .collect(Collectors.toList());
-
-        return new ApiRestErrors(errors);
+    @ExceptionHandler(ContasPagarNaoEncontradaException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiRestErrors contasPagarNaoEncontradaException(ContasPagarNaoEncontradaException contasPagarNaoEncontradaException){
+        return new ApiRestErrors(contasPagarNaoEncontradaException.getMessage());
     }
 
     @ExceptionHandler(EmailDuplicadoException.class)
