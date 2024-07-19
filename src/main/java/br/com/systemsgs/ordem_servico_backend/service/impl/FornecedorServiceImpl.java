@@ -1,7 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelFornecedorDTO;
-import br.com.systemsgs.ordem_servico_backend.exception.FornecedorNaoEncontradoException;
+import br.com.systemsgs.ordem_servico_backend.exception.errors.FornecedorNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelFornecedor;
 import br.com.systemsgs.ordem_servico_backend.repository.FornecedoresRepository;
 import br.com.systemsgs.ordem_servico_backend.service.FornecedorService;

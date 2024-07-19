@@ -2,7 +2,7 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.dto.ModelProdutosDTO;
-import br.com.systemsgs.ordem_servico_backend.exception.RecursoNaoEncontradoException;
+import br.com.systemsgs.ordem_servico_backend.exception.errors.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 import br.com.systemsgs.ordem_servico_backend.repository.ProdutoRepository;
 import br.com.systemsgs.ordem_servico_backend.util.UtilProdutos;

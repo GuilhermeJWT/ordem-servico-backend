@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "produtos")
 @Entity
+@Table(name = "tbl_produtos")
 public class ModelProdutos implements Serializable {
 
     private static final long serialVersionUID = 1L;

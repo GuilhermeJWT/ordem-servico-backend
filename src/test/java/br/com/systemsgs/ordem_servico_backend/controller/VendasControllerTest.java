@@ -3,7 +3,7 @@ package br.com.systemsgs.ordem_servico_backend.controller;
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.dto.ModelVendasDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.VendasResponseDTO;
-import br.com.systemsgs.ordem_servico_backend.exception.VendaNaoEncontradaException;
+import br.com.systemsgs.ordem_servico_backend.exception.errors.VendaNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelVendas;
 import br.com.systemsgs.ordem_servico_backend.repository.VendasRepository;
 import br.com.systemsgs.ordem_servico_backend.service.VendaService;

@@ -1,6 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.util;
 
-import br.com.systemsgs.ordem_servico_backend.exception.FornecedorNaoEncontradoException;
+import br.com.systemsgs.ordem_servico_backend.exception.errors.FornecedorNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelFornecedor;
 import br.com.systemsgs.ordem_servico_backend.repository.FornecedoresRepository;
 import org.springframework.beans.factory.annotation.Autowired;

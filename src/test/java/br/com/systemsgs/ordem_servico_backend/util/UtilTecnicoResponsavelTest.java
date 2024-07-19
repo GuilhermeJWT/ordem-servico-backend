@@ -1,7 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.util;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
-import br.com.systemsgs.ordem_servico_backend.exception.TecnicoResponsavelNaoEncontradoException;
+import br.com.systemsgs.ordem_servico_backend.exception.errors.TecnicoResponsavelNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelTecnicoResponsavel;
 import br.com.systemsgs.ordem_servico_backend.repository.TecnicoRepository;
 import org.junit.jupiter.api.BeforeEach;

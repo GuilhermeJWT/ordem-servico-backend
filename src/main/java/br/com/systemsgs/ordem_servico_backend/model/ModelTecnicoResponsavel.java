@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tecnico_responsavel")
+@Table(name = "tbl_tecnico_responsavel")
 public class ModelTecnicoResponsavel implements Serializable {
 
     private static final long serialVersionUID = 1L;

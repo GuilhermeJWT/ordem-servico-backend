@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "vendas")
+@Table(name = "tbl_vendas")
 public class ModelVendas implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -1,7 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.util;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
-import br.com.systemsgs.ordem_servico_backend.exception.ClienteNaoEncontradoException;
+import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import org.junit.jupiter.api.BeforeEach;

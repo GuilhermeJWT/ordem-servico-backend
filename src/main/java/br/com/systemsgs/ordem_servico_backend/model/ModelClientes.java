@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "clientes")
+@Table(name = "tbl_clientes")
 public class ModelClientes implements Serializable {
 
     private static final long serialVersionUID = 1L;

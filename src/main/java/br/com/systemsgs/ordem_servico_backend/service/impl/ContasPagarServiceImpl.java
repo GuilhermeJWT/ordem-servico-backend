@@ -2,7 +2,7 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.ModelContasPagarDTO;
-import br.com.systemsgs.ordem_servico_backend.exception.ContasPagarNaoEncontradaException;
+import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasPagar;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasPagarRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ContasPagarService;

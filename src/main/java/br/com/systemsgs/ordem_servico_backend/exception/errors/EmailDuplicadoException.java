@@ -1,4 +1,4 @@
-package br.com.systemsgs.ordem_servico_backend.exception;
+package br.com.systemsgs.ordem_servico_backend.exception.errors;
 
 public class EmailDuplicadoException extends RuntimeException{
 

@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.exception;
 
+import br.com.systemsgs.ordem_servico_backend.exception.errors.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -66,14 +67,14 @@ class ExceptionControllerAdviceTest{
         retornaAssertException(apiRestErrors);
     }
 
-    /*@DisplayName("Retorna Exception - Internal Server Error 500")
+    @DisplayName("Retorna Exception - Internal Server Error 500")
     @Test
     void testErroInternoServidorException() {
         ApiRestErrors apiRestErrors = exceptionControllerAdvice.
                 internalServerErroException();
 
         retornaAssertException(apiRestErrors);
-    }*/
+    }
 
     @DisplayName("Retorna Exception - Body Vazio - 400")
     @Test

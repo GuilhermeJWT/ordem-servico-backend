@@ -13,9 +13,8 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-@Table(name = "ordemservico")
 @Entity
+@Table(name = "tbl_ordemservico")
 public class ModelOrdemServico implements Serializable{
 
     private static final long serialVersionUID = 1L;

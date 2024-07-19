@@ -1,7 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.util;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
-import br.com.systemsgs.ordem_servico_backend.exception.RecursoNaoEncontradoException;
+import br.com.systemsgs.ordem_servico_backend.exception.errors.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
 import br.com.systemsgs.ordem_servico_backend.repository.OrdemServicoRepository;
 import org.junit.jupiter.api.BeforeEach;

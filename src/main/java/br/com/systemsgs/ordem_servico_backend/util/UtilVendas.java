@@ -1,6 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.util;
 
-import br.com.systemsgs.ordem_servico_backend.exception.VendaNaoEncontradaException;
+import br.com.systemsgs.ordem_servico_backend.exception.errors.VendaNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelVendas;
 import br.com.systemsgs.ordem_servico_backend.repository.VendasRepository;
 import org.springframework.beans.factory.annotation.Autowired;

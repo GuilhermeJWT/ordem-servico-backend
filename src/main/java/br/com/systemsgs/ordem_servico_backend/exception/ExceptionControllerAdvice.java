@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.exception;
 
+import br.com.systemsgs.ordem_servico_backend.exception.errors.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
