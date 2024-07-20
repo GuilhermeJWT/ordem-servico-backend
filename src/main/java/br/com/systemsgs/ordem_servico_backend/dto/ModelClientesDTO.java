@@ -29,6 +29,7 @@ public class ModelClientesDTO extends RepresentationModel<ModelClientesDTO> {
     @Email(message = "Informe um E-mail Válido.")
     private String email;
     private String endereco;
+    private String complemento;
     private String cidade;
     private String estado;
     private String cep;

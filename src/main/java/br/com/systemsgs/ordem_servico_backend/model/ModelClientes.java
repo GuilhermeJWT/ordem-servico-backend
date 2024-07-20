@@ -31,19 +31,10 @@ public class ModelClientes implements Serializable {
 
     private String email;
 
-    private String endereco;
+    @Embedded
+    private ModelEndereco endereco;
 
-    private String cidade;
-
-    private String estado;
-
-    private String cep;
-
-    @OneToMany(mappedBy = "cliente",
-               cascade = CascadeType.ALL,
-               fetch = FetchType.LAZY,
-               orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
     private List<ModelOrdemServico> ordemServicos = new ArrayList<>();
 }
