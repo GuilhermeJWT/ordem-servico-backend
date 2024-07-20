@@ -85,10 +85,10 @@ public class ExceptionControllerAdvice {
         return new ApiRestErrors(vendaNaoEncontradaException.getMessage());
     }
 
-    @ExceptionHandler(ContasPagarNaoEncontradaException.class)
+    @ExceptionHandler(ContasPagarReceberNaoEncontradaException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiRestErrors contasPagarNaoEncontradaException(ContasPagarNaoEncontradaException contasPagarNaoEncontradaException){
-        return new ApiRestErrors(contasPagarNaoEncontradaException.getMessage());
+    public ApiRestErrors contasPagarReceberNaoEncontradaException(ContasPagarReceberNaoEncontradaException contasPagarReceberNaoEncontradaException){
+        return new ApiRestErrors(contasPagarReceberNaoEncontradaException.getMessage());
     }
 
     @ExceptionHandler(EmailDuplicadoException.class)

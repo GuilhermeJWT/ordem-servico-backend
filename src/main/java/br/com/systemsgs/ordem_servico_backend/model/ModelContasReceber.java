@@ -1,0 +1,59 @@
+package br.com.systemsgs.ordem_servico_backend.model;
+
+import br.com.systemsgs.ordem_servico_backend.enums.FormaPagamento;
+import br.com.systemsgs.ordem_servico_backend.enums.StatusContasPagar;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "tbl_contas_receber")
+public class ModelContasReceber implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(generator = "id_gen_contas_receber",strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "id_gen_contas_receber", sequenceName = "contas_receber_seq", initialValue = 2, allocationSize = 1)
+    private Long id;
+
+    @Column(name = "data_vencimento", nullable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
+    private Date data_vencimento;
+
+    @Column(name = "valor", nullable = false)
+    private BigDecimal valor = BigDecimal.ZERO;
+
+    @Column(name = "data_emissao")
+    private Date data_emissao = new Date();
+
+    @Column(name = "observacao")
+    private String observacao;
+
+    @Column(name = "forma_pagamento")
+    @Enumerated(EnumType.STRING)
+    private FormaPagamento formaPagamento;
+
+    @Column(name = "status_conta_pagar", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private StatusContasPagar statusContasPagar;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private ModelClientes cliente;
+
+}

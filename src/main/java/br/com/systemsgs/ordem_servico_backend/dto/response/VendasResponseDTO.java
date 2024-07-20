@@ -1,4 +1,4 @@
-package br.com.systemsgs.ordem_servico_backend.dto;
+package br.com.systemsgs.ordem_servico_backend.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

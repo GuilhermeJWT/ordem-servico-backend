@@ -1,6 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.service;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ContasPagarResponse;
+import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.ModelContasPagarDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasPagar;
 
