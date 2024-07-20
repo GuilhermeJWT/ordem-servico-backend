@@ -1,6 +1,8 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelClientesDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.hateoas.ModelClientesHateoas;
+import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,52 +36,52 @@ public class ClienteController {
 
     @Operation(summary = "Listar Clientes - HATEOAS", description = "Api para listar todos os Clientes com Link (HATEOAS)")
     @GetMapping("/listar/v2/link")
-    public CollectionModel<ModelClientesDTO> listarCLientesComLink(){
-        List<ModelClientesDTO> listaCLientes = clienteService.listarClientes().
-                stream().map(x -> mapper.map(x, ModelClientesDTO.class)).collect(Collectors.toList());
+    public CollectionModel<ModelClientesHateoas> listarCLientesComLink(){
+        List<ModelClientesHateoas> listaCLientes = clienteService.listarClientes().
+                stream().map(x -> mapper.map(x, ModelClientesHateoas.class)).collect(Collectors.toList());
 
-        for (ModelClientesDTO modelClientesDTO : listaCLientes) {
-            Long clienteID = modelClientesDTO.getId();
-            Link clienteLink = linkTo(methodOn(ClienteController.class).pesquisarPorId(clienteID)).withRel("Pesquisa Cliente pelo ID");
-            modelClientesDTO.add(clienteLink);
+        for (ModelClientesHateoas modelClientesHateoas : listaCLientes) {
+            Long clienteID = modelClientesHateoas.getId();
+            Link clienteLink = linkTo(methodOn(ClienteController.class).pesquisarPorId(clienteID)).withRel("Pesquisa Cliente pelo ID: ");
+            modelClientesHateoas.add(clienteLink);
         }
 
-        CollectionModel<ModelClientesDTO> result = CollectionModel.of(listaCLientes);
+        CollectionModel<ModelClientesHateoas> result = CollectionModel.of(listaCLientes);
         return result;
     }
 
     @Operation(summary = "Listar Clientes", description = "Api para listar todos os registro de Clientes")
     @GetMapping("/listar")
-    public ResponseEntity<List<ModelClientesDTO>> listarClientes(){
+    public ResponseEntity<List<ClienteResponse>> listarClientes(){
         return ResponseEntity.ok().body(clienteService.listarClientes().
-                stream().map(x -> mapper.map(x, ModelClientesDTO.class))
+                stream().map(x -> mapper.map(x, ClienteResponse.class))
                 .collect(Collectors.toList()));
     }
 
     @Operation(summary = "Pesquisa por ID", description = "Api para listar um Cliente por ID")
     @GetMapping("/pesquisar/{id}")
-    public ResponseEntity<ModelClientesDTO> pesquisarPorId(@PathVariable Long id){
-        return ResponseEntity.ok().body(mapper.map(clienteService.pesquisaPorId(id), ModelClientesDTO.class));
+    public ResponseEntity<ClienteResponse> pesquisarPorId(@PathVariable Long id){
+        return ResponseEntity.ok().body(mapper.map(clienteService.pesquisaPorId(id), ClienteResponse.class));
     }
 
     @Operation(summary = "Salvar Clientes", description = "Api para Salvar um Cliente")
     @PostMapping("/salvar")
-    public ResponseEntity<ModelClientesDTO> salvarCliente(@RequestBody @Valid ModelClientesDTO modelClientesDTO){
+    public ResponseEntity<ClienteResponse> salvarCliente(@RequestBody @Valid ModelClientesDTO modelClientesDTO){
         ModelClientes clienteSalvo = clienteService.salvarClientes(modelClientesDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
                 buildAndExpand(clienteService.pesquisaPorId(clienteSalvo.getId())).toUri();
 
-        return ResponseEntity.created(uri).body(mapper.map(clienteSalvo, ModelClientesDTO.class));
+        return ResponseEntity.created(uri).body(mapper.map(clienteSalvo, ClienteResponse.class));
     }
 
     @Operation(summary = "Atualizar Clientes", description = "Api para Atualizar um Cliente pelo Id e Entidade")
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<ModelClientesDTO> atualizarClientes(@PathVariable Long id, @RequestBody @Valid ModelClientesDTO modelClientesDTO){
+    public ResponseEntity<ClienteResponse> atualizarClientes(@PathVariable Long id, @RequestBody @Valid ModelClientesDTO modelClientesDTO){
         modelClientesDTO.setId(id);
         ModelClientes clienteAtualizado = clienteService.updateClientes(id, modelClientesDTO);
 
-        return ResponseEntity.ok().body(mapper.map(clienteAtualizado, ModelClientesDTO.class));
+        return ResponseEntity.ok().body(mapper.map(clienteAtualizado, ClienteResponse.class));
     }
 
     @Operation(summary = "Deletar Clientes", description = "Api para Deletar um Cliente por ID")
