@@ -64,10 +64,11 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosClientes().getCelular(), response.getCelular());
         assertEquals(dadosClientes().getCpf(), response.getCpf());
         assertEquals(dadosClientes().getEmail(), response.getEmail());
-        assertEquals(dadosClientes().getEndereco(), response.getEndereco());
-        assertEquals(dadosClientes().getCidade(), response.getCidade());
-        assertEquals(dadosClientes().getEstado(), response.getEstado());
-        assertEquals(dadosClientes().getCep(), response.getCep());
+        assertEquals(dadosClientes().getEndereco().getEndereco(), response.getEndereco().getEndereco());
+        assertEquals(dadosClientes().getEndereco().getComplemento(), response.getEndereco().getComplemento());
+        assertEquals(dadosClientes().getEndereco().getCidade(), response.getEndereco().getCidade());
+        assertEquals(dadosClientes().getEndereco().getEstado(), response.getEndereco().getEstado());
+        assertEquals(dadosClientes().getEndereco().getCep(), response.getEndereco().getCep());
         assertEquals(dadosClientes().getOrdemServicos(), response.getOrdemServicos());
     }
 
@@ -101,10 +102,11 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosClientes().getCelular(), response.get(0).getCelular());
         assertEquals(dadosClientes().getCpf(), response.get(0).getCpf());
         assertEquals(dadosClientes().getEmail(), response.get(0).getEmail());
-        assertEquals(dadosClientes().getEndereco(), response.get(0).getEndereco());
-        assertEquals(dadosClientes().getCidade(), response.get(0).getCidade());
-        assertEquals(dadosClientes().getEstado(), response.get(0).getEstado());
-        assertEquals(dadosClientes().getCep(), response.get(0).getCep());
+        assertEquals(dadosClientes().getEndereco().getEndereco(), response.get(0).getEndereco().getEndereco());
+        assertEquals(dadosClientes().getEndereco().getComplemento(), response.get(0).getEndereco().getComplemento());
+        assertEquals(dadosClientes().getEndereco().getCidade(), response.get(0).getEndereco().getCidade());
+        assertEquals(dadosClientes().getEndereco().getEstado(), response.get(0).getEndereco().getEstado());
+        assertEquals(dadosClientes().getEndereco().getCep(), response.get(0).getEndereco().getCep());
         assertEquals(dadosClientes().getOrdemServicos(), response.get(0).getOrdemServicos());
     }
 
@@ -121,10 +123,11 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosClientes().getCelular(), response.getCelular());
         assertEquals(dadosClientes().getCpf(), response.getCpf());
         assertEquals(dadosClientes().getEmail(), response.getEmail());
-        assertEquals(dadosClientes().getEndereco(), response.getEndereco());
-        assertEquals(dadosClientes().getCidade(), response.getCidade());
-        assertEquals(dadosClientes().getEstado(), response.getEstado());
-        assertEquals(dadosClientes().getCep(), response.getCep());
+        assertEquals(dadosClientes().getEndereco().getEndereco(), response.getEndereco().getEndereco());
+        assertEquals(dadosClientes().getEndereco().getComplemento(), response.getEndereco().getComplemento());
+        assertEquals(dadosClientes().getEndereco().getCidade(), response.getEndereco().getCidade());
+        assertEquals(dadosClientes().getEndereco().getEstado(), response.getEndereco().getEstado());
+        assertEquals(dadosClientes().getEndereco().getCep(), response.getEndereco().getCep());
         assertEquals(dadosClientes().getOrdemServicos(), response.getOrdemServicos());
     }
 
@@ -152,10 +155,11 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosClientes().getCelular(), response.getCelular());
         assertEquals(dadosClientes().getCpf(), response.getCpf());
         assertEquals(dadosClientes().getEmail(), response.getEmail());
-        assertEquals(dadosClientes().getEndereco(), response.getEndereco());
-        assertEquals(dadosClientes().getCidade(), response.getCidade());
-        assertEquals(dadosClientes().getEstado(), response.getEstado());
-        assertEquals(dadosClientes().getCep(), response.getCep());
+        assertEquals(dadosClientes().getEndereco().getEndereco(), response.getEndereco().getEndereco());
+        assertEquals(dadosClientes().getEndereco().getComplemento(), response.getEndereco().getComplemento());
+        assertEquals(dadosClientes().getEndereco().getCidade(), response.getEndereco().getCidade());
+        assertEquals(dadosClientes().getEndereco().getEstado(), response.getEndereco().getEstado());
+        assertEquals(dadosClientes().getEndereco().getCep(), response.getEndereco().getCep());
         assertEquals(dadosClientes().getOrdemServicos(), response.getOrdemServicos());
     }
 
@@ -167,9 +171,6 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
                 dadosClientes().getCelular(),
                 dadosClientes().getEmail(),
                 dadosClientes().getEndereco(),
-                dadosClientes().getCidade(),
-                dadosClientes().getEstado(),
-                dadosClientes().getCep(),
                 dadosClientes().getOrdemServicos()
         );
         modelClientesDTO = new ModelClientesDTO(
@@ -178,10 +179,11 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
                 dadosClientes().getCpf(),
                 dadosClientes().getCelular(),
                 dadosClientes().getEmail(),
-                dadosClientes().getEndereco(),
-                dadosClientes().getCidade(),
-                dadosClientes().getEstado(),
-                dadosClientes().getCep()
+                dadosClientes().getEndereco().getEndereco(),
+                dadosClientes().getEndereco().getCidade(),
+                dadosClientes().getEndereco().getEstado(),
+                dadosClientes().getEndereco().getCep(),
+                dadosClientes().getEndereco().getComplemento()
         );
         modelClientesOptional = Optional.of(new ModelClientes(
                 dadosClientes().getId(),
@@ -190,9 +192,6 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
                 dadosClientes().getCelular(),
                 dadosClientes().getEmail(),
                 dadosClientes().getEndereco(),
-                dadosClientes().getCidade(),
-                dadosClientes().getEstado(),
-                dadosClientes().getCep(),
                 dadosClientes().getOrdemServicos())
         );
     }

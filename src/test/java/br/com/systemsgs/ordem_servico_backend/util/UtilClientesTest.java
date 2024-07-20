@@ -52,10 +52,11 @@ class UtilClientesTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosClientes().getCpf(), response.getCpf());
         assertEquals(dadosClientes().getCelular(), response.getCelular());
         assertEquals(dadosClientes().getEmail(), response.getEmail());
-        assertEquals(dadosClientes().getEndereco(), response.getEndereco());
-        assertEquals(dadosClientes().getCidade(), response.getCidade());
-        assertEquals(dadosClientes().getEstado(), response.getEstado());
-        assertEquals(dadosClientes().getCep(), response.getCep());
+        assertEquals(dadosEndereco().getEndereco(), response.getEndereco().getEndereco());
+        assertEquals(dadosEndereco().getComplemento(), response.getEndereco().getComplemento());
+        assertEquals(dadosEndereco().getCidade(), response.getEndereco().getCidade());
+        assertEquals(dadosEndereco().getEstado(), response.getEndereco().getEstado());
+        assertEquals(dadosEndereco().getCep(), response.getEndereco().getCep());
     }
 
     @DisplayName("Pesquisa um Cliente por ID e retorna Not Found")
@@ -79,9 +80,6 @@ class UtilClientesTest extends ConfigDadosEstaticosEntidades{
                 dadosClientes().getCelular(),
                 dadosClientes().getEmail(),
                 dadosClientes().getEndereco(),
-                dadosClientes().getCidade(),
-                dadosClientes().getEstado(),
-                dadosClientes().getCep(),
                 dadosClientes().getOrdemServicos())
         );
     }

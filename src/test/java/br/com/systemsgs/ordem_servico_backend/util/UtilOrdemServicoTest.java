@@ -59,10 +59,12 @@ class UtilOrdemServicoTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosOrdemServico().getCliente().getCpf(), response.getCliente().getCpf());
         assertEquals(dadosOrdemServico().getCliente().getCelular(), response.getCliente().getCelular());
         assertEquals(dadosOrdemServico().getCliente().getEmail(), response.getCliente().getEmail());
-        assertEquals(dadosOrdemServico().getCliente().getEndereco(), response.getCliente().getEndereco());
-        assertEquals(dadosOrdemServico().getCliente().getCidade(), response.getCliente().getCidade());
-        assertEquals(dadosOrdemServico().getCliente().getEstado(), response.getCliente().getEstado());
-        assertEquals(dadosOrdemServico().getCliente().getCep(), response.getCliente().getCep());
+
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getEndereco(), response.getCliente().getEndereco().getEndereco());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getComplemento(), response.getCliente().getEndereco().getComplemento());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getCidade(), response.getCliente().getEndereco().getCidade());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getEstado(), response.getCliente().getEndereco().getEstado());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getCep(), response.getCliente().getEndereco().getCep());
     }
 
     @DisplayName("Pesquisa uma OS por ID e retorna Not Found")

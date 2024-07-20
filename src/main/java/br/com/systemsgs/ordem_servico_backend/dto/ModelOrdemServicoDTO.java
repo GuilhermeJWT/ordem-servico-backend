@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,22 +25,27 @@ public class ModelOrdemServicoDTO extends RepresentationModel<ModelOrdemServicoD
 
     private Long id;
 
+    @Size(max = 250, message = "Defeito deve ter no máximo 250 Caracteres.")
     private String defeito;
 
+    @Size(max = 250, message = "Descricao deve ter no máximo 250 Caracteres.")
     private String descricao;
 
+    @Size(max = 250, message = "Laudo Técnico deve ter no máximo 250 Caracteres.")
     private String laudo_tecnico;
 
     @NotNull(message = "Status deve ser Informado.")
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Size(max = 20, message = "Data Inicial deve ter no máximo 20 Caracteres.")
     @NotNull(message = "A Data Inicial deve ser Informada.")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
     private Date data_inicial;
 
+    @Size(max = 20, message = "Data Final deve ter no máximo 20 Caracteres.")
     @NotNull(message = "A Data Final deve ser Informada.")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)

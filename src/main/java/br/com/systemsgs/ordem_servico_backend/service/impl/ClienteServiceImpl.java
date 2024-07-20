@@ -3,6 +3,7 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 import br.com.systemsgs.ordem_servico_backend.dto.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
+import br.com.systemsgs.ordem_servico_backend.model.ModelEndereco;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ClienteService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
@@ -39,8 +40,21 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ModelClientes salvarClientes(ModelClientesDTO modelClientesDTO) {
-        ModelClientes clienteConvertido = mapper.map(modelClientesDTO, ModelClientes.class);
-        return clienteRepository.save(clienteConvertido);
+        ModelClientes modelClientes = new ModelClientes();
+        ModelEndereco modelEndereco = new ModelEndereco();
+
+        modelEndereco.setEndereco(modelClientesDTO.getEndereco());
+        modelEndereco.setComplemento(modelClientesDTO.getComplemento());
+        modelEndereco.setCidade(modelClientesDTO.getCidade());
+        modelEndereco.setEstado(modelClientesDTO.getEstado());
+        modelEndereco.setCep(modelClientesDTO.getCep());
+        modelClientes.setNome(modelClientesDTO.getNome());
+        modelClientes.setCpf(modelClientesDTO.getCpf());
+        modelClientes.setCelular(modelClientesDTO.getCelular());
+        modelClientes.setEmail(modelClientesDTO.getEmail());
+        modelClientes.setEndereco(modelEndereco);
+
+        return clienteRepository.save(modelClientes);
     }
 
     @Override
