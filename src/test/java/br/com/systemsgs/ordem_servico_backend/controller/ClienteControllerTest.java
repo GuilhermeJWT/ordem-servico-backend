@@ -70,10 +70,12 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosClientes().getCelular(), response.getBody().get(0).getCelular());
         assertEquals(dadosClientes().getCpf(), response.getBody().get(0).getCpf());
         assertEquals(dadosClientes().getEmail(), response.getBody().get(0).getEmail());
-        assertEquals(dadosClientes().getEndereco(), response.getBody().get(0).getEndereco());
-        assertEquals(dadosClientes().getCidade(), response.getBody().get(0).getCidade());
-        assertEquals(dadosClientes().getEstado(), response.getBody().get(0).getEstado());
-        assertEquals(dadosClientes().getCep(), response.getBody().get(0).getCep());
+        assertEquals(dadosClientes().getEndereco().getEndereco(), response.getBody().get(0).getEndereco());
+        assertEquals(dadosClientes().getEndereco().getComplemento(), response.getBody().get(0).getComplemento());
+        assertEquals(dadosClientes().getEndereco().getCidade(), response.getBody().get(0).getCidade());
+        assertEquals(dadosClientes().getEndereco().getEstado(), response.getBody().get(0).getEstado());
+        assertEquals(dadosClientes().getEndereco().getCep(), response.getBody().get(0).getCep());
+
     }
 
     @DisplayName("Pesquisa um Cliente pelo ID e testa o Retorno do Body - retorna 200")
@@ -96,10 +98,12 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosClientes().getCelular(), response.getBody().getCelular());
         assertEquals(dadosClientes().getCpf(), response.getBody().getCpf());
         assertEquals(dadosClientes().getEmail(), response.getBody().getEmail());
-        assertEquals(dadosClientes().getEndereco(), response.getBody().getEndereco());
-        assertEquals(dadosClientes().getCidade(), response.getBody().getCidade());
-        assertEquals(dadosClientes().getEstado(), response.getBody().getEstado());
-        assertEquals(dadosClientes().getCep(), response.getBody().getCep());
+        assertEquals(dadosClientes().getEndereco().getEndereco(), response.getBody().getEndereco());
+        assertEquals(dadosClientes().getEndereco().getComplemento(), response.getBody().getComplemento());
+        assertEquals(dadosClientes().getEndereco().getCidade(), response.getBody().getCidade());
+        assertEquals(dadosClientes().getEndereco().getEstado(), response.getBody().getEstado());
+        assertEquals(dadosClientes().getEndereco().getCep(), response.getBody().getCep());
+
     }
 
     @DisplayName("Pesquisa um Cliente inexistente e retorna 404")
@@ -149,10 +153,12 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosClientes().getCelular(), response.getBody().getCelular());
         assertEquals(dadosClientes().getCpf(), response.getBody().getCpf());
         assertEquals(dadosClientes().getEmail(), response.getBody().getEmail());
-        assertEquals(dadosClientes().getEndereco(), response.getBody().getEndereco());
-        assertEquals(dadosClientes().getCidade(), response.getBody().getCidade());
-        assertEquals(dadosClientes().getEstado(), response.getBody().getEstado());
-        assertEquals(dadosClientes().getCep(), response.getBody().getCep());
+        assertEquals(dadosClientes().getEndereco().getEndereco(), response.getBody().getEndereco());
+        assertEquals(dadosClientes().getEndereco().getComplemento(), response.getBody().getComplemento());
+        assertEquals(dadosClientes().getEndereco().getCidade(), response.getBody().getCidade());
+        assertEquals(dadosClientes().getEndereco().getEstado(), response.getBody().getEstado());
+        assertEquals(dadosClientes().getEndereco().getCep(), response.getBody().getCep());
+
     }
 
     @DisplayName("Deleta um Cliente e retorna 204")
@@ -176,9 +182,6 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
                 dadosClientes().getCelular(),
                 dadosClientes().getEmail(),
                 dadosClientes().getEndereco(),
-                dadosClientes().getCidade(),
-                dadosClientes().getEstado(),
-                dadosClientes().getCep(),
                 dadosClientes().getOrdemServicos()
         );
         modelClientesDTO = new ModelClientesDTO(
@@ -187,10 +190,11 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
                 dadosClientes().getCpf(),
                 dadosClientes().getCelular(),
                 dadosClientes().getEmail(),
-                dadosClientes().getEndereco(),
-                dadosClientes().getCidade(),
-                dadosClientes().getEstado(),
-                dadosClientes().getCep()
+                dadosClientes().getEndereco().getEndereco(),
+                dadosClientes().getEndereco().getComplemento(),
+                dadosClientes().getEndereco().getCidade(),
+                dadosClientes().getEndereco().getEstado(),
+                dadosClientes().getEndereco().getCep()
         );
     }
 }
