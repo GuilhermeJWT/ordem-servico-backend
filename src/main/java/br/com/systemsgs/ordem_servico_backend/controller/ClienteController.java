@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@Tag(name = "Api de Clientes - v1")
+@Tag(name = "Api de Clientes - V1")
 @RestController
 @RequestMapping("/api/clientes/v1")
 public class ClienteController {

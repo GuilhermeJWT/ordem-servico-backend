@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@Tag(name = "Api de Ordem de Serviço - v1")
+@Tag(name = "Api de Ordem de Serviço - V1")
 @RestController
 @RequestMapping("/api/os/v1")
 public class OrdemServicoController {
