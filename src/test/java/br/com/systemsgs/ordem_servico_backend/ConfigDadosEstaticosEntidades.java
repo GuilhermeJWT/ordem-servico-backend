@@ -80,13 +80,22 @@ public class ConfigDadosEstaticosEntidades {
         clienteResponse.setCpf("819.945.180-73"); //gerado no GERADOR DE CPF
         clienteResponse.setCelular("19 99999999");
         clienteResponse.setEmail("guilherme@gmail.com");
-        clienteResponse.setEndereco("Rua 1");
-        clienteResponse.setCidade("Caconde");
-        clienteResponse.setEstado("SP");
-        clienteResponse.setCep("13770-000");
+        clienteResponse.setEndereco(dadosEndereco());
         clienteResponse.setOrdemServicos(new ArrayList<>());
 
        return clienteResponse;
+    }
+
+    public ModelEndereco dadosEndereco(){
+        ModelEndereco enderecoResponse = new ModelEndereco();
+
+        enderecoResponse.setEndereco("Rua 1");
+        enderecoResponse.setComplemento("Perto do Centro");
+        enderecoResponse.setEstado("SP");
+        enderecoResponse.setCidade("Caconde");
+        enderecoResponse.setCep("13770-000");
+
+        return enderecoResponse;
     }
 
     public ModelProdutos dadosProdutos(){
