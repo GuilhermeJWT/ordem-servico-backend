@@ -2,7 +2,7 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.ModelContasPagarDTO;
-import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarNaoEncontradaException;
+import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarReceberNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasPagar;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasPagarRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ContasPagarService;
@@ -30,7 +30,7 @@ public class ContasPagarServiceImpl implements ContasPagarService {
     public ContasPagarResponse pesquisaPorId(Long id) {
         ContasPagarResponse contasPagarResponse = new ContasPagarResponse();
 
-        var pesquisaConta = contasPagarRepository.findById(id).orElseThrow(() -> new ContasPagarNaoEncontradaException());
+        var pesquisaConta = contasPagarRepository.findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
 
         contasPagarResponse.setCodigoContaPagar(pesquisaConta.getId());
         contasPagarResponse.setData_vencimento(pesquisaConta.getData_vencimento());
@@ -82,7 +82,7 @@ public class ContasPagarServiceImpl implements ContasPagarService {
 
     public ModelContasPagar pesquisaContasPagarPeloId(Long id){
         ModelContasPagar pesquisaContaPagar = contasPagarRepository.
-                findById(id).orElseThrow(() -> new ContasPagarNaoEncontradaException());
+                findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
 
         return pesquisaContaPagar;
     }
