@@ -9,10 +9,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +27,7 @@ public class ModelContasPagarDTO {
 
     private Long id;
 
+    @FutureOrPresent(message = "Data de Vencimento deve ser no presente ou futuro.")
     @NotNull(message = "A Data de Vencimento deve ser Informada.")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
@@ -38,7 +36,7 @@ public class ModelContasPagarDTO {
 
     @NotNull(message = "Informe o Valor.")
     @DecimalMin(value = "0.0", inclusive = false, message = "O preço deve ser maior que 0.")
-    @DecimalMax(value = "999999.0", message = "Valor muito alto para o Desconto.")
+    @DecimalMax(value = "999999.0", message = "Valor muito alto para a conta.")
     private BigDecimal valor = BigDecimal.ZERO;
 
     @Size(max = 250, message = "Observação da conta deve ter no máximo 250 Caracteres")

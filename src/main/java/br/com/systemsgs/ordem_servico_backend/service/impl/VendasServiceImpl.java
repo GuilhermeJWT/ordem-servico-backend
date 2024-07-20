@@ -1,10 +1,9 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelVendasDTO;
-import br.com.systemsgs.ordem_servico_backend.dto.VendasResponseDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.response.VendasResponseDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelItensVendas;
 import br.com.systemsgs.ordem_servico_backend.model.ModelVendas;
-import br.com.systemsgs.ordem_servico_backend.repository.ItensVendaRepository;
 import br.com.systemsgs.ordem_servico_backend.repository.VendasRepository;
 import br.com.systemsgs.ordem_servico_backend.service.VendaService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
@@ -26,9 +25,6 @@ public class VendasServiceImpl implements VendaService {
 
     @Autowired
     private VendasRepository vendasRepository;
-
-    @Autowired
-    private ItensVendaRepository itensVendaRepository;
 
     @Autowired
     private UtilVendas utilVendas;
