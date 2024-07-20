@@ -82,9 +82,6 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
         modelOrdemServicoDTO.getCliente().setCelular(pesquisaCliente.getCelular());
         modelOrdemServicoDTO.getCliente().setEmail(pesquisaCliente.getEmail());
         modelOrdemServicoDTO.getCliente().setEndereco(pesquisaCliente.getEndereco());
-        modelOrdemServicoDTO.getCliente().setCidade(pesquisaCliente.getCidade());
-        modelOrdemServicoDTO.getCliente().setEstado(pesquisaCliente.getEstado());
-        modelOrdemServicoDTO.getCliente().setCep(pesquisaCliente.getCep());
 
         return modelOrdemServicoDTO;
     }

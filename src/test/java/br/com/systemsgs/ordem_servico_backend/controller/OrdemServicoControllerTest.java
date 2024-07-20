@@ -80,10 +80,11 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosOrdemServico().getCliente().getCpf(), response.getBody().get(0).getCliente().getCpf());
         assertEquals(dadosOrdemServico().getCliente().getCelular(), response.getBody().get(0).getCliente().getCelular());
         assertEquals(dadosOrdemServico().getCliente().getEmail(), response.getBody().get(0).getCliente().getEmail());
-        assertEquals(dadosOrdemServico().getCliente().getEndereco(), response.getBody().get(0).getCliente().getEndereco());
-        assertEquals(dadosOrdemServico().getCliente().getCidade(), response.getBody().get(0).getCliente().getCidade());
-        assertEquals(dadosOrdemServico().getCliente().getEstado(), response.getBody().get(0).getCliente().getEstado());
-        assertEquals(dadosOrdemServico().getCliente().getCep(), response.getBody().get(0).getCliente().getCep());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getEndereco(), response.getBody().get(0).getCliente().getEndereco().getEndereco());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getComplemento(), response.getBody().get(0).getCliente().getEndereco().getComplemento());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getCidade(), response.getBody().get(0).getCliente().getEndereco().getCidade());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getEstado(), response.getBody().get(0).getCliente().getEndereco().getEstado());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getCep(), response.getBody().get(0).getCliente().getEndereco().getCep());
 
         assertEquals(dadosOrdemServico().getTecnicoResponsavel().getId(), response.getBody().get(0).getTecnicoResponsavel().getId());
         assertEquals(dadosOrdemServico().getTecnicoResponsavel().getNome(), response.getBody().get(0).getTecnicoResponsavel().getNome());
@@ -117,10 +118,11 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosOrdemServico().getCliente().getCpf(), response.getBody().getCliente().getCpf());
         assertEquals(dadosOrdemServico().getCliente().getCelular(), response.getBody().getCliente().getCelular());
         assertEquals(dadosOrdemServico().getCliente().getEmail(), response.getBody().getCliente().getEmail());
-        assertEquals(dadosOrdemServico().getCliente().getEndereco(), response.getBody().getCliente().getEndereco());
-        assertEquals(dadosOrdemServico().getCliente().getCidade(), response.getBody().getCliente().getCidade());
-        assertEquals(dadosOrdemServico().getCliente().getEstado(), response.getBody().getCliente().getEstado());
-        assertEquals(dadosOrdemServico().getCliente().getCep(), response.getBody().getCliente().getCep());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getEndereco(), response.getBody().getCliente().getEndereco().getEndereco());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getComplemento(), response.getBody().getCliente().getEndereco().getComplemento());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getCidade(), response.getBody().getCliente().getEndereco().getCidade());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getEstado(), response.getBody().getCliente().getEndereco().getEstado());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getCep(), response.getBody().getCliente().getEndereco().getCep());
 
         assertEquals(dadosOrdemServico().getTecnicoResponsavel().getId(), response.getBody().getTecnicoResponsavel().getId());
         assertEquals(dadosOrdemServico().getTecnicoResponsavel().getNome(), response.getBody().getTecnicoResponsavel().getNome());
@@ -181,10 +183,12 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosOrdemServico().getCliente().getCpf(), response.getBody().getCliente().getCpf());
         assertEquals(dadosOrdemServico().getCliente().getCelular(), response.getBody().getCliente().getCelular());
         assertEquals(dadosOrdemServico().getCliente().getEmail(), response.getBody().getCliente().getEmail());
-        assertEquals(dadosOrdemServico().getCliente().getEndereco(), response.getBody().getCliente().getEndereco());
-        assertEquals(dadosOrdemServico().getCliente().getCidade(), response.getBody().getCliente().getCidade());
-        assertEquals(dadosOrdemServico().getCliente().getEstado(), response.getBody().getCliente().getEstado());
-        assertEquals(dadosOrdemServico().getCliente().getCep(), response.getBody().getCliente().getCep());
+
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getEndereco(), response.getBody().getCliente().getEndereco().getEndereco());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getComplemento(), response.getBody().getCliente().getEndereco().getComplemento());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getCidade(), response.getBody().getCliente().getEndereco().getCidade());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getEstado(), response.getBody().getCliente().getEndereco().getEstado());
+        assertEquals(dadosOrdemServico().getCliente().getEndereco().getCep(), response.getBody().getCliente().getEndereco().getCep());
 
         assertEquals(dadosOrdemServico().getTecnicoResponsavel().getId(), response.getBody().getTecnicoResponsavel().getId());
         assertEquals(dadosOrdemServico().getTecnicoResponsavel().getNome(), response.getBody().getTecnicoResponsavel().getNome());
