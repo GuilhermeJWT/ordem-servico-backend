@@ -38,14 +38,12 @@ public class ModelOrdemServicoDTO extends RepresentationModel<ModelOrdemServicoD
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Size(max = 20, message = "Data Inicial deve ter no máximo 20 Caracteres.")
     @NotNull(message = "A Data Inicial deve ser Informada.")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
     private Date data_inicial;
 
-    @Size(max = 20, message = "Data Final deve ter no máximo 20 Caracteres.")
     @NotNull(message = "A Data Final deve ser Informada.")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
