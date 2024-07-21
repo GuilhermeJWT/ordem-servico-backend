@@ -1,6 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.enums;
 
-public enum StatusContasPagar {
+public enum StatusContas {
 
     EM_ABERTO,
     PENDENTE,
@@ -10,7 +10,7 @@ public enum StatusContasPagar {
     PAUSADA,
     CANCELADA,
     EXPIRADA,
-    INADINPLENTE,
+    INADIMPLENTE,
     AGUARDANDO_REEMBOLSO
 
 }

@@ -31,7 +31,7 @@ public class ContasReceberResponse {
     private String formaPagamento;
 
     @JsonProperty("status_conta_receber")
-    private String statusContaPagar;
+    private String statusContaReceber;
 
     @JsonProperty("nome_cliente")
     private String nomeCliente;

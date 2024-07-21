@@ -37,7 +37,7 @@ public class ContasPagarServiceImpl implements ContasPagarService {
         contasPagarResponse.setValor_conta_pagar(pesquisaConta.getValor());
         contasPagarResponse.setObservacao(pesquisaConta.getObservacao());
         contasPagarResponse.setFormaPagamento(String.valueOf(pesquisaConta.getFormaPagamento()));
-        contasPagarResponse.setStatusContaPagar(String.valueOf(pesquisaConta.getStatusContasPagar()));
+        contasPagarResponse.setStatusContaPagar(String.valueOf(pesquisaConta.getStatusContas()));
         contasPagarResponse.setNomeFornecedor(pesquisaConta.getFornecedor().getNome());
 
         return contasPagarResponse;
@@ -59,7 +59,7 @@ public class ContasPagarServiceImpl implements ContasPagarService {
         modelContasPagar.setValor(modelContasPagarDTO.getValor());
         modelContasPagar.setFormaPagamento(modelContasPagarDTO.getFormaPagamento());
         modelContasPagar.setData_vencimento(modelContasPagarDTO.getData_vencimento());
-        modelContasPagar.setStatusContasPagar(modelContasPagarDTO.getStatusContasPagar());
+        modelContasPagar.setStatusContas(modelContasPagarDTO.getStatusContas());
 
         contasPagarRepository.save(modelContasPagar);
 
