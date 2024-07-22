@@ -4,8 +4,11 @@ import br.com.systemsgs.ordem_servico_backend.dto.response.DashboardResponse;
 import br.com.systemsgs.ordem_servico_backend.service.DashboardService;
 import br.com.systemsgs.ordem_servico_backend.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+@CacheConfig(cacheNames = "dashboard")
 @Service
 public class DashboardServiceImpl implements DashboardService {
 
@@ -27,6 +30,7 @@ public class DashboardServiceImpl implements DashboardService {
     @Autowired
     private UtilContasReceber utilContasReceber;
 
+    @Cacheable(value = "dashboard")
     @Override
     public DashboardResponse retornaDadosDashboard(){
         DashboardResponse dashboardResponse = new DashboardResponse();
