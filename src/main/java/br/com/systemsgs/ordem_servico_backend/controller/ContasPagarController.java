@@ -2,12 +2,10 @@ package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.ModelContasPagarDTO;
-import br.com.systemsgs.ordem_servico_backend.model.ModelContasPagar;
 import br.com.systemsgs.ordem_servico_backend.service.ContasPagarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +13,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Tag(name = "Api de Contas a Pagar - V1")
 @RestController
@@ -24,9 +21,6 @@ public class ContasPagarController {
 
     @Autowired
     private ContasPagarService contasPagarService;
-
-    @Autowired
-    private ModelMapper mapper;
 
     @Operation(summary = "Listar Contas a Pagar", description = "Api para listar todos os registro de Contas a Pagar")
     @GetMapping("/listar")
