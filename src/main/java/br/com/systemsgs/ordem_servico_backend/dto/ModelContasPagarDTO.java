@@ -41,17 +41,17 @@ public class ModelContasPagarDTO {
     @Size(max = 250, message = "Observação da conta deve ter no máximo 250 Caracteres")
     private String observacao;
 
-    @JsonProperty("forma_pagamento")
     @NotNull(message = "Forma de Pagamento deve ser Informada.")
     @Enumerated(EnumType.STRING)
+    @JsonProperty("forma_pagamento")
     private FormaPagamento formaPagamento;
 
-    @JsonProperty("status_contas")
     @NotNull(message = "Status da Conta deve ser Informada.")
     @Enumerated(EnumType.STRING)
+    @JsonProperty("status_contas")
     private StatusContas statusContas;
 
-    @JsonProperty("codigo_fornecedor")
     @NotNull(message = "Fornecedor deve ser Informado.")
-    private Long codigoFornecedor;
+    @JsonProperty("codigo_fornecedor")
+    private Long fornecedor;
 }

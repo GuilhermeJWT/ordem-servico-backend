@@ -10,12 +10,12 @@ public interface ContasPagarService {
 
     ContasPagarResponse pesquisaPorId(Long id);
 
-    List<ModelContasPagar> listarContasPagar();
+    List<ContasPagarResponse> listarContasPagar();
 
-    ModelContasPagar cadastrarContasPagar(ModelContasPagarDTO modelContasPagarDTO);
+    ContasPagarResponse cadastrarContasPagar(ModelContasPagarDTO modelContasPagarDTO);
 
     void deletarContasPagar(Long id);
 
-    ModelContasPagar alterarContasPAgar(Long id, ModelContasPagarDTO modelContasPagarDTO);
+    ContasPagarResponse alterarContasPagar(Long id, ModelContasPagarDTO modelContasPagarDTO);
 
 }
