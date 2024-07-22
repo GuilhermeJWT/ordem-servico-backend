@@ -1,6 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelContasReceberDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasReceberDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasReceberResponse;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarReceberNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasReceber;

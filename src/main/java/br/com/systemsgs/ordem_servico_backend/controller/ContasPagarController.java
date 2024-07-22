@@ -1,7 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
-import br.com.systemsgs.ordem_servico_backend.dto.ModelContasPagarDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasPagarDTO;
 import br.com.systemsgs.ordem_servico_backend.service.ContasPagarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

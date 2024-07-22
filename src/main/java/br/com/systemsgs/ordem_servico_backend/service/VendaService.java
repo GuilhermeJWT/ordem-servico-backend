@@ -1,6 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.service;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelVendasDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelVendasDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.VendasResponse;
 import br.com.systemsgs.ordem_servico_backend.model.ModelVendas;
 

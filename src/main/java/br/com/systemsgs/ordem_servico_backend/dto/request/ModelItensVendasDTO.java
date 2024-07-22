@@ -1,4 +1,4 @@
-package br.com.systemsgs.ordem_servico_backend.dto;
+package br.com.systemsgs.ordem_servico_backend.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;

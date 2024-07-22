@@ -1,7 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
-import br.com.systemsgs.ordem_servico_backend.dto.ModelClientesDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;

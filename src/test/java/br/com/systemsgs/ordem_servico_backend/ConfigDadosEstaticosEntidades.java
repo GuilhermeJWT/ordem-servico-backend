@@ -1,7 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelItensVendasDTO;
-import br.com.systemsgs.ordem_servico_backend.dto.ModelUserDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelItensVendasDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelUserDTO;
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
 import br.com.systemsgs.ordem_servico_backend.model.*;
 import lombok.Getter;

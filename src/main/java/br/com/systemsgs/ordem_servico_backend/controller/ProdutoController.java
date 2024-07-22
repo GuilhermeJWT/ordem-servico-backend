@@ -1,6 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelProdutosDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelProdutosDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 import br.com.systemsgs.ordem_servico_backend.service.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;

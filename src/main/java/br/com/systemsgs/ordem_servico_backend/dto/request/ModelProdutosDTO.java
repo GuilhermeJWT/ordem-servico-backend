@@ -1,4 +1,4 @@
-package br.com.systemsgs.ordem_servico_backend.dto;
+package br.com.systemsgs.ordem_servico_backend.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

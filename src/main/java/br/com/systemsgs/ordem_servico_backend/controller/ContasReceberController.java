@@ -1,6 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelContasReceberDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasReceberDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasReceberResponse;
 import br.com.systemsgs.ordem_servico_backend.service.ContasReceberService;
 import io.swagger.v3.oas.annotations.Operation;

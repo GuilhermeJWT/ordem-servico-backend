@@ -1,6 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelClientesDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelEndereco;

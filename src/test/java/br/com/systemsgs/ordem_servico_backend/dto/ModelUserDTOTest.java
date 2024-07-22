@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.dto;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelUserDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
