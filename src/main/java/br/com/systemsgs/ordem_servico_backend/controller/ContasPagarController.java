@@ -30,10 +30,8 @@ public class ContasPagarController {
 
     @Operation(summary = "Listar Contas a Pagar", description = "Api para listar todos os registro de Contas a Pagar")
     @GetMapping("/listar")
-    public ResponseEntity<List<ModelContasPagarDTO>> listarContasPagar(){
-        return ResponseEntity.ok().body(contasPagarService.listarContasPagar().
-                stream().map(x -> mapper.map(x, ModelContasPagarDTO.class))
-                .collect(Collectors.toList()));
+    public ResponseEntity<List<ContasPagarResponse>> listarContasPagar(){
+        return ResponseEntity.ok().body(contasPagarService.listarContasPagar());
     }
 
     @Operation(summary = "Pesquisa por ID", description = "Api para listar uma Conta a Pagar por ID")
@@ -44,22 +42,21 @@ public class ContasPagarController {
 
     @Operation(summary = "Cadastrar Contas a Pagar", description = "Api para Salvar uma Conta a Pagar")
     @PostMapping("/salvar")
-    public ResponseEntity<ModelContasPagarDTO> salvarContasPagar(@RequestBody @Valid ModelContasPagarDTO modelContasPagarDTO){
-        ModelContasPagar contaPagarSalva = contasPagarService.cadastrarContasPagar(modelContasPagarDTO);
+    public ResponseEntity<ContasPagarResponse> salvarContasPagar(@RequestBody @Valid ModelContasPagarDTO modelContasPagarDTO){
+        var contaPagarSalva = contasPagarService.cadastrarContasPagar(modelContasPagarDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
                 buildAndExpand(contasPagarService.pesquisaPorId(contaPagarSalva.getId())).toUri();
 
-        return ResponseEntity.created(uri).body(mapper.map(contaPagarSalva, ModelContasPagarDTO.class));
+        return ResponseEntity.created(uri).body(contaPagarSalva);
     }
 
     @Operation(summary = "Atualizar uma Conta a Pagar", description = "Api para Atualizar uma Conta a Pagar pelo Id e Entidade")
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<ModelContasPagarDTO> atualizarContasPagar(@PathVariable Long id, @RequestBody @Valid ModelContasPagarDTO modelContasPagarDTO){
+    public ResponseEntity<ContasPagarResponse> atualizarContasPagar(@PathVariable Long id, @RequestBody @Valid ModelContasPagarDTO modelContasPagarDTO){
         modelContasPagarDTO.setId(id);
-        ModelContasPagar contaPagarAtualizada = contasPagarService.alterarContasPAgar(id, modelContasPagarDTO);
 
-        return ResponseEntity.ok().body(mapper.map(contaPagarAtualizada, ModelContasPagarDTO.class));
+        return ResponseEntity.ok().body(contasPagarService.alterarContasPagar(id, modelContasPagarDTO));
     }
 
     @Operation(summary = "Deletar Contas a Pagar", description = "Api para Deletar uma Conta a Pagar por ID")

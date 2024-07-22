@@ -28,31 +28,21 @@ public class ContasPagarServiceImpl implements ContasPagarService {
 
     @Override
     public ContasPagarResponse pesquisaPorId(Long id) {
-        ContasPagarResponse contasPagarResponse = new ContasPagarResponse();
-
         var pesquisaConta = contasPagarRepository.findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
 
-        contasPagarResponse.setCodigoContaPagar(pesquisaConta.getId());
-        contasPagarResponse.setData_vencimento(pesquisaConta.getData_vencimento());
-        contasPagarResponse.setValor_conta_pagar(pesquisaConta.getValor());
-        contasPagarResponse.setObservacao(pesquisaConta.getObservacao());
-        contasPagarResponse.setFormaPagamento(String.valueOf(pesquisaConta.getFormaPagamento()));
-        contasPagarResponse.setStatusContaPagar(String.valueOf(pesquisaConta.getStatusContas()));
-        contasPagarResponse.setNomeFornecedor(pesquisaConta.getFornecedor().getNome());
-
-        return contasPagarResponse;
+        return converteEntidadeEmResponse(pesquisaConta);
     }
 
     @Override
-    public List<ModelContasPagar> listarContasPagar() {
-        return contasPagarRepository.findAll();
+    public List<ContasPagarResponse> listarContasPagar() {
+        return converteListaContasResponse(contasPagarRepository.findAll());
     }
 
     @Override
-    public ModelContasPagar cadastrarContasPagar(ModelContasPagarDTO modelContasPagarDTO) {
+    public ContasPagarResponse cadastrarContasPagar(ModelContasPagarDTO modelContasPagarDTO) {
         ModelContasPagar modelContasPagar = new ModelContasPagar();
 
-        var fornecedor = utilFornecedores.pesquisarFornecedorPeloId(modelContasPagarDTO.getCodigoFornecedor());
+        var fornecedor = utilFornecedores.pesquisarFornecedorPeloId(modelContasPagarDTO.getFornecedor());
 
         modelContasPagar.setFornecedor(fornecedor);
         modelContasPagar.setObservacao(modelContasPagarDTO.getObservacao());
@@ -61,9 +51,9 @@ public class ContasPagarServiceImpl implements ContasPagarService {
         modelContasPagar.setData_vencimento(modelContasPagarDTO.getData_vencimento());
         modelContasPagar.setStatusContas(modelContasPagarDTO.getStatusContas());
 
-        contasPagarRepository.save(modelContasPagar);
+        var contaSalva = contasPagarRepository.save(modelContasPagar);
 
-        return modelContasPagar;
+        return converteEntidadeEmResponse(contaSalva);
     }
 
     @Override
@@ -72,18 +62,25 @@ public class ContasPagarServiceImpl implements ContasPagarService {
     }
 
     @Override
-    public ModelContasPagar alterarContasPAgar(Long id, ModelContasPagarDTO modelContasPagarDTO) {
+    public ContasPagarResponse alterarContasPagar(Long id, ModelContasPagarDTO modelContasPagarDTO) {
         ModelContasPagar contasPagarPesquisada = pesquisaContasPagarPeloId(modelContasPagarDTO.getId());
         mapper.map(modelContasPagarDTO, ModelContasPagar.class);
         BeanUtils.copyProperties(modelContasPagarDTO, contasPagarPesquisada, "id");
 
-        return contasPagarRepository.save(contasPagarPesquisada);
+        var contasPagarAtualizada = contasPagarRepository.save(contasPagarPesquisada);
+
+        return converteEntidadeEmResponse(contasPagarAtualizada);
     }
 
-    public ModelContasPagar pesquisaContasPagarPeloId(Long id){
-        ModelContasPagar pesquisaContaPagar = contasPagarRepository.
-                findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
+    private List<ContasPagarResponse> converteListaContasResponse(List<ModelContasPagar> listModelsContasPagar){
+      return listModelsContasPagar.stream().map(modelContasPagar -> mapper.map(modelContasPagar, ContasPagarResponse.class)).toList();
+    }
 
-        return pesquisaContaPagar;
+    private ContasPagarResponse converteEntidadeEmResponse(ModelContasPagar modelContasPagar){
+        return mapper.map(modelContasPagar, ContasPagarResponse.class);
+    }
+
+    private ModelContasPagar pesquisaContasPagarPeloId(Long id){
+        return contasPagarRepository.findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
     }
 }
