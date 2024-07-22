@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelProdutosDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.hateoas.ModelProdutosHateoas;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelProdutosDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 import br.com.systemsgs.ordem_servico_backend.service.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,17 +36,17 @@ public class ProdutoController {
 
     @Operation(summary = "Listar Produtos - HATEOAS", description = "Api para listar todos os Produtos com Link (HATEOAS)")
     @GetMapping("/listar/v2/link")
-    public CollectionModel<ModelProdutosDTO> listarProdutosComLink(){
-        List<ModelProdutosDTO> listaProdutos = produtoService.listarProdutos()
-                .stream().map(x -> mapper.map(x, ModelProdutosDTO.class)).collect(Collectors.toList());
+    public CollectionModel<ModelProdutosHateoas> listarProdutosComLink(){
+        List<ModelProdutosHateoas> listaProdutos = produtoService.listarProdutos()
+                .stream().map(x -> mapper.map(x, ModelProdutosHateoas.class)).collect(Collectors.toList());
 
-        for (ModelProdutosDTO modelProdutos : listaProdutos) {
+        for (ModelProdutosHateoas modelProdutos : listaProdutos) {
             Long produtoID = modelProdutos.getId();
             Link produtoLink = linkTo(methodOn(ProdutoController.class).pesquisarPorId(produtoID)).withRel("Pesquisa Produto pelo ID");
             modelProdutos.add(produtoLink);
         }
 
-        CollectionModel<ModelProdutosDTO> result = CollectionModel.of(listaProdutos);
+        CollectionModel<ModelProdutosHateoas> result = CollectionModel.of(listaProdutos);
         return result;
     }
 

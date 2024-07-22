@@ -1,12 +1,13 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelContasReceberDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasReceberDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasReceberResponse;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarReceberNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasReceber;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasReceberRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ContasReceberService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,29 +29,20 @@ public class ContasReceberServiceImpl implements ContasReceberService {
 
     @Override
     public ContasReceberResponse pesquisaPorId(Long id) {
-        ContasReceberResponse contasReceberResponse = new ContasReceberResponse();
-
         var pesquisaContaReceber = contasReceberRepository.findById(id)
                 .orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
 
-        contasReceberResponse.setCodigoContaReceber(pesquisaContaReceber.getId());
-        contasReceberResponse.setData_vencimento(pesquisaContaReceber.getData_vencimento());
-        contasReceberResponse.setValor_conta_receber(pesquisaContaReceber.getValor());
-        contasReceberResponse.setObservacao(pesquisaContaReceber.getObservacao());
-        contasReceberResponse.setFormaPagamento(String.valueOf(pesquisaContaReceber.getFormaPagamento()));
-        contasReceberResponse.setStatusContaReceber(String.valueOf(pesquisaContaReceber.getStatusContasReceber()));
-        contasReceberResponse.setNomeCliente(pesquisaContaReceber.getCliente().getNome());
-
-        return contasReceberResponse;
+        return converteEntidadeEmResponse(pesquisaContaReceber);
     }
 
     @Override
-    public List<ModelContasReceber> listarContasReceber() {
-        return contasReceberRepository.findAll();
+    public List<ContasReceberResponse> listarContasReceber() {
+        return converteListaContasResponse(contasReceberRepository.findAll());
     }
 
+    @Transactional
     @Override
-    public ModelContasReceber cadastrarContasReceber(ModelContasReceberDTO modelContasReceberDTO) {
+    public ContasReceberResponse cadastrarContasReceber(ModelContasReceberDTO modelContasReceberDTO) {
         ModelContasReceber modelContasReceber = new ModelContasReceber();
 
         var cliente = utilClientes.pesquisarClientePeloId(modelContasReceberDTO.getCodigoCliente());
@@ -62,18 +54,20 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         modelContasReceber.setStatusContasReceber(modelContasReceberDTO.getStatusContas());
         modelContasReceber.setCliente(cliente);
 
-        contasReceberRepository.save(modelContasReceber);
+        var contaReceberSalva = contasReceberRepository.save(modelContasReceber);
 
-        return modelContasReceber;
+        return converteEntidadeEmResponse(contaReceberSalva);
     }
 
     @Override
-    public ModelContasReceber alterarContasReceber(Long id, ModelContasReceberDTO modelContasReceberDTO) {
+    public ContasReceberResponse alterarContasReceber(Long id, ModelContasReceberDTO modelContasReceberDTO) {
         ModelContasReceber contaReceberPesquisada = pesquisaContasReceberPeloId(modelContasReceberDTO.getId());
         mapper.map(modelContasReceberDTO, ModelContasReceber.class);
         BeanUtils.copyProperties(modelContasReceberDTO, contaReceberPesquisada, "id");
 
-        return contasReceberRepository.save(contaReceberPesquisada);
+        var contaReceberAtualizada = contasReceberRepository.save(contaReceberPesquisada);
+
+        return converteEntidadeEmResponse(contaReceberAtualizada);
     }
 
     @Override
@@ -81,7 +75,15 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         contasReceberRepository.deleteById(id);
     }
 
-    public ModelContasReceber pesquisaContasReceberPeloId(Long id){
+    private List<ContasReceberResponse> converteListaContasResponse(List<ModelContasReceber> listModelsContasReceber){
+        return listModelsContasReceber.stream().map(modelContasReceber -> mapper.map(modelContasReceber, ContasReceberResponse.class)).toList();
+    }
+
+    private ContasReceberResponse converteEntidadeEmResponse(ModelContasReceber modelContasReceber){
+        return mapper.map(modelContasReceber, ContasReceberResponse.class);
+    }
+
+    private ModelContasReceber pesquisaContasReceberPeloId(Long id){
         ModelContasReceber pesquisaContaReceber = contasReceberRepository.
                 findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
 

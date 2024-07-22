@@ -1,13 +1,11 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
-import br.com.systemsgs.ordem_servico_backend.dto.ModelContasPagarDTO;
-import br.com.systemsgs.ordem_servico_backend.model.ModelContasPagar;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasPagarDTO;
 import br.com.systemsgs.ordem_servico_backend.service.ContasPagarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +13,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Tag(name = "Api de Contas a Pagar - V1")
 @RestController
@@ -25,15 +22,10 @@ public class ContasPagarController {
     @Autowired
     private ContasPagarService contasPagarService;
 
-    @Autowired
-    private ModelMapper mapper;
-
     @Operation(summary = "Listar Contas a Pagar", description = "Api para listar todos os registro de Contas a Pagar")
     @GetMapping("/listar")
-    public ResponseEntity<List<ModelContasPagarDTO>> listarContasPagar(){
-        return ResponseEntity.ok().body(contasPagarService.listarContasPagar().
-                stream().map(x -> mapper.map(x, ModelContasPagarDTO.class))
-                .collect(Collectors.toList()));
+    public ResponseEntity<List<ContasPagarResponse>> listarContasPagar(){
+        return ResponseEntity.ok().body(contasPagarService.listarContasPagar());
     }
 
     @Operation(summary = "Pesquisa por ID", description = "Api para listar uma Conta a Pagar por ID")
@@ -44,22 +36,21 @@ public class ContasPagarController {
 
     @Operation(summary = "Cadastrar Contas a Pagar", description = "Api para Salvar uma Conta a Pagar")
     @PostMapping("/salvar")
-    public ResponseEntity<ModelContasPagarDTO> salvarContasPagar(@RequestBody @Valid ModelContasPagarDTO modelContasPagarDTO){
-        ModelContasPagar contaPagarSalva = contasPagarService.cadastrarContasPagar(modelContasPagarDTO);
+    public ResponseEntity<ContasPagarResponse> salvarContasPagar(@RequestBody @Valid ModelContasPagarDTO modelContasPagarDTO){
+        var contaPagarSalva = contasPagarService.cadastrarContasPagar(modelContasPagarDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
                 buildAndExpand(contasPagarService.pesquisaPorId(contaPagarSalva.getId())).toUri();
 
-        return ResponseEntity.created(uri).body(mapper.map(contaPagarSalva, ModelContasPagarDTO.class));
+        return ResponseEntity.created(uri).body(contaPagarSalva);
     }
 
     @Operation(summary = "Atualizar uma Conta a Pagar", description = "Api para Atualizar uma Conta a Pagar pelo Id e Entidade")
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<ModelContasPagarDTO> atualizarContasPagar(@PathVariable Long id, @RequestBody @Valid ModelContasPagarDTO modelContasPagarDTO){
+    public ResponseEntity<ContasPagarResponse> atualizarContasPagar(@PathVariable Long id, @RequestBody @Valid ModelContasPagarDTO modelContasPagarDTO){
         modelContasPagarDTO.setId(id);
-        ModelContasPagar contaPagarAtualizada = contasPagarService.alterarContasPAgar(id, modelContasPagarDTO);
 
-        return ResponseEntity.ok().body(mapper.map(contaPagarAtualizada, ModelContasPagarDTO.class));
+        return ResponseEntity.ok().body(contasPagarService.alterarContasPagar(id, modelContasPagarDTO));
     }
 
     @Operation(summary = "Deletar Contas a Pagar", description = "Api para Deletar uma Conta a Pagar por ID")

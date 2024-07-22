@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelOrdemServicoDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.hateoas.ModelOrdemServicoHateoas;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelOrdemServicoDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
 import br.com.systemsgs.ordem_servico_backend.service.OrdemServicoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,17 +36,17 @@ public class OrdemServicoController {
 
     @Operation(summary = "Listar OS - HATEOAS", description = "Api para listar todos os registro de Ordem de Serviço com Link (HATEOAS)")
     @GetMapping("/listar/v2/link")
-    public CollectionModel<ModelOrdemServicoDTO> listarOsComLink(){
-        List<ModelOrdemServicoDTO> listaOS = ordemServicoService.listarOS()
-                .stream().map(x -> mapper.map(x, ModelOrdemServicoDTO.class)).collect(Collectors.toList());
+    public CollectionModel<ModelOrdemServicoHateoas> listarOsComLink(){
+        List<ModelOrdemServicoHateoas> listaOS = ordemServicoService.listarOS()
+                .stream().map(x -> mapper.map(x, ModelOrdemServicoHateoas.class)).collect(Collectors.toList());
 
-        for (ModelOrdemServicoDTO modelOrdemServicoDTO : listaOS) {
-            Long osID = modelOrdemServicoDTO.getId();
+        for (ModelOrdemServicoHateoas modelOrdemServicoHateoas : listaOS) {
+            Long osID = modelOrdemServicoHateoas.getId();
             Link osLink = linkTo(methodOn(OrdemServicoController.class).pesquisarPorId(osID)).withRel("Pesquisa OS pelo ID");
-            modelOrdemServicoDTO.add(osLink);
+            modelOrdemServicoHateoas.add(osLink);
         }
 
-        CollectionModel<ModelOrdemServicoDTO> result = CollectionModel.of(listaOS);
+        CollectionModel<ModelOrdemServicoHateoas> result = CollectionModel.of(listaOS);
         return result;
     }
 

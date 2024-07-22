@@ -1,10 +1,13 @@
-package br.com.systemsgs.ordem_servico_backend.dto;
+package br.com.systemsgs.ordem_servico_backend.dto.request;
 
 import br.com.systemsgs.ordem_servico_backend.enums.FormaPagamento;
 import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,11 +22,12 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ModelContasReceberDTO {
+public class ModelContasPagarDTO {
 
     private Long id;
 
     @FutureOrPresent(message = "Data de Vencimento deve ser no presente ou futuro.")
+    @NotNull(message = "A Data de Vencimento deve ser Informada.")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
@@ -35,18 +39,19 @@ public class ModelContasReceberDTO {
     private BigDecimal valor = BigDecimal.ZERO;
 
     @Size(max = 250, message = "Observação da conta deve ter no máximo 250 Caracteres")
-    private String observacao = "Sem Observação.";
+    private String observacao;
 
     @NotNull(message = "Forma de Pagamento deve ser Informada.")
     @Enumerated(EnumType.STRING)
+    @JsonProperty("forma_pagamento")
     private FormaPagamento formaPagamento;
 
     @NotNull(message = "Status da Conta deve ser Informada.")
     @Enumerated(EnumType.STRING)
+    @JsonProperty("status_contas")
     private StatusContas statusContas;
 
-    @JsonProperty("codigo_cliente")
-    @NotNull(message = "Cliente deve ser Informado.")
-    private Long codigoCliente;
-
+    @NotNull(message = "Fornecedor deve ser Informado.")
+    @JsonProperty("codigo_fornecedor")
+    private Long fornecedor;
 }

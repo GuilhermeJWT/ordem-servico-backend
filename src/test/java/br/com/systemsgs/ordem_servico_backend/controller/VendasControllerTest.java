@@ -1,8 +1,8 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
-import br.com.systemsgs.ordem_servico_backend.dto.ModelVendasDTO;
-import br.com.systemsgs.ordem_servico_backend.dto.response.VendasResponseDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelVendasDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.response.VendasResponse;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.VendaNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelVendas;
 import br.com.systemsgs.ordem_servico_backend.repository.VendasRepository;
@@ -29,7 +29,7 @@ class VendasControllerTest extends ConfigDadosEstaticosEntidades {
 
     private ModelVendas modelVendas;
     private ModelVendasDTO modelVendasDTO;
-    private VendasResponseDTO vendasResponseDTO;
+    private VendasResponse vendasResponse;
 
     @InjectMocks
     private VendasController vendasController;
@@ -61,15 +61,15 @@ class VendasControllerTest extends ConfigDadosEstaticosEntidades {
     @DisplayName("Pesquisa uma Venda pelo ID - retorna 200")
     @Test
     void pesquisaVendaPorId(){
-        when(vendaService.pesquisaVendaPorId(modelVendas.getIdVenda())).thenReturn(vendasResponseDTO);
+        when(vendaService.pesquisaVendaPorId(modelVendas.getIdVenda())).thenReturn(vendasResponse);
 
-        ResponseEntity<VendasResponseDTO> response = vendasController.pesquisarPorId(dadosVenda().getIdVenda());
+        ResponseEntity<VendasResponse> response = vendasController.pesquisarPorId(dadosVenda().getIdVenda());
 
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(VendasResponseDTO.class, response.getBody().getClass());
+        assertEquals(VendasResponse.class, response.getBody().getClass());
 
         assertEquals(dadosVenda().getIdVenda(), response.getBody().getIdVenda());
         assertEquals(dadosVenda().getTotalItens(), response.getBody().getTotalItens());
@@ -112,7 +112,7 @@ class VendasControllerTest extends ConfigDadosEstaticosEntidades {
            dadosVenda().getTecnicoResponsavel().getId(),
            dadosItensVendasDTO()
         );
-        vendasResponseDTO = new VendasResponseDTO(
+        vendasResponse = new VendasResponse(
             dadosVenda().getIdVenda(),
             dadosVenda().getTotalItens(),
             dadosVenda().getTotalVenda(),

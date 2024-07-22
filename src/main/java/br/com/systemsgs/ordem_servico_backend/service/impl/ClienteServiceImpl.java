@@ -1,12 +1,13 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelClientesDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelEndereco;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ClienteService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteRepository.findAll();
     }
 
+    @Transactional
     @Override
     public ModelClientes salvarClientes(ModelClientesDTO modelClientesDTO) {
         ModelClientes modelClientes = new ModelClientes();

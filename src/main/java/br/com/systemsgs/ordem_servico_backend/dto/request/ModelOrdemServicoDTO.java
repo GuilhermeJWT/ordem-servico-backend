@@ -1,4 +1,4 @@
-package br.com.systemsgs.ordem_servico_backend.dto;
+package br.com.systemsgs.ordem_servico_backend.dto.request;
 
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;

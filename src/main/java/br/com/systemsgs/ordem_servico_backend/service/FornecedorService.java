@@ -1,6 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.service;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelFornecedorDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelFornecedorDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelFornecedor;
 
 import java.util.List;

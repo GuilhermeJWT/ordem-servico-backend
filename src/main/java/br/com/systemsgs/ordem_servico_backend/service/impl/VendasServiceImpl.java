@@ -1,7 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelVendasDTO;
-import br.com.systemsgs.ordem_servico_backend.dto.response.VendasResponseDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelVendasDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.response.VendasResponse;
 import br.com.systemsgs.ordem_servico_backend.model.ModelItensVendas;
 import br.com.systemsgs.ordem_servico_backend.model.ModelVendas;
 import br.com.systemsgs.ordem_servico_backend.repository.VendasRepository;
@@ -38,7 +38,6 @@ public class VendasServiceImpl implements VendaService {
     @Autowired
     private UtilProdutos utilProdutos;
 
-    /*Salva uma Venda, pegando o Cliente, Técnico Responsavel, os Produtos e calculando o Valor total + Itens do Pedido*/
     @Transactional
     @Override
     public ModelVendas salvarVenda(ModelVendasDTO modelVendasDTO) {
@@ -67,36 +66,33 @@ public class VendasServiceImpl implements VendaService {
     }
 
     @Override
-    public VendasResponseDTO pesquisaVendaPorId(Long id) {
-        VendasResponseDTO vendasResponseDTO = new VendasResponseDTO();
+    public VendasResponse pesquisaVendaPorId(Long id) {
+        VendasResponse vendasResponse = new VendasResponse();
 
         var pesquisaVenda = utilVendas.pesquisarVendaPeloId(id);
 
-        vendasResponseDTO.setIdVenda(pesquisaVenda.getIdVenda());
-        vendasResponseDTO.setTotalItens(pesquisaVenda.getTotalItens());
-        vendasResponseDTO.setTotalVenda(pesquisaVenda.getTotalVenda());
-        vendasResponseDTO.setDataVenda(pesquisaVenda.getDataVenda());
-        vendasResponseDTO.setDesconto(pesquisaVenda.getDesconto());
-        vendasResponseDTO.setNomeCliente(pesquisaVenda.getCliente().getNome());
-        vendasResponseDTO.setNomeTecnicoResponsavel(pesquisaVenda.getTecnicoResponsavel().getNome());
-        vendasResponseDTO.setDescricaoProdutos(pegaDescricaoPedidos(pesquisaVenda));
+        vendasResponse.setIdVenda(pesquisaVenda.getIdVenda());
+        vendasResponse.setTotalItens(pesquisaVenda.getTotalItens());
+        vendasResponse.setTotalVenda(pesquisaVenda.getTotalVenda());
+        vendasResponse.setDataVenda(pesquisaVenda.getDataVenda());
+        vendasResponse.setDesconto(pesquisaVenda.getDesconto());
+        vendasResponse.setNomeCliente(pesquisaVenda.getCliente().getNome());
+        vendasResponse.setNomeTecnicoResponsavel(pesquisaVenda.getTecnicoResponsavel().getNome());
+        vendasResponse.setDescricaoProdutos(pegaDescricaoPedidos(pesquisaVenda));
 
-        return vendasResponseDTO;
+        return vendasResponse;
     }
 
-    /*Multiplicando o Preço com a Quantidade para gerar o Valor Total do Pedido - Caso não tenha retorna 0*/
     private BigDecimal calculaTotalVenda(ModelVendasDTO modelVendasDTO) {
         return modelVendasDTO.getItens().stream().
                 map(itens -> itens.getValorProduto().multiply(BigDecimal.valueOf(itens.getQuantidade())))
                 .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
     }
 
-    /*Multiplicando o Total de Itens no Pedido de Venda 0*/
     private Integer calculaTotalItens(ModelVendasDTO modelVendasDTO) {
         return modelVendasDTO.getItens().stream().mapToInt(p -> p.getQuantidade()).sum();
     }
 
-    /*Pega os Itens da Venda*/
     private List<ModelItensVendas> itensVenda(ModelVendasDTO modelVendasDTO){
         var quantidade = modelVendasDTO.getItens().stream().map(q -> q.getQuantidade()).collect(Collectors.toList());
         var valorProduto = modelVendasDTO.getItens().stream().map(v -> v.getValorProduto()).collect(Collectors.toList());
@@ -108,7 +104,6 @@ public class VendasServiceImpl implements VendaService {
         return itensVendas;
     }
 
-    /*Pega a Descrição dos Produtos de uma Venda*/
     private List<String> pegaDescricaoPedidos(ModelVendas modelVendas){
         var idsProdutos = modelVendas.getItens().stream().map(p -> p.getProduto());
 

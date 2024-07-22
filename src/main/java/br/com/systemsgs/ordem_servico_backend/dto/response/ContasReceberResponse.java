@@ -16,13 +16,13 @@ import java.util.Date;
 public class ContasReceberResponse {
 
     @JsonProperty("codigo_conta_receber")
-    private Long codigoContaReceber;
+    private Long id;
 
     @JsonProperty("data_vencimento")
     private Date data_vencimento;
 
     @JsonProperty("valor_conta_receber")
-    private BigDecimal valor_conta_receber;
+    private BigDecimal valor;
 
     @JsonProperty("observacao")
     private String observacao;
@@ -31,7 +31,7 @@ public class ContasReceberResponse {
     private String formaPagamento;
 
     @JsonProperty("status_conta_receber")
-    private String statusContaReceber;
+    private String statusContasReceber;
 
     @JsonProperty("nome_cliente")
     private String nomeCliente;

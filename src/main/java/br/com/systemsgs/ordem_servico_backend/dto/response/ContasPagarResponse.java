@@ -15,14 +15,14 @@ import java.util.Date;
 @NoArgsConstructor
 public class ContasPagarResponse {
 
-    @JsonProperty("codigo_conta_pagar")
-    private Long codigoContaPagar;
+    @JsonProperty("id_conta_pagar")
+    private Long id;
 
     @JsonProperty("data_vencimento")
     private Date data_vencimento;
 
     @JsonProperty("valor_conta_pagar")
-    private BigDecimal valor_conta_pagar;
+    private BigDecimal valor;
 
     @JsonProperty("observacao")
     private String observacao;
@@ -31,7 +31,7 @@ public class ContasPagarResponse {
     private String formaPagamento;
 
     @JsonProperty("status_conta_pagar")
-    private String statusContaPagar;
+    private String statusContas;
 
     @JsonProperty("nome_fornecedor")
     private String nomeFornecedor;

@@ -1,11 +1,12 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
-import br.com.systemsgs.ordem_servico_backend.dto.ModelProdutosDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelProdutosDTO;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 import br.com.systemsgs.ordem_servico_backend.repository.ProdutoRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ProdutoService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilProdutos;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         return produtoRepository.findAll();
     }
 
+    @Transactional
     @Override
     public ModelProdutos salvarProdutos(ModelProdutosDTO modelProdutosDTO) {
         ModelProdutos produtoConvertido = mapper.map(modelProdutosDTO, ModelProdutos.class);
