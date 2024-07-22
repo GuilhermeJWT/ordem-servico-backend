@@ -23,7 +23,6 @@ public class ModelContasReceberDTO {
 
     private Long id;
 
-    @Size(max = 20, message = "Data de Vencimento deve ter no máximo 20 Caracteres.")
     @FutureOrPresent(message = "Data de Vencimento deve ser no presente ou futuro.")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
