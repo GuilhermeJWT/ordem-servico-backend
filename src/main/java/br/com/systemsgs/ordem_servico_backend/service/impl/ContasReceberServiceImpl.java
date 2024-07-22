@@ -7,6 +7,7 @@ import br.com.systemsgs.ordem_servico_backend.model.ModelContasReceber;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasReceberRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ContasReceberService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         return converteListaContasResponse(contasReceberRepository.findAll());
     }
 
+    @Transactional
     @Override
     public ContasReceberResponse cadastrarContasReceber(ModelContasReceberDTO modelContasReceberDTO) {
         ModelContasReceber modelContasReceber = new ModelContasReceber();

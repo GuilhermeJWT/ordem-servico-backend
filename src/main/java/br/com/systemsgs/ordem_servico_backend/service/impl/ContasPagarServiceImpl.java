@@ -7,6 +7,7 @@ import br.com.systemsgs.ordem_servico_backend.model.ModelContasPagar;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasPagarRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ContasPagarService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilFornecedores;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class ContasPagarServiceImpl implements ContasPagarService {
         return converteListaContasResponse(contasPagarRepository.findAll());
     }
 
+    @Transactional
     @Override
     public ContasPagarResponse cadastrarContasPagar(ModelContasPagarDTO modelContasPagarDTO) {
         ModelContasPagar modelContasPagar = new ModelContasPagar();

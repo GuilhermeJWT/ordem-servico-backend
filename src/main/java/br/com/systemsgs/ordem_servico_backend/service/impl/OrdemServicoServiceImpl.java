@@ -10,6 +10,7 @@ import br.com.systemsgs.ordem_servico_backend.service.OrdemServicoService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
 import br.com.systemsgs.ordem_servico_backend.util.UtilOrdemServico;
 import br.com.systemsgs.ordem_servico_backend.util.UtilTecnicoResponsavel;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,7 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
         return ordemServicoRepository.findAll();
     }
 
+    @Transactional
     @Override
     public ModelOrdemServico salvarOS(ModelOrdemServicoDTO modelOrdemServicoDTO) {
          validaCliente(modelOrdemServicoDTO);

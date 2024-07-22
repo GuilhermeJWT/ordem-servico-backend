@@ -38,7 +38,6 @@ public class VendasServiceImpl implements VendaService {
     @Autowired
     private UtilProdutos utilProdutos;
 
-    /*Salva uma Venda, pegando o Cliente, Técnico Responsavel, os Produtos e calculando o Valor total + Itens do Pedido*/
     @Transactional
     @Override
     public ModelVendas salvarVenda(ModelVendasDTO modelVendasDTO) {
@@ -84,19 +83,16 @@ public class VendasServiceImpl implements VendaService {
         return vendasResponse;
     }
 
-    /*Multiplicando o Preço com a Quantidade para gerar o Valor Total do Pedido - Caso não tenha retorna 0*/
     private BigDecimal calculaTotalVenda(ModelVendasDTO modelVendasDTO) {
         return modelVendasDTO.getItens().stream().
                 map(itens -> itens.getValorProduto().multiply(BigDecimal.valueOf(itens.getQuantidade())))
                 .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
     }
 
-    /*Multiplicando o Total de Itens no Pedido de Venda 0*/
     private Integer calculaTotalItens(ModelVendasDTO modelVendasDTO) {
         return modelVendasDTO.getItens().stream().mapToInt(p -> p.getQuantidade()).sum();
     }
 
-    /*Pega os Itens da Venda*/
     private List<ModelItensVendas> itensVenda(ModelVendasDTO modelVendasDTO){
         var quantidade = modelVendasDTO.getItens().stream().map(q -> q.getQuantidade()).collect(Collectors.toList());
         var valorProduto = modelVendasDTO.getItens().stream().map(v -> v.getValorProduto()).collect(Collectors.toList());
@@ -108,7 +104,6 @@ public class VendasServiceImpl implements VendaService {
         return itensVendas;
     }
 
-    /*Pega a Descrição dos Produtos de uma Venda*/
     private List<String> pegaDescricaoPedidos(ModelVendas modelVendas){
         var idsProdutos = modelVendas.getItens().stream().map(p -> p.getProduto());
 
