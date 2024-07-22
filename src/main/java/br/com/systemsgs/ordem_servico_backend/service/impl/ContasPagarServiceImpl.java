@@ -11,10 +11,15 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@CacheConfig(cacheNames = "contaspagar")
 @Service
 public class ContasPagarServiceImpl implements ContasPagarService {
 
@@ -27,6 +32,7 @@ public class ContasPagarServiceImpl implements ContasPagarService {
     @Autowired
     private ModelMapper mapper;
 
+    @Cacheable(value = "contaspagar", key = "#id")
     @Override
     public ContasPagarResponse pesquisaPorId(Long id) {
         var pesquisaConta = contasPagarRepository.findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
@@ -34,6 +40,7 @@ public class ContasPagarServiceImpl implements ContasPagarService {
         return converteEntidadeEmResponse(pesquisaConta);
     }
 
+    @Cacheable(value = "contaspagar")
     @Override
     public List<ContasPagarResponse> listarContasPagar() {
         return converteListaContasResponse(contasPagarRepository.findAll());
@@ -58,11 +65,13 @@ public class ContasPagarServiceImpl implements ContasPagarService {
         return converteEntidadeEmResponse(contaSalva);
     }
 
+    @CacheEvict(value = "contaspagar", key = "#id")
     @Override
     public void deletarContasPagar(Long id) {
         contasPagarRepository.deleteById(id);
     }
 
+    @CachePut(value = "contaspagar", key = "#id")
     @Override
     public ContasPagarResponse alterarContasPagar(Long id, ModelContasPagarDTO modelContasPagarDTO) {
         ModelContasPagar contasPagarPesquisada = pesquisaContasPagarPeloId(modelContasPagarDTO.getId());

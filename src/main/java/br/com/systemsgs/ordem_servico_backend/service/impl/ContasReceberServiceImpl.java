@@ -11,10 +11,15 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@CacheConfig(cacheNames = "contasreceber")
 @Service
 public class ContasReceberServiceImpl implements ContasReceberService {
 
@@ -27,6 +32,7 @@ public class ContasReceberServiceImpl implements ContasReceberService {
     @Autowired
     private ModelMapper mapper;
 
+    @Cacheable(value = "contasreceber", key = "#id")
     @Override
     public ContasReceberResponse pesquisaPorId(Long id) {
         var pesquisaContaReceber = contasReceberRepository.findById(id)
@@ -35,6 +41,7 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         return converteEntidadeEmResponse(pesquisaContaReceber);
     }
 
+    @Cacheable(value = "contasreceber")
     @Override
     public List<ContasReceberResponse> listarContasReceber() {
         return converteListaContasResponse(contasReceberRepository.findAll());
@@ -59,6 +66,7 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         return converteEntidadeEmResponse(contaReceberSalva);
     }
 
+    @CachePut(value = "contasreceber", key = "#id")
     @Override
     public ContasReceberResponse alterarContasReceber(Long id, ModelContasReceberDTO modelContasReceberDTO) {
         ModelContasReceber contaReceberPesquisada = pesquisaContasReceberPeloId(modelContasReceberDTO.getId());
@@ -70,6 +78,7 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         return converteEntidadeEmResponse(contaReceberAtualizada);
     }
 
+    @CacheEvict(value = "contasreceber", key = "#id")
     @Override
     public void deletarContasReceber(Long id) {
         contasReceberRepository.deleteById(id);
