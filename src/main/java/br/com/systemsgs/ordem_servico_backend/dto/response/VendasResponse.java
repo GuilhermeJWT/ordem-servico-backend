@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VendasResponseDTO {
+public class VendasResponse {
 
     @JsonProperty("id_venda")
     private Long idVenda;

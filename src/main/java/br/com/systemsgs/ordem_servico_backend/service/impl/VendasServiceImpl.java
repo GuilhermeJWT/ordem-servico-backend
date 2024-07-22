@@ -1,7 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.ModelVendasDTO;
-import br.com.systemsgs.ordem_servico_backend.dto.response.VendasResponseDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.response.VendasResponse;
 import br.com.systemsgs.ordem_servico_backend.model.ModelItensVendas;
 import br.com.systemsgs.ordem_servico_backend.model.ModelVendas;
 import br.com.systemsgs.ordem_servico_backend.repository.VendasRepository;
@@ -67,21 +67,21 @@ public class VendasServiceImpl implements VendaService {
     }
 
     @Override
-    public VendasResponseDTO pesquisaVendaPorId(Long id) {
-        VendasResponseDTO vendasResponseDTO = new VendasResponseDTO();
+    public VendasResponse pesquisaVendaPorId(Long id) {
+        VendasResponse vendasResponse = new VendasResponse();
 
         var pesquisaVenda = utilVendas.pesquisarVendaPeloId(id);
 
-        vendasResponseDTO.setIdVenda(pesquisaVenda.getIdVenda());
-        vendasResponseDTO.setTotalItens(pesquisaVenda.getTotalItens());
-        vendasResponseDTO.setTotalVenda(pesquisaVenda.getTotalVenda());
-        vendasResponseDTO.setDataVenda(pesquisaVenda.getDataVenda());
-        vendasResponseDTO.setDesconto(pesquisaVenda.getDesconto());
-        vendasResponseDTO.setNomeCliente(pesquisaVenda.getCliente().getNome());
-        vendasResponseDTO.setNomeTecnicoResponsavel(pesquisaVenda.getTecnicoResponsavel().getNome());
-        vendasResponseDTO.setDescricaoProdutos(pegaDescricaoPedidos(pesquisaVenda));
+        vendasResponse.setIdVenda(pesquisaVenda.getIdVenda());
+        vendasResponse.setTotalItens(pesquisaVenda.getTotalItens());
+        vendasResponse.setTotalVenda(pesquisaVenda.getTotalVenda());
+        vendasResponse.setDataVenda(pesquisaVenda.getDataVenda());
+        vendasResponse.setDesconto(pesquisaVenda.getDesconto());
+        vendasResponse.setNomeCliente(pesquisaVenda.getCliente().getNome());
+        vendasResponse.setNomeTecnicoResponsavel(pesquisaVenda.getTecnicoResponsavel().getNome());
+        vendasResponse.setDescricaoProdutos(pegaDescricaoPedidos(pesquisaVenda));
 
-        return vendasResponseDTO;
+        return vendasResponse;
     }
 
     /*Multiplicando o Preço com a Quantidade para gerar o Valor Total do Pedido - Caso não tenha retorna 0*/
