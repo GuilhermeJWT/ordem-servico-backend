@@ -17,12 +17,16 @@ jobs:
             java-version: '17'
         - name: Build Project
           run: mvn package
+    Testes Unitarios:
         - name: Test Unit
           run: mvn test
+    Deploy Docker Hub:
         - name: Login Docker Hub
           run: docker login -u ${{secrets.DOCKER_LOGIN}} -p ${{secrets.DOCKER_PASSWORD}}
         - name: Build Docker Image
           run: docker build -t guilhermesantosdocker/ordem-servico-backend .
         - name: Push Imagem Docker
           run: docker push guilhermesantosdocker/ordem-servico-backend
+
+
 
