@@ -13,11 +13,16 @@ import br.com.systemsgs.ordem_servico_backend.util.UtilTecnicoResponsavel;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@CacheConfig(cacheNames = "os")
 @Service
 public class OrdemServicoServiceImpl implements OrdemServicoService {
 
@@ -36,12 +41,14 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     @Autowired
     private UtilTecnicoResponsavel utilTecnicoResponsavel;
 
+    @Cacheable(value = "os", key = "#id")
     @Override
     public ModelOrdemServico pesquisaPorId(Long id) {
         Optional<ModelOrdemServico> modelOrdemServico = ordemServicoRepository.findById(id);
         return modelOrdemServico.orElseThrow(() -> new RecursoNaoEncontradoException());
     }
 
+    @Cacheable(value = "os")
     @Override
     public List<ModelOrdemServico> listarOS() {
         return ordemServicoRepository.findAll();
@@ -57,11 +64,13 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
         return ordemServicoRepository.save(osConvertida);
     }
 
+    @CacheEvict(value = "os", key = "#id")
     @Override
     public void deletarOS(Long id) {
         ordemServicoRepository.deleteById(id);
     }
 
+    @CachePut(value = "os", key = "#id")
     @Override
     public ModelOrdemServico atualizarOS(Long id, ModelOrdemServicoDTO modelOrdemServicoDTO) {
         ModelOrdemServico osPesquisada = utilOrdemServico.pesquisaOsPorId(id);
