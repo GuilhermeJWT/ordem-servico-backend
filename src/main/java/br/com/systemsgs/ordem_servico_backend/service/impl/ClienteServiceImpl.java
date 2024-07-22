@@ -11,11 +11,16 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@CacheConfig(cacheNames = "clientes")
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
@@ -28,12 +33,14 @@ public class ClienteServiceImpl implements ClienteService {
     @Autowired
     private ModelMapper mapper;
 
+    @Cacheable(value = "clientes", key = "#id")
     @Override
     public ModelClientes pesquisaPorId(Long id) {
         Optional<ModelClientes> modelClientes = clienteRepository.findById(id);
         return modelClientes.orElseThrow(() -> new ClienteNaoEncontradoException());
     }
 
+    @Cacheable(value = "clientes")
     @Override
     public List<ModelClientes> listarClientes() {
         return clienteRepository.findAll();
@@ -59,11 +66,13 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteRepository.save(modelClientes);
     }
 
+    @CacheEvict(value = "clientes", key = "#id")
     @Override
     public void deletarCliente(Long id) {
         clienteRepository.deleteById(id);
     }
 
+    @CachePut(value = "clientes", key = "#id")
     @Override
     public ModelClientes updateClientes(Long id, ModelClientesDTO modelClientesDTO) {
         ModelClientes clientePesquisado = utilClientes.pesquisarClientePeloId(id);
