@@ -9,11 +9,16 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@CacheConfig(cacheNames = "fornecedores")
 @Service
 public class FornecedorServiceImpl implements FornecedorService {
 
@@ -23,12 +28,14 @@ public class FornecedorServiceImpl implements FornecedorService {
     @Autowired
     private ModelMapper mapper;
 
+    @Cacheable(value = "fornecedores", key = "#id")
     @Override
     public ModelFornecedor pesquisaPorId(Long id) {
         Optional<ModelFornecedor> modelFornecedor = fornecedoresRepository.findById(id);
         return modelFornecedor.orElseThrow(() -> new FornecedorNaoEncontradoException());
     }
 
+    @Cacheable(value = "fornecedores")
     @Override
     public List<ModelFornecedor> listarFornecedores() {
         return fornecedoresRepository.findAll();
@@ -41,11 +48,13 @@ public class FornecedorServiceImpl implements FornecedorService {
         return fornecedoresRepository.save(fornecedorConvertido);
     }
 
+    @CacheEvict(value = "fornecedores", key = "#id")
     @Override
     public void deletarFornecedor(Long id) {
         fornecedoresRepository.deleteById(id);
     }
 
+    @CachePut(value = "fornecedores", key = "#id")
     @Override
     public ModelFornecedor updateFornecedor(Long id, ModelFornecedorDTO modelFornecedorDTO) {
         ModelFornecedor fornecedorPesquisado = pesquisaFornecedorPeloId(id);

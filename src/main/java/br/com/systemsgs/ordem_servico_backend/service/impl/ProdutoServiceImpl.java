@@ -10,11 +10,16 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@CacheConfig(cacheNames = "produtos")
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
 
@@ -27,12 +32,14 @@ public class ProdutoServiceImpl implements ProdutoService {
     @Autowired
     private ModelMapper mapper;
 
+    @Cacheable(value = "produtos", key = "#id")
     @Override
     public ModelProdutos pesquisaPorId(Long id) {
         Optional<ModelProdutos> modelProdutos = produtoRepository.findById(id);
         return modelProdutos.orElseThrow(() -> new RecursoNaoEncontradoException());
     }
 
+    @Cacheable(value = "produtos")
     @Override
     public List<ModelProdutos> listarProdutos() {
         return produtoRepository.findAll();
@@ -45,11 +52,13 @@ public class ProdutoServiceImpl implements ProdutoService {
         return produtoRepository.save(produtoConvertido);
     }
 
+    @CacheEvict(value = "produtos", key = "#id")
     @Override
     public void deletarProduto(Long id) {
         produtoRepository.deleteById(id);
     }
 
+    @CachePut(value = "produtos", key = "#id")
     @Override
     public ModelProdutos atualizarProduto(Long id, ModelProdutosDTO modelProdutosDTO) {
         ModelProdutos produtoPesquisado = utilProdutos.pesquisaProdutoPorId(id);
