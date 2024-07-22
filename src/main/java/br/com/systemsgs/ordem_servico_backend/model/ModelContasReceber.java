@@ -1,7 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.model;
 
 import br.com.systemsgs.ordem_servico_backend.enums.FormaPagamento;
-import br.com.systemsgs.ordem_servico_backend.enums.StatusContasPagar;
+import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -48,9 +48,9 @@ public class ModelContasReceber implements Serializable {
     @Enumerated(EnumType.STRING)
     private FormaPagamento formaPagamento;
 
-    @Column(name = "status_conta_pagar", nullable = false)
+    @Column(name = "status_conta_receber", nullable = false)
     @Enumerated(EnumType.STRING)
-    private StatusContasPagar statusContasPagar;
+    private StatusContas statusContasReceber;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente")

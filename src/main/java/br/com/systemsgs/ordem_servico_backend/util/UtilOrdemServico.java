@@ -6,6 +6,8 @@ import br.com.systemsgs.ordem_servico_backend.repository.OrdemServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class UtilOrdemServico {
 
@@ -17,6 +19,14 @@ public class UtilOrdemServico {
                 orElseThrow(() -> new RecursoNaoEncontradoException());
 
         return pesquisarOS;
+    }
+
+    public Optional<Integer> quantidadeOsRealizadas(){
+        return ordemServicoRepository.quantidadeOsRealizadas();
+    }
+
+    public Optional<Integer> quantidadeOsStatusEmAndamento(){
+        return ordemServicoRepository.quantidadeOsEmAndamento();
     }
 
 }

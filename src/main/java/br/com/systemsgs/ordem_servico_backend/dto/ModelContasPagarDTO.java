@@ -1,8 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.dto;
 
 import br.com.systemsgs.ordem_servico_backend.enums.FormaPagamento;
-import br.com.systemsgs.ordem_servico_backend.enums.StatusContasPagar;
-import br.com.systemsgs.ordem_servico_backend.model.ModelFornecedor;
+import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.EnumType;
@@ -49,7 +48,7 @@ public class ModelContasPagarDTO {
 
     @NotNull(message = "Status da Conta deve ser Informada.")
     @Enumerated(EnumType.STRING)
-    private StatusContasPagar statusContasPagar;
+    private StatusContas statusContas;
 
     @JsonProperty("codigo_fornecedor")
     @NotNull(message = "Fornecedor deve ser Informado.")

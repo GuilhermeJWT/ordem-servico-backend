@@ -38,7 +38,7 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         contasReceberResponse.setValor_conta_receber(pesquisaContaReceber.getValor());
         contasReceberResponse.setObservacao(pesquisaContaReceber.getObservacao());
         contasReceberResponse.setFormaPagamento(String.valueOf(pesquisaContaReceber.getFormaPagamento()));
-        contasReceberResponse.setStatusContaPagar(String.valueOf(pesquisaContaReceber.getStatusContasPagar()));
+        contasReceberResponse.setStatusContaReceber(String.valueOf(pesquisaContaReceber.getStatusContasReceber()));
         contasReceberResponse.setNomeCliente(pesquisaContaReceber.getCliente().getNome());
 
         return contasReceberResponse;
@@ -59,7 +59,7 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         modelContasReceber.setValor(modelContasReceberDTO.getValor());
         modelContasReceber.setObservacao(modelContasReceberDTO.getObservacao());
         modelContasReceber.setFormaPagamento(modelContasReceberDTO.getFormaPagamento());
-        modelContasReceber.setStatusContasPagar(modelContasReceberDTO.getStatusContasPagar());
+        modelContasReceber.setStatusContasReceber(modelContasReceberDTO.getStatusContas());
         modelContasReceber.setCliente(cliente);
 
         contasReceberRepository.save(modelContasReceber);

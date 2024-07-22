@@ -38,7 +38,6 @@ public class ModelProdutosDTO extends RepresentationModel<ModelProdutosDTO> {
     @Min(value = 1, message = "Preço de Venda deve ser maior que R$ 1.00.")
     private BigDecimal preco_venda;
 
-    @Max(value = 12, message = "Código de Barras deve ter no máximo 12 números")
     @Min(value = 8, message = "Código de Barras deve ter no minimo 8 Números.")
     private String codigo_barras;
 
