@@ -30,6 +30,7 @@ public class ModelItensVendas implements Serializable {
     @Column(name = "valor_produto")
     private List<BigDecimal> valorProduto;
 
+    @Column(name = "produto")
     private List<Long> produto;
 
     public ModelItensVendas(List<Integer> quantidade, List<BigDecimal> valorProduto, List<Long> produto){
@@ -37,5 +38,4 @@ public class ModelItensVendas implements Serializable {
         this.valorProduto = valorProduto;
         this.produto = produto;
     }
-
 }
