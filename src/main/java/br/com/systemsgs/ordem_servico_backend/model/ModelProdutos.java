@@ -21,7 +21,7 @@ public class ModelProdutos implements Serializable {
     @SequenceGenerator(name = "id_produto_gen", sequenceName = "produtos_seq", initialValue = 1, allocationSize = 1)
     private Long id;
 
-    @Column(name = "descricao")
+    @Column(name = "descricao", length = 250)
     private String descricao;
 
     @Column(name = "quantidade")
@@ -36,6 +36,6 @@ public class ModelProdutos implements Serializable {
     @Column(name = "preco_venda")
     private BigDecimal preco_venda;
 
-    @Column(name = "codigo_barras")
+    @Column(name = "codigo_barras", length = 30)
     private String codigo_barras;
 }
