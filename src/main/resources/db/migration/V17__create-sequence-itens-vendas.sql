@@ -1,0 +1,1 @@
+create sequence itens_vendas_seq start with 2 increment by 1
