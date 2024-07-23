@@ -1,0 +1,1 @@
+create sequence contas_pagar_seq start with 2 increment by 1
