@@ -1,0 +1,1 @@
+alter table if exists tbl_vendas_itens drop constraint if exists UK_3rxi3eb73wdryyulhr2ct5ql5
