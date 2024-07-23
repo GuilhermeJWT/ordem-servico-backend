@@ -41,14 +41,14 @@ public class ModelContasReceber implements Serializable {
     @Column(name = "data_emissao")
     private Date data_emissao = new Date();
 
-    @Column(name = "observacao")
+    @Column(name = "observacao", length = 250)
     private String observacao;
 
-    @Column(name = "forma_pagamento")
+    @Column(name = "forma_pagamento", length = 35)
     @Enumerated(EnumType.STRING)
     private FormaPagamento formaPagamento;
 
-    @Column(name = "status_conta_receber", nullable = false)
+    @Column(name = "status_conta_receber", nullable = false, length = 35)
     @Enumerated(EnumType.STRING)
     private StatusContas statusContasReceber;
 
