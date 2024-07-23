@@ -1,1 +1,0 @@
-alter table if exists itens_vendas add constraint FK9rl6wk0bb6etwhmjre8sknuij foreign key (id_venda) references vendas

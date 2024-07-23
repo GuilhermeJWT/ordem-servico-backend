@@ -1,1 +1,0 @@
-ALTER TABLE ordemservico ADD CONSTRAINT tecnico_id FOREIGN KEY (tecnico_id) REFERENCES tecnico_responsavel (id);

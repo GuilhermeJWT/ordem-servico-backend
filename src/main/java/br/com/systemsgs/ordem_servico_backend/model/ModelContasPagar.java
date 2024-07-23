@@ -41,14 +41,14 @@ public class ModelContasPagar implements Serializable {
     @Column(name = "valor", nullable = false)
     private BigDecimal valor = BigDecimal.ZERO;
 
-    @Column(name = "observacao")
+    @Column(name = "observacao", length = 250)
     private String observacao;
 
-    @Column(name = "forma_pagamento")
+    @Column(name = "forma_pagamento", length = 35)
     @Enumerated(EnumType.STRING)
     private FormaPagamento formaPagamento;
 
-    @Column(name = "status_conta_pagar", nullable = false)
+    @Column(name = "status_conta_pagar", nullable = false, length = 35)
     @Enumerated(EnumType.STRING)
     private StatusContas statusContas;
 

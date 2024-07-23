@@ -1,0 +1,1 @@
+alter table if exists tbl_ordemservico add constraint FKmbamclocr8ci36bgwjt0qniwo foreign key (cliente_id) references tbl_clientes

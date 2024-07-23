@@ -21,15 +21,21 @@ public class ModelProdutos implements Serializable {
     @SequenceGenerator(name = "id_produto_gen", sequenceName = "produtos_seq", initialValue = 1, allocationSize = 1)
     private Long id;
 
+    @Column(name = "descricao", length = 250)
     private String descricao;
 
+    @Column(name = "quantidade")
     private Integer quantidade;
 
+    @Column(name = "quantidade_minima")
     private Integer quantidade_minima;
 
+    @Column(name = "preco_compra")
     private BigDecimal preco_compra;
 
+    @Column(name = "preco_venda")
     private BigDecimal preco_venda;
 
+    @Column(name = "codigo_barras", length = 30)
     private String codigo_barras;
 }

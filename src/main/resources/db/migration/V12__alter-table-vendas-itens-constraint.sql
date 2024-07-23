@@ -1,0 +1,1 @@
+alter table if exists tbl_vendas_itens add constraint UK_3rxi3eb73wdryyulhr2ct5ql5 unique (itens_id_itens_venda);

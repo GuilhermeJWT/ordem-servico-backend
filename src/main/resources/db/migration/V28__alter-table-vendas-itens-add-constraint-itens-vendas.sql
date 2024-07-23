@@ -1,0 +1,1 @@
+alter table if exists tbl_vendas_itens add constraint FKje2lvkohggusn3rvpx9ro4gvd foreign key (itens_id_itens_venda) references tbl_itens_vendas
