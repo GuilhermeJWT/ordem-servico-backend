@@ -24,17 +24,17 @@ public class ModelOrdemServico implements Serializable{
     @SequenceGenerator(name = "id_ordem_servico_gen", sequenceName = "ordemservico_seq", initialValue = 2, allocationSize = 1)
     private Long id;
 
-    @Column(name = "defeito")
+    @Column(name = "defeito", length = 250)
     private String defeito;
 
-    @Column(name = "descricao")
+    @Column(name = "descricao", length = 250)
     private String descricao;
 
-    @Column(name = "laudo_tecnico")
+    @Column(name = "laudo_tecnico", length = 250)
     private String laudo_tecnico;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", length = 30)
     private Status status;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
