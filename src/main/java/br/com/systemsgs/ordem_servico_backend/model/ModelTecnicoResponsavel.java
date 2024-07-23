@@ -23,6 +23,6 @@ public class ModelTecnicoResponsavel implements Serializable {
     @SequenceGenerator(name = "id_gen_tecnico", sequenceName = "tecnico_seq", initialValue = 2, allocationSize = 1)
     private Long id;
 
-    @Column(name = "nome")
+    @Column(name = "nome", length = 150)
     private String nome;
 }
