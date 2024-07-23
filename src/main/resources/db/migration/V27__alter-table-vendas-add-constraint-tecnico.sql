@@ -1,0 +1,1 @@
+alter table if exists tbl_vendas add constraint FK2k804vhhe15v1jll7fce4gb4u foreign key (id_tecnico_responsavel) references tbl_tecnico_responsavel

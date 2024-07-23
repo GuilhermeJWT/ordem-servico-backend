@@ -1,0 +1,1 @@
+alter table if exists tbl_vendas add constraint FKj2fbtoccko7h5b4y8d31271ra foreign key (id_cliente) references tbl_clientes
