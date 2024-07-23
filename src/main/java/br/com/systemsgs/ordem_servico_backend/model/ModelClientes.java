@@ -23,12 +23,16 @@ public class ModelClientes implements Serializable {
     @SequenceGenerator(name = "id_gen", sequenceName = "clientes_seq", initialValue = 2, allocationSize = 1)
     private Long id;
 
+    @Column(name = "nome")
     private String nome;
 
+    @Column(name = "cpf")
     private String cpf;
 
+    @Column(name = "celular")
     private String celular;
 
+    @Column(name = "email")
     private String email;
 
     @Embedded
