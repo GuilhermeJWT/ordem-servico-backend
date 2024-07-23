@@ -1,0 +1,1 @@
+create sequence vendas_seq start with 2 increment by 1
