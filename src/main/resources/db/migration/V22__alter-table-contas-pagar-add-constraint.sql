@@ -1,0 +1,1 @@
+alter table if exists tbl_contas_pagar add constraint FKj1e3jquanfdcm6c2f1y9avv21 foreign key (id_fornecedor) references tbl_fornecedor

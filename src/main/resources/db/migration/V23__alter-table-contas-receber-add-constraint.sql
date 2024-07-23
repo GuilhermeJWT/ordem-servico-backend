@@ -1,0 +1,1 @@
+alter table if exists tbl_contas_receber add constraint FKpmm25ketip8mntwoe101ybvci foreign key (id_cliente) references tbl_clientes
