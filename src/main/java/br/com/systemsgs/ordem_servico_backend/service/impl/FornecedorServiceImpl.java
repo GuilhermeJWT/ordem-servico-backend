@@ -5,6 +5,7 @@ import br.com.systemsgs.ordem_servico_backend.exception.errors.FornecedorNaoEnco
 import br.com.systemsgs.ordem_servico_backend.model.ModelFornecedor;
 import br.com.systemsgs.ordem_servico_backend.repository.FornecedoresRepository;
 import br.com.systemsgs.ordem_servico_backend.service.FornecedorService;
+import br.com.systemsgs.ordem_servico_backend.util.UtilFornecedores;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -24,6 +25,9 @@ public class FornecedorServiceImpl implements FornecedorService {
 
     @Autowired
     private FornecedoresRepository fornecedoresRepository;
+
+    @Autowired
+    private UtilFornecedores utilFornecedores;
 
     @Autowired
     private ModelMapper mapper;
@@ -57,17 +61,10 @@ public class FornecedorServiceImpl implements FornecedorService {
     @CachePut(value = "fornecedores", key = "#id")
     @Override
     public ModelFornecedor updateFornecedor(Long id, ModelFornecedorDTO modelFornecedorDTO) {
-        ModelFornecedor fornecedorPesquisado = pesquisaFornecedorPeloId(id);
+        ModelFornecedor fornecedorPesquisado = utilFornecedores.pesquisarFornecedorPeloId(id);
         mapper.map(modelFornecedorDTO, ModelFornecedor.class);
         BeanUtils.copyProperties(modelFornecedorDTO, fornecedorPesquisado, "id");
 
         return fornecedoresRepository.save(fornecedorPesquisado);
-    }
-
-    public ModelFornecedor pesquisaFornecedorPeloId(Long id){
-       ModelFornecedor pesquisaFornecedor = fornecedoresRepository.findById(id)
-               .orElseThrow(() -> new FornecedorNaoEncontradoException());
-
-       return pesquisaFornecedor;
     }
 }
