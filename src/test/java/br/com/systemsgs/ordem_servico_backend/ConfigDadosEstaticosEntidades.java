@@ -2,7 +2,10 @@ package br.com.systemsgs.ordem_servico_backend;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelItensVendasDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelUserDTO;
+import br.com.systemsgs.ordem_servico_backend.enums.FormaPagamento;
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
+import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
+import br.com.systemsgs.ordem_servico_backend.enums.TipoPessoa;
 import br.com.systemsgs.ordem_servico_backend.model.*;
 import lombok.Getter;
 import org.springframework.test.context.ActiveProfiles;
@@ -80,12 +83,40 @@ public class ConfigDadosEstaticosEntidades {
         return responseItensVendas;
     }
 
+    public ModelContasPagar dadosContasPagar(){
+        ModelContasPagar contasPagarResponse = new ModelContasPagar();
+
+        contasPagarResponse.setId(1L);
+        contasPagarResponse.setData_vencimento(new Date("2024/11/25"));
+        contasPagarResponse.setData_emissao(new Date("24/25/07"));
+        contasPagarResponse.setValor(new BigDecimal(100));
+        contasPagarResponse.setObservacao("Pagar o Fornecedor Guilherme");
+        contasPagarResponse.setFormaPagamento(FormaPagamento.BOLETO);
+        contasPagarResponse.setStatusContas(StatusContas.EM_ABERTO);
+        contasPagarResponse.setFornecedor(dadosFornecedores());
+
+        return contasPagarResponse;
+    }
+
+    public ModelFornecedor dadosFornecedores(){
+        ModelFornecedor fornecedorResponse = new ModelFornecedor();
+
+        fornecedorResponse.setId(1L);
+        fornecedorResponse.setNome("Fornecedor Guilherme");
+        fornecedorResponse.setNomeFantasia("Fornecedor Guilherme LTDA");
+        fornecedorResponse.setTipoPessoa(TipoPessoa.PESSOA_JURIDICA);
+        fornecedorResponse.setCnpj("58.472.837/0001-13"); // gerado no site: Gerador de CNPJ
+        fornecedorResponse.setEndereco(dadosEndereco());
+
+        return fornecedorResponse;
+    }
+
     public ModelClientes dadosClientes(){
         ModelClientes clienteResponse = new ModelClientes();
 
         clienteResponse.setId(1L);
         clienteResponse.setNome("Guilherme Santos");
-        clienteResponse.setCpf("819.945.180-73"); //gerado no GERADOR DE CPF
+        clienteResponse.setCpf("819.945.180-73"); //gerado no site: GERADOR DE CPF
         clienteResponse.setCelular("19 99999999");
         clienteResponse.setEmail("guilherme@gmail.com");
         clienteResponse.setEndereco(dadosEndereco());
