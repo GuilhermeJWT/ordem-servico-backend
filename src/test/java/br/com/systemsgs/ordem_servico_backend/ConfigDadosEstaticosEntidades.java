@@ -2,6 +2,7 @@ package br.com.systemsgs.ordem_servico_backend;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelItensVendasDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelUserDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.response.DashboardResponse;
 import br.com.systemsgs.ordem_servico_backend.enums.FormaPagamento;
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
 import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
@@ -13,10 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @ActiveProfiles(value = "test")
 @Getter
@@ -59,6 +57,23 @@ public class ConfigDadosEstaticosEntidades {
         vendasResponse.setItens(dadosItensVendas());
 
         return vendasResponse;
+    }
+
+    public DashboardResponse dadosDashboard(){
+        DashboardResponse dashboardResponse = new DashboardResponse();
+
+        dashboardResponse.setTotal_vendas(Optional.of(new BigDecimal(3500)));
+        dashboardResponse.setQuantidadeItensVendidosTodoPeriodo(Optional.of(150));
+        dashboardResponse.setQuantidadeClientesCadastrados(Optional.of(60));
+        dashboardResponse.setQuantidadeProdutosEstoqueAtual(Optional.of(580));
+        dashboardResponse.setQuantidadeOrdemServicoRealizadas(Optional.of(50));
+        dashboardResponse.setQuantidadeOrdensServicoEmAndamento(Optional.of(5));
+        dashboardResponse.setTotalContasPagar(Optional.of(new BigDecimal(3500)));
+        dashboardResponse.setTotalContasReceber(Optional.of(new BigDecimal(4500)));
+        dashboardResponse.setQuantidadeContasReceberInadimplentes(Optional.of(5));
+
+        return dashboardResponse;
+
     }
 
     public List<ModelItensVendas> dadosItensVendas(){
