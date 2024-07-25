@@ -50,18 +50,6 @@ public class ExceptionControllerAdvice {
         return new ApiRestErrors(new MetodoHttpNaoSuportadoException().getMessage());
     }
 
-    @ExceptionHandler(TokenInvalidoException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ApiRestErrors tokenInvalidoExpirado(){
-        return new ApiRestErrors(new TokenInvalidoException().getMessage());
-    }
-
-    @ExceptionHandler(UsuarioNaoEncontradoException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiRestErrors usuarioSenhaInvalidosException(){
-        return new ApiRestErrors(new UsuarioNaoEncontradoException().getMessage());
-    }
-
     @ExceptionHandler(FornecedorNaoEncontradoException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiRestErrors fornecedorNaoEncontradoException(){
@@ -102,11 +90,5 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestErrors emailDuplicadoException(EmailDuplicadoException emailDuplicadoException){
         return new ApiRestErrors(emailDuplicadoException.getMessage());
-    }
-
-    @ExceptionHandler(TokenInexistenteException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ApiRestErrors tokenInexistenteException(TokenInexistenteException tokenInexistenteException){
-        return new ApiRestErrors(tokenInexistenteException.getMessage());
     }
 }
