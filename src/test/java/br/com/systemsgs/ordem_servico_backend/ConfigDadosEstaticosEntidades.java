@@ -73,7 +73,6 @@ public class ConfigDadosEstaticosEntidades {
         dashboardResponse.setQuantidadeContasReceberInadimplentes(Optional.of(5));
 
         return dashboardResponse;
-
     }
 
     public List<ModelItensVendas> dadosItensVendas(){
