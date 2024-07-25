@@ -5,6 +5,6 @@ public class ContasPagarReceberNaoEncontradaException extends RuntimeException{
     private static final long serialVersionUID = 1L;
 
     public ContasPagarReceberNaoEncontradaException(){
-        super("Conta não Encontrada.");
+        super("Conta não Encontrada!");
     }
 }

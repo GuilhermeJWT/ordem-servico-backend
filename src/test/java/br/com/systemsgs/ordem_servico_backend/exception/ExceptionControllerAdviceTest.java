@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.exception;
 
+import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles(value = "test")
 @SpringBootTest
-class ExceptionControllerAdviceTest{
+class ExceptionControllerAdviceTest extends ConfigDadosEstaticosEntidades {
 
     @InjectMocks
     private ExceptionControllerAdvice exceptionControllerAdvice;
@@ -81,6 +82,42 @@ class ExceptionControllerAdviceTest{
     void testPayloadVazioException() {
         ApiRestErrors apiRestErrors = exceptionControllerAdvice.
                 httpMessageNotReadableException();
+
+        retornaAssertException(apiRestErrors);
+    }
+
+    @DisplayName("Retorna Exception - Campos Duplicados - 422")
+    @Test
+    void testCamposDuplicadosException() {
+        ApiRestErrors apiRestErrors = exceptionControllerAdvice.
+                camposDuplicadoException();
+
+        retornaAssertException(apiRestErrors);
+    }
+
+    @DisplayName("Retorna Exception - Conta não Encontrada - 404")
+    @Test
+    void contasPagarReceberException() {
+        ApiRestErrors apiRestErrors = exceptionControllerAdvice.
+                contasPagarReceberNaoEncontradaException(new ContasPagarReceberNaoEncontradaException());
+
+        retornaAssertException(apiRestErrors);
+    }
+
+    @DisplayName("Retorna Exception - Fornecedor não Encontrado - 404")
+    @Test
+    void fornecedorNaoEncontradoException() {
+        ApiRestErrors apiRestErrors = exceptionControllerAdvice.
+                fornecedorNaoEncontradoException();
+
+        retornaAssertException(apiRestErrors);
+    }
+
+    @DisplayName("Retorna Exception - Método Http não Suportado - 400")
+    @Test
+    void metodoHttpNaoSuportadoException() {
+        ApiRestErrors apiRestErrors = exceptionControllerAdvice.
+                metodoHttpNaoSuportadoException();
 
         retornaAssertException(apiRestErrors);
     }

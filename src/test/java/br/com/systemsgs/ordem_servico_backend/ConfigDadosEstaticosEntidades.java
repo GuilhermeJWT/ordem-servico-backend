@@ -2,7 +2,11 @@ package br.com.systemsgs.ordem_servico_backend;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelItensVendasDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelUserDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.response.DashboardResponse;
+import br.com.systemsgs.ordem_servico_backend.enums.FormaPagamento;
 import br.com.systemsgs.ordem_servico_backend.enums.Status;
+import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
+import br.com.systemsgs.ordem_servico_backend.enums.TipoPessoa;
 import br.com.systemsgs.ordem_servico_backend.model.*;
 import lombok.Getter;
 import org.springframework.test.context.ActiveProfiles;
@@ -10,10 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @ActiveProfiles(value = "test")
 @Getter
@@ -26,11 +27,19 @@ public class ConfigDadosEstaticosEntidades {
         String recursoNaoEncontrado = "Recurso não Encontrado!";
         String vendaNaoEncontrada = "Venda não Encontrada!";
         String tecnicoNaoEncontrado = "Técnico Responsavel não Encontrado!";
+        String camposDuplicados = "Campos já cadastrados na base de dados, Por Favor, Informe outros!";
+        String contaNaoEncontrada = "Conta não Encontrada!";
+        String fornecedorNaoEncontrado = "Fornecedor não Encontrado!";
+        String metodoHttpNaoSuportado = "Tipo de solicitação HTTP incorreta, reveja qual o tipo correto: 'GET' 'POST' 'PUT' 'DELETE' ou outro!";
 
         msgErro.add(clienteNaoEncontrado);
         msgErro.add(recursoNaoEncontrado);
         msgErro.add(vendaNaoEncontrada);
         msgErro.add(tecnicoNaoEncontrado);
+        msgErro.add(camposDuplicados);
+        msgErro.add(contaNaoEncontrada);
+        msgErro.add(fornecedorNaoEncontrado);
+        msgErro.add(metodoHttpNaoSuportado);
 
         return msgErro;
     }
@@ -48,6 +57,22 @@ public class ConfigDadosEstaticosEntidades {
         vendasResponse.setItens(dadosItensVendas());
 
         return vendasResponse;
+    }
+
+    public DashboardResponse dadosDashboard(){
+        DashboardResponse dashboardResponse = new DashboardResponse();
+
+        dashboardResponse.setTotal_vendas(Optional.of(new BigDecimal(3500)));
+        dashboardResponse.setQuantidadeItensVendidosTodoPeriodo(Optional.of(150));
+        dashboardResponse.setQuantidadeClientesCadastrados(Optional.of(60));
+        dashboardResponse.setQuantidadeProdutosEstoqueAtual(Optional.of(580));
+        dashboardResponse.setQuantidadeOrdemServicoRealizadas(Optional.of(50));
+        dashboardResponse.setQuantidadeOrdensServicoEmAndamento(Optional.of(5));
+        dashboardResponse.setTotalContasPagar(Optional.of(new BigDecimal(3500)));
+        dashboardResponse.setTotalContasReceber(Optional.of(new BigDecimal(4500)));
+        dashboardResponse.setQuantidadeContasReceberInadimplentes(Optional.of(5));
+
+        return dashboardResponse;
     }
 
     public List<ModelItensVendas> dadosItensVendas(){
@@ -72,12 +97,55 @@ public class ConfigDadosEstaticosEntidades {
         return responseItensVendas;
     }
 
+    public ModelContasPagar dadosContasPagar(){
+        ModelContasPagar contasPagarResponse = new ModelContasPagar();
+
+        contasPagarResponse.setId(1L);
+        contasPagarResponse.setData_vencimento(new Date("2024/11/25"));
+        contasPagarResponse.setData_emissao(new Date("24/25/07"));
+        contasPagarResponse.setValor(new BigDecimal(100));
+        contasPagarResponse.setObservacao("Pagar o Fornecedor Guilherme");
+        contasPagarResponse.setFormaPagamento(FormaPagamento.BOLETO);
+        contasPagarResponse.setStatusContas(StatusContas.EM_ABERTO);
+        contasPagarResponse.setFornecedor(dadosFornecedores());
+
+        return contasPagarResponse;
+    }
+
+    public ModelContasReceber dadosContasReceber(){
+        ModelContasReceber contasReceberResponse = new ModelContasReceber();
+
+        contasReceberResponse.setId(1L);
+        contasReceberResponse.setData_vencimento(new Date("2024/11/25"));
+        contasReceberResponse.setValor(new BigDecimal(100));
+        contasReceberResponse.setData_emissao(new Date("24/25/07"));
+        contasReceberResponse.setObservacao("Receber uma compra de Equipamentos do Cliente Guilherme");
+        contasReceberResponse.setFormaPagamento(FormaPagamento.CARTAO_CREDITO);
+        contasReceberResponse.setStatusContasReceber(StatusContas.ATRASADA);
+        contasReceberResponse.setCliente(dadosClientes());
+
+        return contasReceberResponse;
+    }
+
+    public ModelFornecedor dadosFornecedores(){
+        ModelFornecedor fornecedorResponse = new ModelFornecedor();
+
+        fornecedorResponse.setId(1L);
+        fornecedorResponse.setNome("Fornecedor Guilherme");
+        fornecedorResponse.setNomeFantasia("Fornecedor Guilherme LTDA");
+        fornecedorResponse.setTipoPessoa(TipoPessoa.PESSOA_JURIDICA);
+        fornecedorResponse.setCnpj("58.472.837/0001-13"); // gerado no site: Gerador de CNPJ
+        fornecedorResponse.setEndereco(dadosEndereco());
+
+        return fornecedorResponse;
+    }
+
     public ModelClientes dadosClientes(){
         ModelClientes clienteResponse = new ModelClientes();
 
         clienteResponse.setId(1L);
         clienteResponse.setNome("Guilherme Santos");
-        clienteResponse.setCpf("819.945.180-73"); //gerado no GERADOR DE CPF
+        clienteResponse.setCpf("819.945.180-73"); //gerado no site: GERADOR DE CPF
         clienteResponse.setCelular("19 99999999");
         clienteResponse.setEmail("guilherme@gmail.com");
         clienteResponse.setEndereco(dadosEndereco());
