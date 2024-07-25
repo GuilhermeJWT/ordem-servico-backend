@@ -98,6 +98,21 @@ public class ConfigDadosEstaticosEntidades {
         return contasPagarResponse;
     }
 
+    public ModelContasReceber dadosContasReceber(){
+        ModelContasReceber contasReceberResponse = new ModelContasReceber();
+
+        contasReceberResponse.setId(1L);
+        contasReceberResponse.setData_vencimento(new Date("2024/11/25"));
+        contasReceberResponse.setValor(new BigDecimal(100));
+        contasReceberResponse.setData_emissao(new Date("24/25/07"));
+        contasReceberResponse.setObservacao("Receber uma compra de Equipamentos do Cliente Guilherme");
+        contasReceberResponse.setFormaPagamento(FormaPagamento.CARTAO_CREDITO);
+        contasReceberResponse.setStatusContasReceber(StatusContas.ATRASADA);
+        contasReceberResponse.setCliente(dadosClientes());
+
+        return contasReceberResponse;
+    }
+
     public ModelFornecedor dadosFornecedores(){
         ModelFornecedor fornecedorResponse = new ModelFornecedor();
 
