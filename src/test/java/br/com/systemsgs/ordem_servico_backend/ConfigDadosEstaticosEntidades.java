@@ -26,11 +26,19 @@ public class ConfigDadosEstaticosEntidades {
         String recursoNaoEncontrado = "Recurso não Encontrado!";
         String vendaNaoEncontrada = "Venda não Encontrada!";
         String tecnicoNaoEncontrado = "Técnico Responsavel não Encontrado!";
+        String camposDuplicados = "Campos já cadastrados na base de dados, Por Favor, Informe outros!";
+        String contaNaoEncontrada = "Conta não Encontrada!";
+        String fornecedorNaoEncontrado = "Fornecedor não Encontrado!";
+        String metodoHttpNaoSuportado = "Tipo de solicitação HTTP incorreta, reveja qual o tipo correto: 'GET' 'POST' 'PUT' 'DELETE' ou outro!";
 
         msgErro.add(clienteNaoEncontrado);
         msgErro.add(recursoNaoEncontrado);
         msgErro.add(vendaNaoEncontrada);
         msgErro.add(tecnicoNaoEncontrado);
+        msgErro.add(camposDuplicados);
+        msgErro.add(contaNaoEncontrada);
+        msgErro.add(fornecedorNaoEncontrado);
+        msgErro.add(metodoHttpNaoSuportado);
 
         return msgErro;
     }
