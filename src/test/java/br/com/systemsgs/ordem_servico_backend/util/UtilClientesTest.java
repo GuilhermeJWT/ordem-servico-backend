@@ -84,6 +84,18 @@ class UtilClientesTest extends ConfigDadosEstaticosEntidades{
         assertEquals(response, dadosDashboard().getQuantidadeClientesCadastrados());
     }
 
+    @DisplayName("Teste para retornar NullPointerException caso não tenha dados")
+    @Test
+    void testSomasomaQuantidadeClientesCadastradosNullPointerException(){
+        when(clienteRepository.somaClientesCadastrados()).thenThrow(new NullPointerException());
+
+        try{
+            var response = utilClientes.somaQuantidadeClientesCadastrados();
+        }catch (NullPointerException exception){
+            assertEquals(NullPointerException.class, exception.getClass());
+        }
+    }
+
     private void startClienteOptional(){
         modelClientesOptional = Optional.of(new ModelClientes(
                 dadosClientes().getId(),
