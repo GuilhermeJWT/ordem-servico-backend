@@ -226,4 +226,10 @@ public class ConfigDadosEstaticosEntidades {
 
         return descricaoProdutosResponse;
     }
+
+    public List<Long> dadosIds(){
+        List<Long> idsResponse = Arrays.asList(1L, 2L, 3L);
+
+        return idsResponse;
+    }
 }

@@ -80,6 +80,56 @@ class UtilOrdemServicoTest extends ConfigDadosEstaticosEntidades{
         }
     }
 
+    @DisplayName("Teste para retornar a quantidade de OS realizadas para o Dashboard")
+    @Test
+    void testQuantidadeOsRealizadas(){
+        when(ordemServicoRepository.quantidadeOsRealizadas())
+                .thenReturn(dadosDashboard().getQuantidadeOrdemServicoRealizadas());
+
+        Optional<Integer> response = utilOrdemServico.quantidadeOsRealizadas();
+
+        assertNotNull(response);
+        assertTrue(response.isPresent());
+        assertEquals(response, dadosDashboard().getQuantidadeOrdemServicoRealizadas());
+    }
+
+    @DisplayName("Teste para retornar NullPointerException caso não tenha dados")
+    @Test
+    void testQuantidadeOsRealizadasNullPointerException() {
+        when(ordemServicoRepository.quantidadeOsRealizadas()).thenThrow(new NullPointerException());
+
+        try {
+            var response = utilOrdemServico.quantidadeOsRealizadas();
+        }catch (NullPointerException exception){
+            assertEquals(NullPointerException.class, exception.getClass());
+        }
+    }
+
+    @DisplayName("Teste para retornar a quantidade de OS em Andamento para o Dashboard")
+    @Test
+    void testQuantidadeOsStatusEmAndamento(){
+        when(ordemServicoRepository.quantidadeOsEmAndamento())
+                .thenReturn(dadosDashboard().getQuantidadeOrdensServicoEmAndamento());
+
+        Optional<Integer> response = utilOrdemServico.quantidadeOsStatusEmAndamento();
+
+        assertNotNull(response);
+        assertTrue(response.isPresent());
+        assertEquals(response, dadosDashboard().getQuantidadeOrdensServicoEmAndamento());
+    }
+
+    @DisplayName("Teste para retornar NullPointerException caso não tenha dados")
+    @Test
+    void testQuantidadeOsStatusEmAndamentoNullPointerException() {
+        when(ordemServicoRepository.quantidadeOsEmAndamento()).thenThrow(new NullPointerException());
+
+        try {
+            var response = utilOrdemServico.quantidadeOsStatusEmAndamento();
+        }catch (NullPointerException exception){
+            assertEquals(NullPointerException.class, exception.getClass());
+        }
+    }
+
     private void startOrdemServicoOptinal(){
         modelOrdemServicoOptional = Optional.of(new ModelOrdemServico(
                 dadosOrdemServico().getId(),

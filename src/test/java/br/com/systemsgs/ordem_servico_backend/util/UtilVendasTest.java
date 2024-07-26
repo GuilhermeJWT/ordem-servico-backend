@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,6 +67,55 @@ class UtilVendasTest extends ConfigDadosEstaticosEntidades {
         }catch (Exception exception){
             assertEquals(VendaNaoEncontradaException.class, exception.getClass());
             assertEquals(mensagemErro().get(2), exception.getMessage());
+        }
+    }
+
+    @DisplayName("Teste para calcula o Total de Vendas para o Dashboard")
+    @Test
+    void testCalculaTotalVendas(){
+        when(vendasRepository.calculaTotalVendasTodoPeriodo()).thenReturn(dadosDashboard().getTotal_vendas());
+
+        Optional<BigDecimal> response = utilVendas.calculaTotalVendas();
+
+        assertNotNull(response);
+        assertTrue(response.isPresent());
+        assertEquals(response, dadosDashboard().getTotal_vendas());
+    }
+
+    @DisplayName("Teste para retornar NullPointerException caso não tenha dados")
+    @Test
+    void testCalculaTotalVendasNullPointerException() {
+        when(vendasRepository.calculaTotalVendasTodoPeriodo()).thenThrow(new NullPointerException());
+
+        try {
+            var response = utilVendas.calculaTotalVendas();
+        }catch (NullPointerException exception){
+            assertEquals(NullPointerException.class, exception.getClass());
+        }
+    }
+
+    @DisplayName("Teste para somar a quantidade de Itens já vendidos para o Dashboard")
+    @Test
+    void testSomaTotalItensVendidosTodoPeriodo(){
+        when(vendasRepository.calculaTotalItensVendidosTodoPeriodo())
+                .thenReturn(dadosDashboard().getQuantidadeItensVendidosTodoPeriodo());
+
+        Optional<Integer> response = utilVendas.somaTotalItensVendidosTodoPeriodo();
+
+        assertNotNull(response);
+        assertTrue(response.isPresent());
+        assertEquals(response, dadosDashboard().getQuantidadeItensVendidosTodoPeriodo());
+    }
+
+    @DisplayName("Teste para retornar NullPointerException caso não tenha dados")
+    @Test
+    void testSomaTotalItensVendidosTodoPeriodoNullPointerException() {
+        when(vendasRepository.calculaTotalItensVendidosTodoPeriodo()).thenThrow(new NullPointerException());
+
+        try {
+            var response = utilVendas.somaTotalItensVendidosTodoPeriodo();
+        }catch (NullPointerException exception){
+            assertEquals(NullPointerException.class, exception.getClass());
         }
     }
 

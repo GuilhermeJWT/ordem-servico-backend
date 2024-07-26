@@ -72,6 +72,30 @@ class UtilClientesTest extends ConfigDadosEstaticosEntidades{
         }
     }
 
+    @DisplayName("Teste para retornar a Quantidade de Clientes Cadastrados")
+    @Test
+    void testSomasomaQuantidadeClientesCadastrados(){
+        when(clienteRepository.somaClientesCadastrados()).thenReturn(dadosDashboard().getQuantidadeClientesCadastrados());
+
+        Optional<Integer> response = utilClientes.somaQuantidadeClientesCadastrados();
+
+        assertNotNull(response);
+        assertTrue(response.isPresent());
+        assertEquals(response, dadosDashboard().getQuantidadeClientesCadastrados());
+    }
+
+    @DisplayName("Teste para retornar NullPointerException caso não tenha dados")
+    @Test
+    void testSomasomaQuantidadeClientesCadastradosNullPointerException(){
+        when(clienteRepository.somaClientesCadastrados()).thenThrow(new NullPointerException());
+
+        try{
+            var response = utilClientes.somaQuantidadeClientesCadastrados();
+        }catch (NullPointerException exception){
+            assertEquals(NullPointerException.class, exception.getClass());
+        }
+    }
+
     private void startClienteOptional(){
         modelClientesOptional = Optional.of(new ModelClientes(
                 dadosClientes().getId(),
