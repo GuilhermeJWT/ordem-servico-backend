@@ -72,6 +72,18 @@ class UtilClientesTest extends ConfigDadosEstaticosEntidades{
         }
     }
 
+    @DisplayName("Teste para retornar a Quantidade de Clientes Cadastrados")
+    @Test
+    void testSomasomaQuantidadeClientesCadastrados(){
+        when(clienteRepository.somaClientesCadastrados()).thenReturn(dadosDashboard().getQuantidadeClientesCadastrados());
+
+        Optional<Integer> response = utilClientes.somaQuantidadeClientesCadastrados();
+
+        assertNotNull(response);
+        assertTrue(response.isPresent());
+        assertEquals(response, dadosDashboard().getQuantidadeClientesCadastrados());
+    }
+
     private void startClienteOptional(){
         modelClientesOptional = Optional.of(new ModelClientes(
                 dadosClientes().getId(),
