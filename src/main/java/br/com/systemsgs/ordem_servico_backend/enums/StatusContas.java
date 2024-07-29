@@ -9,7 +9,7 @@ public enum StatusContas {
     ATRASADA,
     PAUSADA,
     CANCELADA,
-    EXPIRADA,
+    VENCIDA,
     INADIMPLENTE,
     AGUARDANDO_REEMBOLSO
 

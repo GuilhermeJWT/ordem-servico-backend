@@ -18,15 +18,15 @@ public class ContasReceberExpiradasScheduled {
      //Todo dia as 7 da manhã, o Job será executado para listar as Contas a Receber vencida, e atualizar para = EXPIRADA
     @Scheduled(cron = "0 0 7 * * *")
     public void verificaContasReceberVencidas() {
-        contasReceberExpiradas();
+        contasReceberVencidas();
     }
 
-    public void contasReceberExpiradas(){
+    public void contasReceberVencidas(){
         List<ModelContasReceber> contasReceberVencidasHoje = contasReceberRepository.pesquisaContasReceberExpiradas();
 
         if(!contasReceberVencidasHoje.isEmpty()){
             contasReceberVencidasHoje.stream()
-                    .forEach(status -> status.setStatusContasReceber(StatusContas.EXPIRADA));
+                    .forEach(status -> status.setStatusContasReceber(StatusContas.VENCIDA));
 
             contasReceberRepository.saveAll(contasReceberVencidasHoje);
         }
