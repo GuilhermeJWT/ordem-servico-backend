@@ -60,6 +60,7 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
         when(utilContasPagar.totalContasPagar()).thenReturn(dashboardResponse.getTotalContasPagar());
         when(utilContasReceber.totalContasReceber()).thenReturn(dashboardResponse.getTotalContasReceber());
         when(utilContasReceber.quantidadeContasInadimplentes()).thenReturn(dashboardResponse.getQuantidadeContasReceberInadimplentes());
+        when(utilContasReceber.quantidadeContasReceberVencidas()).thenReturn(dashboardResponse.getQuantidadeContasReceberVencidas());
 
         DashboardResponse response = dashboardServiceImpl.retornaDadosDashboard();
 
@@ -72,6 +73,7 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
         assertEquals(dadosDashboard().getTotalContasPagar(), response.getTotalContasPagar());
         assertEquals(dadosDashboard().getTotalContasReceber(), response.getTotalContasReceber());
         assertEquals(dadosDashboard().getQuantidadeContasReceberInadimplentes(), response.getQuantidadeContasReceberInadimplentes());
+        assertEquals(dadosDashboard().getQuantidadeContasReceberVencidas(), response.getQuantidadeContasReceberVencidas());
     }
 
     private void startDashboard(){
@@ -84,7 +86,8 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
                 dadosDashboard().getQuantidadeOrdensServicoEmAndamento(),
                 dadosDashboard().getTotalContasPagar(),
                 dadosDashboard().getTotalContasReceber(),
-                dadosDashboard().getQuantidadeContasReceberInadimplentes()
+                dadosDashboard().getQuantidadeContasReceberInadimplentes(),
+                dadosDashboard().getQuantidadeContasReceberVencidas()
         );
     }
 }

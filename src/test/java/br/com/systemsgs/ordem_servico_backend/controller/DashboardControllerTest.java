@@ -57,6 +57,7 @@ class DashboardControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(dadosDashboard().getTotalContasPagar(), response.getBody().getTotalContasPagar());
         assertEquals(dadosDashboard().getTotalContasReceber(), response.getBody().getTotalContasReceber());
         assertEquals(dadosDashboard().getQuantidadeContasReceberInadimplentes(), response.getBody().getQuantidadeContasReceberInadimplentes());
+        assertEquals(dadosDashboard().getQuantidadeContasReceberVencidas(), response.getBody().getQuantidadeContasReceberVencidas());
     }
 
     private void startDashboard(){
@@ -69,7 +70,8 @@ class DashboardControllerTest extends ConfigDadosEstaticosEntidades {
           dadosDashboard().getQuantidadeOrdensServicoEmAndamento(),
           dadosDashboard().getTotalContasPagar(),
           dadosDashboard().getTotalContasReceber(),
-          dadosDashboard().getQuantidadeContasReceberInadimplentes()
+          dadosDashboard().getQuantidadeContasReceberInadimplentes(),
+          dadosDashboard().getQuantidadeContasReceberVencidas()
         );
     }
 }

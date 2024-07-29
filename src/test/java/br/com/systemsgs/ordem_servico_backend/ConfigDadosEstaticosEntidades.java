@@ -71,6 +71,7 @@ public class ConfigDadosEstaticosEntidades {
         dashboardResponse.setTotalContasPagar(Optional.of(new BigDecimal(3500)));
         dashboardResponse.setTotalContasReceber(Optional.of(new BigDecimal(4500)));
         dashboardResponse.setQuantidadeContasReceberInadimplentes(Optional.of(5));
+        dashboardResponse.setQuantidadeContasReceberVencidas(Optional.of(3));
 
         return dashboardResponse;
     }
