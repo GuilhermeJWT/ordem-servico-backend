@@ -20,4 +20,8 @@ public class UtilContasReceber {
     public Optional<Integer> quantidadeContasInadimplentes() {
         return contasReceberRepository.quantidadeContasInadimplentes();
     }
+
+    public Optional<Integer> quantidadeContasReceberVencidas() {
+        return contasReceberRepository.quantidadeContasReceberVencidas();
+    }
 }

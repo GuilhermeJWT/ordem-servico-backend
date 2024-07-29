@@ -42,4 +42,7 @@ public class DashboardResponse {
     @JsonProperty("quantidade_contas_receber_inadimplentes")
     private Optional<Integer> quantidadeContasReceberInadimplentes;
 
+    @JsonProperty("quantidade_contas_receber_vencidas")
+    private Optional<Integer> quantidadeContasReceberVencidas;
+
 }

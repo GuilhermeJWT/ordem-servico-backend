@@ -44,6 +44,7 @@ public class DashboardServiceImpl implements DashboardService {
         var totalContasPagar = utilContasPagar.totalContasPagar();
         var totalContasReceber = utilContasReceber.totalContasReceber();
         var quantidadeContasReceberInadimplentes = utilContasReceber.quantidadeContasInadimplentes();
+        var quantidadeContasReceberVencidas = utilContasReceber.quantidadeContasReceberVencidas();
 
         dashboardResponse.setTotal_vendas(totalVendas);
         dashboardResponse.setQuantidadeItensVendidosTodoPeriodo(totalItensVendidos);
@@ -54,6 +55,7 @@ public class DashboardServiceImpl implements DashboardService {
         dashboardResponse.setTotalContasPagar(totalContasPagar);
         dashboardResponse.setTotalContasReceber(totalContasReceber);
         dashboardResponse.setQuantidadeContasReceberInadimplentes(quantidadeContasReceberInadimplentes);
+        dashboardResponse.setQuantidadeContasReceberVencidas(quantidadeContasReceberVencidas);
 
         return dashboardResponse;
     }
