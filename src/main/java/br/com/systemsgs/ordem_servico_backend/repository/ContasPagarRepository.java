@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,4 +15,6 @@ public interface ContasPagarRepository extends JpaRepository<ModelContasPagar, L
     @Query(value = "SELECT SUM(v.valor) FROM tbl_contas_pagar v", nativeQuery = true)
     Optional<BigDecimal> totalContasPagar();
 
+    @Query(value = "SELECT * FROM tbl_contas_pagar WHERE data_vencimento = CURRENT_DATE", nativeQuery = true)
+    List<ModelContasPagar> pesquisaContasPagarExpiradas();
 }
