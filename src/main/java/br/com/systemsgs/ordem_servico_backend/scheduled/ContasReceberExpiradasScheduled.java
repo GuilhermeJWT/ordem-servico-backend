@@ -15,7 +15,7 @@ public class ContasReceberExpiradasScheduled {
     @Autowired
     private ContasReceberRepository contasReceberRepository;
 
-     //Todo dia as 7 da manhã, o Job será executado para listar as Contas a Receber vencida, e atualizar para = EXPIRADA
+     //Todo dia as 07:00 da manhã, o Job será executado para listar as Contas a Receber vencida, e atualizar para = VENCIDA
     @Scheduled(cron = "0 0 7 * * *")
     public void verificaContasReceberVencidas() {
         contasReceberVencidas();
