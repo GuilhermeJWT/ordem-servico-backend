@@ -17,4 +17,7 @@ public interface ContasPagarRepository extends JpaRepository<ModelContasPagar, L
 
     @Query(value = "SELECT * FROM tbl_contas_pagar WHERE data_vencimento = CURRENT_DATE", nativeQuery = true)
     List<ModelContasPagar> pesquisaContasPagarExpiradas();
+
+    @Query(value = "SELECT COUNT(*) from tbl_contas_pagar where status_conta_pagar = 'VENCIDA'", nativeQuery = true)
+    Optional<Integer> quantidadeContasPagarVencidas();
 }

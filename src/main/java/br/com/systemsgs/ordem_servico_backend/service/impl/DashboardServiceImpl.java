@@ -42,6 +42,7 @@ public class DashboardServiceImpl implements DashboardService {
         var quantidadeOrdemServico = utilOrdemServico.quantidadeOsRealizadas();
         var quantidadeOsEmAndamento = utilOrdemServico.quantidadeOsStatusEmAndamento();
         var totalContasPagar = utilContasPagar.totalContasPagar();
+        var quantidadeContasPagarVencidas = utilContasPagar.quantidadeContasPagarVencidas();
         var totalContasReceber = utilContasReceber.totalContasReceber();
         var quantidadeContasReceberInadimplentes = utilContasReceber.quantidadeContasInadimplentes();
         var quantidadeContasReceberVencidas = utilContasReceber.quantidadeContasReceberVencidas();
@@ -53,6 +54,7 @@ public class DashboardServiceImpl implements DashboardService {
         dashboardResponse.setQuantidadeOrdemServicoRealizadas(quantidadeOrdemServico);
         dashboardResponse.setQuantidadeOrdensServicoEmAndamento(quantidadeOsEmAndamento);
         dashboardResponse.setTotalContasPagar(totalContasPagar);
+        dashboardResponse.setQuantidadeContasPagarVencidas(quantidadeContasPagarVencidas);
         dashboardResponse.setTotalContasReceber(totalContasReceber);
         dashboardResponse.setQuantidadeContasReceberInadimplentes(quantidadeContasReceberInadimplentes);
         dashboardResponse.setQuantidadeContasReceberVencidas(quantidadeContasReceberVencidas);
