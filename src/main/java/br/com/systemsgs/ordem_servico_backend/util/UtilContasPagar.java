@@ -16,4 +16,8 @@ public class UtilContasPagar {
     public Optional<BigDecimal> totalContasPagar() {
         return contasPagarRepository.totalContasPagar();
     }
+
+    public Optional<Integer> quantidadeContasPagarVencidas() {
+        return contasPagarRepository.quantidadeContasPagarVencidas();
+    }
 }

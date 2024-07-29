@@ -58,8 +58,10 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
         when(utilOrdemServico.quantidadeOsRealizadas()).thenReturn(dashboardResponse.getQuantidadeOrdemServicoRealizadas());
         when(utilOrdemServico.quantidadeOsStatusEmAndamento()).thenReturn(dashboardResponse.getQuantidadeOrdensServicoEmAndamento());
         when(utilContasPagar.totalContasPagar()).thenReturn(dashboardResponse.getTotalContasPagar());
+        when(utilContasPagar.quantidadeContasPagarVencidas()).thenReturn(dashboardResponse.getQuantidadeContasPagarVencidas());
         when(utilContasReceber.totalContasReceber()).thenReturn(dashboardResponse.getTotalContasReceber());
         when(utilContasReceber.quantidadeContasInadimplentes()).thenReturn(dashboardResponse.getQuantidadeContasReceberInadimplentes());
+        when(utilContasReceber.quantidadeContasReceberVencidas()).thenReturn(dashboardResponse.getQuantidadeContasReceberVencidas());
 
         DashboardResponse response = dashboardServiceImpl.retornaDadosDashboard();
 
@@ -70,8 +72,10 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
         assertEquals(dadosDashboard().getQuantidadeOrdemServicoRealizadas(), response.getQuantidadeOrdemServicoRealizadas());
         assertEquals(dadosDashboard().getQuantidadeOrdensServicoEmAndamento(), response.getQuantidadeOrdensServicoEmAndamento());
         assertEquals(dadosDashboard().getTotalContasPagar(), response.getTotalContasPagar());
+        assertEquals(dadosDashboard().getQuantidadeContasPagarVencidas(), response.getQuantidadeContasPagarVencidas());
         assertEquals(dadosDashboard().getTotalContasReceber(), response.getTotalContasReceber());
         assertEquals(dadosDashboard().getQuantidadeContasReceberInadimplentes(), response.getQuantidadeContasReceberInadimplentes());
+        assertEquals(dadosDashboard().getQuantidadeContasReceberVencidas(), response.getQuantidadeContasReceberVencidas());
     }
 
     private void startDashboard(){
@@ -83,8 +87,10 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
                 dadosDashboard().getQuantidadeOrdemServicoRealizadas(),
                 dadosDashboard().getQuantidadeOrdensServicoEmAndamento(),
                 dadosDashboard().getTotalContasPagar(),
+                dadosDashboard().getQuantidadeContasPagarVencidas(),
                 dadosDashboard().getTotalContasReceber(),
-                dadosDashboard().getQuantidadeContasReceberInadimplentes()
+                dadosDashboard().getQuantidadeContasReceberInadimplentes(),
+                dadosDashboard().getQuantidadeContasReceberVencidas()
         );
     }
 }

@@ -36,10 +36,16 @@ public class DashboardResponse {
     @JsonProperty("total_contas_pagar")
     private Optional<BigDecimal> totalContasPagar;
 
+    @JsonProperty("quantidade_contas_pagar_vencidas")
+    private Optional<Integer> quantidadeContasPagarVencidas;
+
     @JsonProperty("total_contas_receber")
     private Optional<BigDecimal> totalContasReceber;
 
     @JsonProperty("quantidade_contas_receber_inadimplentes")
     private Optional<Integer> quantidadeContasReceberInadimplentes;
+
+    @JsonProperty("quantidade_contas_receber_vencidas")
+    private Optional<Integer> quantidadeContasReceberVencidas;
 
 }

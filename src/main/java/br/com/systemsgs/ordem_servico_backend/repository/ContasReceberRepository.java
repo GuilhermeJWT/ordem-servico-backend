@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,4 +17,10 @@ public interface ContasReceberRepository extends JpaRepository<ModelContasRecebe
 
     @Query(value = "SELECT COUNT(*) from tbl_contas_receber where status_conta_receber = 'INADIMPLENTE'", nativeQuery = true)
     Optional<Integer> quantidadeContasInadimplentes();
+
+    @Query(value = "SELECT * FROM tbl_contas_receber WHERE data_vencimento = CURRENT_DATE", nativeQuery = true)
+    List<ModelContasReceber> pesquisaContasReceberExpiradas();
+
+    @Query(value = "SELECT COUNT(*) from tbl_contas_receber where status_conta_receber = 'VENCIDA'", nativeQuery = true)
+    Optional<Integer> quantidadeContasReceberVencidas();
 }

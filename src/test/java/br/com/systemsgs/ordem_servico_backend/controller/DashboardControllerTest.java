@@ -55,8 +55,10 @@ class DashboardControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(dadosDashboard().getQuantidadeOrdemServicoRealizadas(), response.getBody().getQuantidadeOrdemServicoRealizadas());
         assertEquals(dadosDashboard().getQuantidadeOrdensServicoEmAndamento(), response.getBody().getQuantidadeOrdensServicoEmAndamento());
         assertEquals(dadosDashboard().getTotalContasPagar(), response.getBody().getTotalContasPagar());
+        assertEquals(dadosDashboard().getQuantidadeContasPagarVencidas(), response.getBody().getQuantidadeContasPagarVencidas());
         assertEquals(dadosDashboard().getTotalContasReceber(), response.getBody().getTotalContasReceber());
         assertEquals(dadosDashboard().getQuantidadeContasReceberInadimplentes(), response.getBody().getQuantidadeContasReceberInadimplentes());
+        assertEquals(dadosDashboard().getQuantidadeContasReceberVencidas(), response.getBody().getQuantidadeContasReceberVencidas());
     }
 
     private void startDashboard(){
@@ -68,8 +70,10 @@ class DashboardControllerTest extends ConfigDadosEstaticosEntidades {
           dadosDashboard().getQuantidadeOrdemServicoRealizadas(),
           dadosDashboard().getQuantidadeOrdensServicoEmAndamento(),
           dadosDashboard().getTotalContasPagar(),
+          dadosDashboard().getQuantidadeContasPagarVencidas(),
           dadosDashboard().getTotalContasReceber(),
-          dadosDashboard().getQuantidadeContasReceberInadimplentes()
+          dadosDashboard().getQuantidadeContasReceberInadimplentes(),
+          dadosDashboard().getQuantidadeContasReceberVencidas()
         );
     }
 }
