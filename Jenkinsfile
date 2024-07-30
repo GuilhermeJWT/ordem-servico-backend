@@ -22,7 +22,7 @@ pipeline {
 		}
 		stage ('Quality Gate'){
             steps {
-                waitForQualityGate abortPipeline: true
+                sh './mvnw sonar:sonar sonar-quality-gate:check -Dsonar.host.url=http://192.168.18.15:9000/ -Dsonar.login=${SONAR_TOKEN}'
             }
 		}
 	}

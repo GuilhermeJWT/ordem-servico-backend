@@ -161,6 +161,11 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>io.github.r0bb3n</groupId>
+				<artifactId>sonar-quality-gate-maven-plugin</artifactId>
+				<version>1.3.0</version>
+			</plugin>
 		</plugins>
 
 		<finalName>ordem-servico-backend</finalName>
