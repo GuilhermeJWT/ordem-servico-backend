@@ -20,21 +20,5 @@ pipeline {
 		        }
 		    }
 		}
-		stage ('Build Docker Image'){
-		    steps{
-                script{
-                   sh './docker build -t guilhermesantosdocker/ordem-servico-backend .'
-                }
-		    }
-		}
-		stage ('Deploy Docker Hub'){
-		    steps {
-		        script {
-		            docker.withRegistry('', registryCredential){
-		                dockerImage.push()
-		            }
-		        }
-		    }
-		}
 	}
 }
