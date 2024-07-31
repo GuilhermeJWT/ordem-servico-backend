@@ -30,5 +30,10 @@ pipeline {
               input "Deseja aprovar o Deploy para Produção?"
             }
 		}
+		stage ('Deploy AWS EC2'){
+		    steps {
+		        echo "Teste deploy."
+		    }
+		}
 	}
 }
