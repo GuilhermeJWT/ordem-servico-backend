@@ -37,7 +37,7 @@ pipeline {
               emailext (
                  subject : "${JOB_NAME}.${BUILD_NUMBER} Falhou" ,
                  mimeType : 'text/html' ,
-                 to : " $defaultValue " ,
+                 to : " $email " ,
                  body : "${JOB_NAME}.${BUILD_NUMBER} Falhou"
                  )
                  }
@@ -45,7 +45,7 @@ pipeline {
                  emailext (
                    subject : "${JOB_NAME}.${BUILD_NUMBER} Passou com Sucesso!" ,
                    mimeType : 'text/html' ,
-                   to : " $defaultValue " ,
+                   to : " $email " ,
                    body : "${JOB_NAME}.${BUILD_NUMBER} Passou com Sucesso!"
                    )
          }
