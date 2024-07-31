@@ -42,7 +42,7 @@ pipeline {
                 }
                 success {
                     emailext (
-                        subject : "${JOB_NAME}.${BUILD_NUMBER} PASSOU" ,
+                        subject : "${JOB_NAME}.${BUILD_NUMBER} Passou com Sucesso!" ,
                         mimeType : 'text/html' ,
                         to : " $email " ,
                         body : "${JOB_NAME}.${BUILD_NUMBER} Passou com Sucesso!"
