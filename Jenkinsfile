@@ -1,11 +1,5 @@
 pipeline {
 	agent any
-    parameters {
-        string (
-            name: 'email' ,
-            defaultValue: 'guiromanno@gmail.com' ,
-            description: 'Endereço de e-mail para enviar notificação' )
-    }
 	stages {
 		stage('Build Backend'){
 			steps {
@@ -32,22 +26,4 @@ pipeline {
             }
 		}
 	}
-	post {
-           failure {
-              emailext (
-                 subject : "${JOB_NAME}.${BUILD_NUMBER} Falhou" ,
-                 mimeType : 'text/html' ,
-                 to : " $email " ,
-                 body : "${JOB_NAME}.${BUILD_NUMBER} Falhou"
-                 )
-                 }
-              success {
-                 emailext (
-                   subject : "${JOB_NAME}.${BUILD_NUMBER} Passou com Sucesso!" ,
-                   mimeType : 'text/html' ,
-                   to : " $email " ,
-                   body : "${JOB_NAME}.${BUILD_NUMBER} Passou com Sucesso!"
-                   )
-         }
-    }
 }
