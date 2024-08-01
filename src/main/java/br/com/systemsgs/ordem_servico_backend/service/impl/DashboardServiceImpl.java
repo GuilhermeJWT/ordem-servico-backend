@@ -8,6 +8,9 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 @CacheConfig(cacheNames = "dashboard")
 @Service
 public class DashboardServiceImpl implements DashboardService {
@@ -47,17 +50,17 @@ public class DashboardServiceImpl implements DashboardService {
         var quantidadeContasReceberInadimplentes = utilContasReceber.quantidadeContasInadimplentes();
         var quantidadeContasReceberVencidas = utilContasReceber.quantidadeContasReceberVencidas();
 
-        dashboardResponse.setTotal_vendas(totalVendas);
-        dashboardResponse.setQuantidadeItensVendidosTodoPeriodo(totalItensVendidos);
-        dashboardResponse.setQuantidadeClientesCadastrados(quantidadeClientes);
-        dashboardResponse.setQuantidadeProdutosEstoqueAtual(quantidadeEstoque);
-        dashboardResponse.setQuantidadeOrdemServicoRealizadas(quantidadeOrdemServico);
-        dashboardResponse.setQuantidadeOrdensServicoEmAndamento(quantidadeOsEmAndamento);
-        dashboardResponse.setTotalContasPagar(totalContasPagar);
-        dashboardResponse.setQuantidadeContasPagarVencidas(quantidadeContasPagarVencidas);
-        dashboardResponse.setTotalContasReceber(totalContasReceber);
-        dashboardResponse.setQuantidadeContasReceberInadimplentes(quantidadeContasReceberInadimplentes);
-        dashboardResponse.setQuantidadeContasReceberVencidas(quantidadeContasReceberVencidas);
+        dashboardResponse.setTotal_vendas(Optional.of(totalVendas.orElse(new BigDecimal(0))));
+        dashboardResponse.setQuantidadeItensVendidosTodoPeriodo(Optional.of(totalItensVendidos.orElse(0)));
+        dashboardResponse.setQuantidadeClientesCadastrados(Optional.of(quantidadeClientes.orElse(0)));
+        dashboardResponse.setQuantidadeProdutosEstoqueAtual(Optional.of(quantidadeEstoque.orElse(0)));
+        dashboardResponse.setQuantidadeOrdemServicoRealizadas(Optional.of(quantidadeOrdemServico.orElse(0)));
+        dashboardResponse.setQuantidadeOrdensServicoEmAndamento(Optional.of(quantidadeOsEmAndamento.orElse(0)));
+        dashboardResponse.setTotalContasPagar(Optional.of(totalContasPagar.orElse(new BigDecimal(0))));
+        dashboardResponse.setQuantidadeContasPagarVencidas(Optional.of(quantidadeContasPagarVencidas.orElse(0)));
+        dashboardResponse.setTotalContasReceber(Optional.of(totalContasReceber.orElse(new BigDecimal(0))));
+        dashboardResponse.setQuantidadeContasReceberInadimplentes(Optional.of(quantidadeContasReceberInadimplentes.orElse(0)));
+        dashboardResponse.setQuantidadeContasReceberVencidas(Optional.of(quantidadeContasReceberVencidas.orElse(0)));
 
         return dashboardResponse;
     }
