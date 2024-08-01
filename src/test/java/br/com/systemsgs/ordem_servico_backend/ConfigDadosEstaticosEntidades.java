@@ -77,6 +77,24 @@ public class ConfigDadosEstaticosEntidades {
         return dashboardResponse;
     }
 
+    public DashboardResponse dadosDashboardZerados(){
+        DashboardResponse dashboardResponse = new DashboardResponse();
+
+        dashboardResponse.setTotal_vendas(Optional.of(new BigDecimal(0)));
+        dashboardResponse.setQuantidadeItensVendidosTodoPeriodo(Optional.of(0));
+        dashboardResponse.setQuantidadeClientesCadastrados(Optional.of(0));
+        dashboardResponse.setQuantidadeProdutosEstoqueAtual(Optional.of(0));
+        dashboardResponse.setQuantidadeOrdemServicoRealizadas(Optional.of(0));
+        dashboardResponse.setQuantidadeOrdensServicoEmAndamento(Optional.of(0));
+        dashboardResponse.setTotalContasPagar(Optional.of(new BigDecimal(0)));
+        dashboardResponse.setQuantidadeContasPagarVencidas(Optional.of(0));
+        dashboardResponse.setTotalContasReceber(Optional.of(new BigDecimal(0)));
+        dashboardResponse.setQuantidadeContasReceberInadimplentes(Optional.of(0));
+        dashboardResponse.setQuantidadeContasReceberVencidas(Optional.of(0));
+
+        return dashboardResponse;
+    }
+
     public List<ModelItensVendas> dadosItensVendas(){
         List<Integer> quantidade = Arrays.asList(1, 25, 39);
         List<BigDecimal> valorProduto = Arrays.asList(BigDecimal.valueOf(125), BigDecimal.valueOf(358));

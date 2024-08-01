@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
 
     private DashboardResponse dashboardResponse;
+    private DashboardResponse dashboardResponseZerado;
 
     @InjectMocks
     private DashboardServiceImpl dashboardServiceImpl;
@@ -78,6 +79,36 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
         assertEquals(dadosDashboard().getQuantidadeContasReceberVencidas(), response.getQuantidadeContasReceberVencidas());
     }
 
+    @DisplayName("Teste para Mockar os dados do Dashboard com valores Null - Zerados")
+    @Test
+    void retornaDadosDashboardZerados() {
+        when(utilVendas.calculaTotalVendas()).thenReturn(dashboardResponseZerado.getTotal_vendas());
+        when(utilVendas.somaTotalItensVendidosTodoPeriodo()).thenReturn(dashboardResponseZerado.getQuantidadeItensVendidosTodoPeriodo());
+        when(utilClientes.somaQuantidadeClientesCadastrados()).thenReturn(dashboardResponseZerado.getQuantidadeClientesCadastrados());
+        when(utilProdutos.somaEstoqueAtualProdutos()).thenReturn(dashboardResponseZerado.getQuantidadeProdutosEstoqueAtual());
+        when(utilOrdemServico.quantidadeOsRealizadas()).thenReturn(dashboardResponseZerado.getQuantidadeOrdemServicoRealizadas());
+        when(utilOrdemServico.quantidadeOsStatusEmAndamento()).thenReturn(dashboardResponseZerado.getQuantidadeOrdensServicoEmAndamento());
+        when(utilContasPagar.totalContasPagar()).thenReturn(dashboardResponseZerado.getTotalContasPagar());
+        when(utilContasPagar.quantidadeContasPagarVencidas()).thenReturn(dashboardResponseZerado.getQuantidadeContasPagarVencidas());
+        when(utilContasReceber.totalContasReceber()).thenReturn(dashboardResponseZerado.getTotalContasReceber());
+        when(utilContasReceber.quantidadeContasInadimplentes()).thenReturn(dashboardResponseZerado.getQuantidadeContasReceberInadimplentes());
+        when(utilContasReceber.quantidadeContasReceberVencidas()).thenReturn(dashboardResponseZerado.getQuantidadeContasReceberVencidas());
+
+        DashboardResponse response = dashboardServiceImpl.retornaDadosDashboard();
+
+        assertEquals(dadosDashboardZerados().getTotal_vendas(), response.getTotal_vendas());
+        assertEquals(dadosDashboardZerados().getQuantidadeItensVendidosTodoPeriodo(), response.getQuantidadeItensVendidosTodoPeriodo());
+        assertEquals(dadosDashboardZerados().getQuantidadeClientesCadastrados(), response.getQuantidadeClientesCadastrados());
+        assertEquals(dadosDashboardZerados().getQuantidadeProdutosEstoqueAtual(), response.getQuantidadeProdutosEstoqueAtual());
+        assertEquals(dadosDashboardZerados().getQuantidadeOrdemServicoRealizadas(), response.getQuantidadeOrdemServicoRealizadas());
+        assertEquals(dadosDashboardZerados().getQuantidadeOrdensServicoEmAndamento(), response.getQuantidadeOrdensServicoEmAndamento());
+        assertEquals(dadosDashboardZerados().getTotalContasPagar(), response.getTotalContasPagar());
+        assertEquals(dadosDashboardZerados().getQuantidadeContasPagarVencidas(), response.getQuantidadeContasPagarVencidas());
+        assertEquals(dadosDashboardZerados().getTotalContasReceber(), response.getTotalContasReceber());
+        assertEquals(dadosDashboardZerados().getQuantidadeContasReceberInadimplentes(), response.getQuantidadeContasReceberInadimplentes());
+        assertEquals(dadosDashboardZerados().getQuantidadeContasReceberVencidas(), response.getQuantidadeContasReceberVencidas());
+    }
+
     private void startDashboard(){
         dashboardResponse = new DashboardResponse(
                 dadosDashboard().getTotal_vendas(),
@@ -91,6 +122,19 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
                 dadosDashboard().getTotalContasReceber(),
                 dadosDashboard().getQuantidadeContasReceberInadimplentes(),
                 dadosDashboard().getQuantidadeContasReceberVencidas()
+        );
+        dashboardResponseZerado = new DashboardResponse(
+                dadosDashboardZerados().getTotal_vendas(),
+                dadosDashboardZerados().getQuantidadeItensVendidosTodoPeriodo(),
+                dadosDashboardZerados().getQuantidadeClientesCadastrados(),
+                dadosDashboardZerados().getQuantidadeProdutosEstoqueAtual(),
+                dadosDashboardZerados().getQuantidadeOrdemServicoRealizadas(),
+                dadosDashboardZerados().getQuantidadeOrdensServicoEmAndamento(),
+                dadosDashboardZerados().getTotalContasPagar(),
+                dadosDashboardZerados().getQuantidadeContasPagarVencidas(),
+                dadosDashboardZerados().getTotalContasReceber(),
+                dadosDashboardZerados().getQuantidadeContasReceberInadimplentes(),
+                dadosDashboardZerados().getQuantidadeContasReceberVencidas()
         );
     }
 }
