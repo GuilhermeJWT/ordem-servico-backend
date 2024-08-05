@@ -14,7 +14,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@Tag(name = "Api de Contas a Pagar - V1")
+import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration.TAG_API_CONTAS_PAGAR;
+
+@Tag(name = TAG_API_CONTAS_PAGAR)
 @RestController
 @RequestMapping("/api/contaspagar/v1")
 public class ContasPagarController {

@@ -20,10 +20,11 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration.TAG_API_CLIENTES;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@Tag(name = "Api de Clientes - V1")
+@Tag(name = TAG_API_CLIENTES)
 @RestController
 @RequestMapping("/api/clientes/v1")
 public class ClienteController {

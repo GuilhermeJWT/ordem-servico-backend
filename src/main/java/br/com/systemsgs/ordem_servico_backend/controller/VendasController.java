@@ -14,7 +14,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
-@Tag(name = "Api de Vendas da Assistência Técnica - V1")
+import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration.TAG_API_VENDAS;
+
+@Tag(name = TAG_API_VENDAS)
 @RestController
 @RequestMapping(value = "/api/v1/vendas")
 public class VendasController {

@@ -20,10 +20,11 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration.TAG_API_ORDEM_SERVICO;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@Tag(name = "Api de Ordem de Serviço - V1")
+@Tag(name = TAG_API_ORDEM_SERVICO)
 @RestController
 @RequestMapping("/api/os/v1")
 public class OrdemServicoController {

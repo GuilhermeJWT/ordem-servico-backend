@@ -16,7 +16,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Tag(name = "Api de Fornecedores - V1")
+import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration.TAG_API_FORNECEDOR;
+
+@Tag(name = TAG_API_FORNECEDOR)
 @RestController
 @RequestMapping("/api/fornecedores/v1")
 public class FornecedorController {

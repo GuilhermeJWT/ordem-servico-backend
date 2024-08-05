@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Api para retornar os dados do Dashboard - V1")
+import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration.TAG_API_DASHBOARD;
+
+@Tag(name = TAG_API_DASHBOARD)
 @RestController
 @RequestMapping("/api/dashboard/v1")
 public class DashboardController {

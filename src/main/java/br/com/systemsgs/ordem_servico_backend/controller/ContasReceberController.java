@@ -14,7 +14,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@Tag(name = "Api de Contas a Receber - V1")
+import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration.TAG_API_CONTAS_RECEBER;
+
+@Tag(name = TAG_API_CONTAS_RECEBER)
 @RestController
 @RequestMapping("/api/contasreceber/v1")
 public class ContasReceberController {
