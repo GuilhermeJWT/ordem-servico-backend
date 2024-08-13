@@ -3,6 +3,7 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasReceberDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasReceberResponse;
+import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarReceberNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasReceber;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasReceberRepository;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
@@ -16,6 +17,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -63,6 +66,56 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
         assertNotNull(response);
 
         verify(contasReceberRepository, times(1)).findById(modelContasReceber.getId());
+        verify(mapper, times(1)).map(modelContasReceber, ContasReceberResponse.class);
+    }
+
+    @DisplayName("Teste pesquisa Conta a Receber Inexistente - 404")
+    @Test
+    void testPesquisaContaReceberInexistente() {
+        when(contasReceberRepository.findById(modelContasReceber.getId()))
+                .thenThrow(new ContasPagarReceberNaoEncontradaException());
+
+        try{
+            contasReceberService.pesquisaPorId(modelContasReceber.getId());
+        }catch (Exception exception){
+            assertEquals(ContasPagarReceberNaoEncontradaException.class, exception.getClass());
+            assertEquals(mensagemErro().get(5), exception.getMessage());
+        }
+    }
+
+    @DisplayName("Teste para listar Contas a Receber Vazia - 0")
+    @Test
+    void testListarContasReceberSemContas() {
+        when(contasReceberRepository.findAll()).thenReturn(Collections.emptyList());
+
+        List<ContasReceberResponse> response = contasReceberService.listarContasReceber();
+
+        assertNotNull(response);
+        assertTrue(response.isEmpty());
+
+        verify(contasReceberRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testCadastrarContasReceber() {
+        when(utilClientes.pesquisarClientePeloId(1L)).thenReturn(dadosClientes());
+        when(contasReceberRepository.save(any(ModelContasReceber.class))).thenReturn(modelContasReceber);
+        when(mapper.map(modelContasReceber, ContasReceberResponse.class)).thenReturn(contasReceberResponse);
+
+        ContasReceberResponse response = contasReceberService.cadastrarContasReceber(modelContasReceberDTO);
+
+        assertNotNull(response);
+
+        assertEquals(dadosContasReceber().getId(), response.getId());
+        assertEquals(dadosContasReceber().getData_vencimento(), response.getData_vencimento());
+        assertEquals(dadosContasReceber().getValor(), response.getValor());
+        assertEquals(dadosContasReceber().getObservacao(), response.getObservacao());
+        assertEquals(dadosContasReceber().getFormaPagamento().name(), response.getFormaPagamento());
+        assertEquals(dadosContasReceber().getStatusContasReceber().name(), response.getStatusContasReceber());
+        assertEquals(dadosContasReceber().getCliente().getNome(), response.getNomeCliente());
+
+        verify(utilClientes, times(1)).pesquisarClientePeloId(1L);
+        verify(contasReceberRepository, times(1)).save(any(ModelContasReceber.class));
         verify(mapper, times(1)).map(modelContasReceber, ContasReceberResponse.class);
     }
 
