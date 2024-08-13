@@ -1,8 +1,10 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelVendasDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.VendasResponse;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.VendaNaoEncontradaException;
+import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 import br.com.systemsgs.ordem_servico_backend.model.ModelVendas;
 import br.com.systemsgs.ordem_servico_backend.repository.VendasRepository;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
@@ -18,13 +20,17 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ActiveProfiles(value = "test")
 @SpringBootTest
 class VendasServiceImplTest extends ConfigDadosEstaticosEntidades {
+
+    private ModelVendasDTO modelVendasDTO;
+    private List<ModelProdutos> modelProdutosList;
 
     @InjectMocks
     private VendasServiceImpl vendasService;
@@ -47,6 +53,23 @@ class VendasServiceImplTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        startVendas();
+    }
+
+    @DisplayName("Teste para salvar uma Venda")
+    @Test
+    void testSalvarVendaComSucesso() {
+
+        when(utilClientes.pesquisarClientePeloId(modelVendasDTO.getIdCliente())).thenReturn(dadosClientes());
+        when(utilTecnicoResponsavel.pesquisarTecnicoPeloId(modelVendasDTO.getIdTecnicoResponsavel())).thenReturn(dadosTecnicoResponsavel());
+        when(utilProdutos.pesquisaListaProdutosPorIds(anyList())).thenReturn(modelProdutosList);
+        when(vendasRepository.save(any(ModelVendas.class))).thenReturn(dadosVenda());
+
+        ModelVendas response = vendasService.salvarVenda(modelVendasDTO);
+
+        verify(vendasRepository, times(1)).save(any(ModelVendas.class));
+        assertNotNull(response);
+        assertEquals(dadosVenda().getDesconto(), response.getDesconto());
     }
 
     @DisplayName("Teste para Pesquisar uma Venda pelo ID")
@@ -64,9 +87,21 @@ class VendasServiceImplTest extends ConfigDadosEstaticosEntidades {
 
     @DisplayName("Teste para Pesquisar uma Venda pelo ID Inexistente - 404")
     @Test
-    void testPesquisaVendaPorId_VendaNaoEncontradaException() {
+    void testPesquisaVendaPorIdVendaNaoEncontradaException() {
         when(utilVendas.pesquisarVendaPeloId(0L)).thenThrow(new VendaNaoEncontradaException());
 
         assertThrows(VendaNaoEncontradaException.class, () -> vendasService.pesquisaVendaPorId(0L));
+    }
+
+    private void startVendas(){
+        modelVendasDTO = new ModelVendasDTO(
+          dadosVenda().getDesconto(),
+          dadosClientes().getId(),
+          dadosTecnicoResponsavel().getId(),
+          dadosItensVendasDTO()
+        );
+        modelProdutosList = List.of(
+          dadosProdutos()
+        );
     }
 }
