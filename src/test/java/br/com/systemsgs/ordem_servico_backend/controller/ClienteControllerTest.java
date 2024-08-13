@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
+import br.com.systemsgs.ordem_servico_backend.dto.hateoas.ModelClientesHateoas;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
@@ -15,11 +16,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -79,6 +82,18 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosClientes().getEndereco().getEstado(), response.getBody().get(0).getEndereco().getEstado());
         assertEquals(dadosClientes().getEndereco().getCep(), response.getBody().get(0).getEndereco().getCep());
 
+    }
+
+    @DisplayName("Teste lista de Clientes com Link Vazio - Hateoas")
+    @Test
+    void testListarClientesComLink_Vazio() {
+        List<ModelClientesHateoas> listaClientes = Collections.emptyList();
+
+        when(clienteService.listarClientes()).thenReturn(Collections.emptyList());
+
+        CollectionModel<ModelClientesHateoas> response = clienteController.listarCLientesComLink();
+
+        assertEquals(0, response.getContent().size());
     }
 
     @DisplayName("Pesquisa um Cliente pelo ID e testa o Retorno do Body - retorna 200")
