@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles(value = "test")
 @SpringBootTest
@@ -47,5 +46,23 @@ class ContasPagarVencidasScheduledTest extends ConfigDadosEstaticosEntidades {
 
         verify(contasPagarRepository).saveAll(anyList());
         assert contasVencidas.stream().allMatch(conta -> conta.getStatusContas() == StatusContas.VENCIDA);
+    }
+
+    @DisplayName("Teste Contas Pagar Vencidas 0 Dados, não chama o método Salvar - Scheduled")
+    @Test
+    void testContasPagarVencidasQuandoNaoExistemContasVencidas() {
+        when(contasPagarRepository.pesquisaContasPagarExpiradas()).thenReturn(new ArrayList<>());
+
+        contasPagarVencidasScheduled.contasPagarVencidas();
+
+        verify(contasPagarRepository, never()).saveAll(anyList());
+    }
+
+    @DisplayName("Teste para identificar Contas a Pagar com Vencimento - Scheduled")
+    @Test
+    void testIdentificaContasPagarComVencimento() {
+        contasPagarVencidasScheduled.identificaContasPagarComVencimento();
+
+        verify(contasPagarRepository, times(1)).pesquisaContasPagarExpiradas();
     }
 }
