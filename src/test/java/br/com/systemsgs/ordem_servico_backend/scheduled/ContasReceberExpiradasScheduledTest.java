@@ -5,6 +5,7 @@ import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasReceber;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasReceberRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -33,6 +34,7 @@ class ContasReceberExpiradasScheduledTest extends ConfigDadosEstaticosEntidades 
         MockitoAnnotations.openMocks(this);
     }
 
+    @DisplayName("Teste para Contas a Receber Vencidas com Dados - Scheduled")
     @Test
     void testContasReceberVencidasQuandoExistemContasVencidas() {
         List<ModelContasReceber> contasVencidas = new ArrayList<>();
@@ -46,6 +48,7 @@ class ContasReceberExpiradasScheduledTest extends ConfigDadosEstaticosEntidades 
         assert contasVencidas.stream().allMatch(conta -> conta.getStatusContasReceber() == StatusContas.VENCIDA);
     }
 
+    @DisplayName("Teste para quando não existe Contas Vencidas")
     @Test
     void testContasReceberVencidasQuandoNaoExistemContasVencidas() {
         when(contasReceberRepository.pesquisaContasReceberExpiradas()).thenReturn(new ArrayList<>());
@@ -55,6 +58,7 @@ class ContasReceberExpiradasScheduledTest extends ConfigDadosEstaticosEntidades 
         verify(contasReceberRepository, never()).saveAll(anyList());
     }
 
+    @DisplayName("Teste para verificar a chamada do Repository quando existe contas - 1 Acesso - Scheduled")
     @Test
     void testVerificaContasReceberVencidas() {
         contasReceberExpiradasScheduled.verificaContasReceberVencidas();
