@@ -6,10 +6,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ActiveProfiles(value = "test")
 @SpringBootTest
@@ -18,9 +27,47 @@ class ExceptionControllerAdviceTest extends ConfigDadosEstaticosEntidades {
     @InjectMocks
     private ExceptionControllerAdvice exceptionControllerAdvice;
 
+    @Mock
+    private MethodArgumentNotValidException methodArgumentNotValidException;
+
+    @Mock
+    private BindingResult bindingResult;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @DisplayName("Teste para retornar uma lista de erros quando o código é 400 - Bad Request")
+    @Test
+    void testHandlerMethodNotValidExceptionRetornaApiRestErrorsComListaDeMensagensDeErro() {
+        List<ObjectError> objectErrors = Arrays.asList(
+                new ObjectError("erros", "Cliente não Encontrado!"),
+                new ObjectError("erros", "Recurso não Encontrado!"),
+                new ObjectError("erros", "Venda não Encontrada!"),
+                new ObjectError("erros", "Técnico Responsavel não Encontrado!"),
+                new ObjectError("erros", "Campos já cadastrados na base de dados, Por Favor, Informe outros!"),
+                new ObjectError("erros", "Conta não Encontrada!"),
+                new ObjectError("erros", "Fornecedor não Encontrado!"),
+                new ObjectError("erros", "Tipo de solicitação HTTP incorreta, reveja qual o tipo correto: 'GET' 'POST' 'PUT' 'DELETE' ou outro!")
+        );
+
+        when(methodArgumentNotValidException.getBindingResult()).thenReturn(bindingResult);
+        when(bindingResult.getAllErrors()).thenReturn(objectErrors);
+
+        ApiRestErrors response = exceptionControllerAdvice.handlerMethodNotValidException(methodArgumentNotValidException);
+
+        List<String> listErros = Arrays.asList(
+                mensagemErro().get(0),
+                mensagemErro().get(1),
+                mensagemErro().get(2),
+                mensagemErro().get(3),
+                mensagemErro().get(4),
+                mensagemErro().get(5),
+                mensagemErro().get(6),
+                mensagemErro().get(7));
+
+        assertEquals(listErros, response.getErros());
     }
 
     @DisplayName("Retorna Exception - Recurso não Encontrado! - 404")
