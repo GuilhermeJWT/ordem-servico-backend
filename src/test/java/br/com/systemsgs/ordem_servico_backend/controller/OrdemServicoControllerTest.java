@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
+import br.com.systemsgs.ordem_servico_backend.dto.hateoas.ModelOrdemServicoHateoas;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelOrdemServicoDTO;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
@@ -14,11 +15,16 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,6 +32,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @ActiveProfiles(value = "test")
 @SpringBootTest
@@ -46,10 +56,43 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
     @Mock
     private ModelMapper mapper;
 
+    private MockMvc mockMvc;
+
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(ordemServicoController).build();
         startOrdemServico();
+    }
+
+    @DisplayName("Teste para listar Ordens de Serviço com Link - Hateoas")
+    @Test
+    public void testListarOsComLinkHateoas() {
+        ModelOrdemServico ordemServico1 = dadosOrdemServico();
+        ModelOrdemServico ordemServico2 = dadosOrdemServico();
+
+        List<ModelOrdemServico> ordemServicoList = Arrays.asList(ordemServico1, ordemServico2);
+
+        ModelOrdemServicoHateoas hateoas1 = new ModelOrdemServicoHateoas();
+        hateoas1.setId(1L);
+
+        ModelOrdemServicoHateoas hateoas2 = new ModelOrdemServicoHateoas();
+        hateoas2.setId(2L);
+
+        when(ordemServicoService.listarOS()).thenReturn(ordemServicoList);
+        when(mapper.map(ordemServico1, ModelOrdemServicoHateoas.class)).thenReturn(hateoas1);
+        when(mapper.map(ordemServico2, ModelOrdemServicoHateoas.class)).thenReturn(hateoas2);
+
+        CollectionModel<ModelOrdemServicoHateoas> response = ordemServicoController.listarOsComLink();
+
+        Link link1 = linkTo(methodOn(OrdemServicoController.class).pesquisarPorId(1L)).withRel("Pesquisa OS pelo ID");
+        Link link2 = linkTo(methodOn(OrdemServicoController.class).pesquisarPorId(2L)).withRel("Pesquisa OS pelo ID");
+
+        assertThat(response).isNotNull();
+        assertThat(response.getContent()).hasSize(2);
+        assertThat(response.getContent()).containsExactly(hateoas1, hateoas2);
+        assertThat(hateoas1.getLinks()).contains(link1);
+        assertThat(hateoas2.getLinks()).contains(link2);
     }
 
     @DisplayName("Teste para retornar a lista de OS - retorna 200")

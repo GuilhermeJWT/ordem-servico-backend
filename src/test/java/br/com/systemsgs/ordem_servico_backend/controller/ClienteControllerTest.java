@@ -17,17 +17,26 @@ import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @ActiveProfiles(value = "test")
 @SpringBootTest
@@ -49,9 +58,12 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
     @Mock
     private ModelMapper mapper;
 
+    private MockMvc mockMvc;
+
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(clienteController).build();
         startCliente();
     }
 
@@ -82,6 +94,36 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosClientes().getEndereco().getEstado(), response.getBody().get(0).getEndereco().getEstado());
         assertEquals(dadosClientes().getEndereco().getCep(), response.getBody().get(0).getEndereco().getCep());
 
+    }
+
+    @DisplayName("Teste para listar Clientes com Link - Hateoas")
+    @Test
+    public void testListarClientesComLinkHateoas() {
+        ModelClientes cliente1 = dadosClientes();
+        ModelClientes cliente2 = dadosClientes();
+
+        List<ModelClientes> clienteList = Arrays.asList(cliente1, cliente2);
+
+        ModelClientesHateoas hateoas1 = new ModelClientesHateoas();
+        hateoas1.setId(1L);
+
+        ModelClientesHateoas hateoas2 = new ModelClientesHateoas();
+        hateoas2.setId(2L);
+
+        when(clienteService.listarClientes()).thenReturn(clienteList);
+        when(mapper.map(cliente1, ModelClientesHateoas.class)).thenReturn(hateoas1);
+        when(mapper.map(cliente2, ModelClientesHateoas.class)).thenReturn(hateoas2);
+
+        CollectionModel<ModelClientesHateoas> response = clienteController.listarCLientesComLink();
+
+        Link link1 = linkTo(methodOn(ClienteController.class).pesquisarPorId(1L)).withRel("Pesquisa Cliente pelo ID: ");
+        Link link2 = linkTo(methodOn(ClienteController.class).pesquisarPorId(2L)).withRel("Pesquisa Cliente pelo ID: ");
+
+        assertThat(hateoas1.getLinks()).contains(link1);
+        assertThat(hateoas2.getLinks()).contains(link2);
+        assertThat(response).isNotNull();
+        assertThat(response.getContent()).hasSize(2);
+        assertThat(response.getContent()).containsExactly(hateoas1, hateoas2);
     }
 
     @DisplayName("Teste lista de Clientes com Link Vazio - Hateoas")
