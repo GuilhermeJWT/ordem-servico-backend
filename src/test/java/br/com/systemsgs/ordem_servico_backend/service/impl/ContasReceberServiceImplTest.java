@@ -96,6 +96,7 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
         verify(contasReceberRepository, times(1)).findAll();
     }
 
+    @DisplayName("Teste para salvar uma Conta a Receber")
     @Test
     void testCadastrarContasReceber() {
         when(utilClientes.pesquisarClientePeloId(1L)).thenReturn(dadosClientes());
@@ -117,6 +118,41 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
         verify(utilClientes, times(1)).pesquisarClientePeloId(1L);
         verify(contasReceberRepository, times(1)).save(any(ModelContasReceber.class));
         verify(mapper, times(1)).map(modelContasReceber, ContasReceberResponse.class);
+    }
+
+    @DisplayName("Teste para alterar uma Conta a Receber")
+    @Test
+    void testAlterarContasReceber() {
+        when(contasReceberRepository.findById(modelContasReceber.getId())).thenReturn(Optional.of(modelContasReceber));
+        when(contasReceberRepository.save(modelContasReceber)).thenReturn(modelContasReceber);
+        when(mapper.map(modelContasReceberDTO, ModelContasReceber.class)).thenReturn(modelContasReceber);
+        when(mapper.map(modelContasReceber, ContasReceberResponse.class)).thenReturn(contasReceberResponse);
+
+        ContasReceberResponse response = contasReceberService.alterarContasReceber(modelContasReceber.getId(), modelContasReceberDTO);
+
+        assertNotNull(response);
+
+        assertEquals(dadosContasReceber().getId(), response.getId());
+        assertEquals(dadosContasReceber().getData_vencimento(), response.getData_vencimento());
+        assertEquals(dadosContasReceber().getValor(), response.getValor());
+        assertEquals(dadosContasReceber().getObservacao(), response.getObservacao());
+        assertEquals(dadosContasReceber().getFormaPagamento().name(), response.getFormaPagamento());
+        assertEquals(dadosContasReceber().getStatusContasReceber().name(), response.getStatusContasReceber());
+        assertEquals(dadosContasReceber().getCliente().getNome(), response.getNomeCliente());
+
+        verify(contasReceberRepository, times(1)).findById(modelContasReceber.getId());
+        verify(contasReceberRepository, times(1)).save(modelContasReceber);
+        verify(mapper, times(1)).map(modelContasReceberDTO, ModelContasReceber.class);
+        verify(mapper, times(1)).map(modelContasReceber, ContasReceberResponse.class);
+    }
+
+    @DisplayName("Deleta Conta a Receber")
+    @Test
+    void testDeletarContaReceber() {
+        doNothing().when(contasReceberRepository).deleteById(modelContasReceber.getId());
+
+        contasReceberService.deletarContasReceber(modelContasReceber.getId());
+        verify(contasReceberRepository, times(1)).deleteById(anyLong());
     }
 
     private void startContasReceber(){
