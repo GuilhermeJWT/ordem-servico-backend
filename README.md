@@ -11,7 +11,7 @@
   <li>Java 17 - Spring Boot 3 - Porta 8081</li>
   <li>Pipeline CI/CD - Jenkins</li>
   <li>Qualidade do Código - SonarQube</li>
-  <li>Cobertura de Testes - Junit/Mockito</li>
+  <li>Cobertura de Testes - Junit/Mockito - 140 Testes</li>
   <li>Observabilidade - Prometheus/Grafana e Spring Admin</li>
   <li>Deploy da imagem no Docker Hub e AWS EC2 + RDS</li>
   <li>Banco de Dados - PostgreSql</li>
