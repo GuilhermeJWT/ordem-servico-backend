@@ -17,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -76,6 +77,82 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
         assertThrows(ContasPagarReceberNaoEncontradaException.class, () -> contasPagarService.pesquisaPorId(1L));
 
         verify(contasPagarRepository, times(1)).findById(modelContasPagar.getId());
+    }
+
+    @DisplayName("Teste para listar Contas a Pagar")
+    @Test
+    void testListarContasPagarSucesso() {
+        when(contasPagarRepository.findAll()).thenReturn(List.of(modelContasPagar));
+        when(modelMapper.map(any(ModelContasPagar.class), eq(ContasPagarResponse.class))).thenReturn(contasPagarResponse);
+
+        List<ContasPagarResponse> response = contasPagarService.listarContasPagar();
+
+        assertNotNull(response);
+        assertEquals(1, response.size());
+        assertEquals(ContasPagarResponse.class, response.get(0).getClass());
+
+        assertEquals(dadosContasPagar().getId(), response.get(0).getId());
+        assertEquals(dadosContasPagar().getData_vencimento(), response.get(0).getData_vencimento());
+        assertEquals(dadosContasPagar().getValor(), response.get(0).getValor());
+        assertEquals(dadosContasPagar().getObservacao(), response.get(0).getObservacao());
+        assertEquals(dadosContasPagar().getFormaPagamento().name(), response.get(0).getFormaPagamento());
+        assertEquals(dadosContasPagar().getStatusContas().name(), response.get(0).getStatusContas());
+        assertEquals(dadosContasPagar().getFornecedor().getNome(), response.get(0).getNomeFornecedor());
+
+        verify(contasPagarRepository, times(1)).findAll();
+    }
+
+    @DisplayName("Teste para salvar uma Conta a Pagar")
+    @Test
+    void testCadastrarContasPagar() {
+        when(utilFornecedores.pesquisarFornecedorPeloId(dadosFornecedores().getId())).thenReturn(dadosFornecedores());
+        when(contasPagarRepository.save(any(ModelContasPagar.class))).thenReturn(modelContasPagar);
+        when(modelMapper.map(modelContasPagar, ContasPagarResponse.class)).thenReturn(contasPagarResponse);
+
+        ContasPagarResponse response = contasPagarService.cadastrarContasPagar(modelContasPagarDTO);
+
+        assertNotNull(response);
+        assertEquals(dadosContasPagar().getId(), response.getId());
+        assertEquals(dadosContasPagar().getData_vencimento(), response.getData_vencimento());
+        assertEquals(dadosContasPagar().getValor(), response.getValor());
+        assertEquals(dadosContasPagar().getObservacao(), response.getObservacao());
+        assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getFormaPagamento());
+        assertEquals(dadosContasPagar().getStatusContas().name(), response.getStatusContas());
+        assertEquals(dadosContasPagar().getFornecedor().getNome(), response.getNomeFornecedor());
+
+        verify(contasPagarRepository, times(1)).save(any(ModelContasPagar.class));
+    }
+
+    @DisplayName("Teste para deletar uma Conta a Pagar pelo ID")
+    @Test
+    void testDeletarContasPagar() {
+        doNothing().when(contasPagarRepository).deleteById(modelContasPagar.getId());
+
+        contasPagarService.deletarContasPagar(modelContasPagar.getId());
+
+        verify(contasPagarRepository, times(1)).deleteById(modelContasPagar.getId());
+    }
+
+    @DisplayName("Teste para alterar uma Conta a Pagar, pelo ID e Entidade DTO")
+    @Test
+    void testAlterarContasPagarSucesso() {
+        when(contasPagarRepository.findById(modelContasPagar.getId())).thenReturn(Optional.of(modelContasPagar));
+        when(contasPagarRepository.save(any(ModelContasPagar.class))).thenReturn(modelContasPagar);
+        when(modelMapper.map(modelContasPagar, ContasPagarResponse.class)).thenReturn(contasPagarResponse);
+
+        ContasPagarResponse response = contasPagarService.alterarContasPagar(modelContasPagar.getId(), modelContasPagarDTO);
+
+        assertNotNull(response);
+        assertEquals(dadosContasPagar().getId(), response.getId());
+        assertEquals(dadosContasPagar().getData_vencimento(), response.getData_vencimento());
+        assertEquals(dadosContasPagar().getValor(), response.getValor());
+        assertEquals(dadosContasPagar().getObservacao(), response.getObservacao());
+        assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getFormaPagamento());
+        assertEquals(dadosContasPagar().getStatusContas().name(), response.getStatusContas());
+        assertEquals(dadosContasPagar().getFornecedor().getNome(), response.getNomeFornecedor());
+
+        verify(contasPagarRepository, times(1)).findById(modelContasPagar.getId());
+        verify(contasPagarRepository, times(1)).save(any(ModelContasPagar.class));
     }
 
     private void startContasPagar(){
