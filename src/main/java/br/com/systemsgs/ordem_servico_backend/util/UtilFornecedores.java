@@ -9,8 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class UtilFornecedores {
 
+    private final FornecedoresRepository fornecedoresRepository;
+
     @Autowired
-    private FornecedoresRepository fornecedoresRepository;
+    public UtilFornecedores(FornecedoresRepository fornecedoresRepository) {
+        this.fornecedoresRepository = fornecedoresRepository;
+    }
 
     public ModelFornecedor pesquisarFornecedorPeloId(Long id){
          ModelFornecedor pesquisaFornecedor = fornecedoresRepository.findById(id).

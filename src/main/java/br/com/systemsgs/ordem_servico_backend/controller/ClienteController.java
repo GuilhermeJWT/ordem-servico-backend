@@ -29,11 +29,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/api/clientes/v1")
 public class ClienteController {
 
-    @Autowired
-    private ClienteService clienteService;
+    private final ClienteService clienteService;
+    private final ModelMapper mapper;
 
     @Autowired
-    private ModelMapper mapper;
+    public ClienteController(ClienteService clienteService, ModelMapper mapper) {
+        this.clienteService = clienteService;
+        this.mapper = mapper;
+    }
 
     @Operation(summary = "Listar Clientes - HATEOAS", description = "Api para listar todos os Clientes com Link (HATEOAS)")
     @GetMapping("/listar/v2/link")

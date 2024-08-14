@@ -10,8 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class UtilTecnicoResponsavel {
 
+    private final TecnicoRepository tecnicoRepository;
+
     @Autowired
-    private TecnicoRepository tecnicoRepository;
+    public UtilTecnicoResponsavel(TecnicoRepository tecnicoRepository) {
+        this.tecnicoRepository = tecnicoRepository;
+    }
 
     public ModelTecnicoResponsavel pesquisarTecnicoPeloId(Long id){
         ModelTecnicoResponsavel pesquisaTecnico = tecnicoRepository.findById(id).

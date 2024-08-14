@@ -21,8 +21,12 @@ import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration
 @RequestMapping(value = "/api/v1/vendas")
 public class VendasController {
 
+    private final VendaService vendaService;
+
     @Autowired
-    private VendaService vendaService;
+    public VendasController(VendaService vendaService) {
+        this.vendaService = vendaService;
+    }
 
     @Operation(summary = "Realizar uma Venda", description = "Api para realizar uma Venda dos Produtos da Assitência Técnica.")
     @PostMapping("/salvar")

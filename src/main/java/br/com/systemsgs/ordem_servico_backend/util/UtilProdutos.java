@@ -13,8 +13,12 @@ import java.util.stream.Collectors;
 @Component
 public class UtilProdutos {
 
+    private final ProdutoRepository produtoRepository;
+
     @Autowired
-    private ProdutoRepository produtoRepository;
+    public UtilProdutos(ProdutoRepository produtoRepository) {
+        this.produtoRepository = produtoRepository;
+    }
 
     public ModelProdutos pesquisaProdutoPorId(Long id){
         ModelProdutos pesquisaProduto = produtoRepository.findById(id).

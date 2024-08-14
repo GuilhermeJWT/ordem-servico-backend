@@ -17,8 +17,12 @@ import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration
 @RequestMapping("/api/dashboard/v1")
 public class DashboardController {
 
+    private final DashboardService dashboardService;
+
     @Autowired
-    private DashboardService dashboardService;
+    public DashboardController(DashboardService dashboardService) {
+        this.dashboardService = dashboardService;
+    }
 
     @Operation(summary = "Prepara dados para o Dashboard", description = "Api para montar os dados do Dashboard do Sistema")
     @GetMapping("/dados")

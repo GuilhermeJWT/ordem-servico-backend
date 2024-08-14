@@ -24,11 +24,14 @@ import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration
 @RequestMapping("/api/produtos/v1")
 public class ProdutoController {
 
-    @Autowired
-    private ProdutoService produtoService;
+    private final ProdutoService produtoService;
+    private final ModelMapper mapper;
 
     @Autowired
-    private ModelMapper mapper;
+    public ProdutoController(ProdutoService produtoService, ModelMapper mapper) {
+        this.produtoService = produtoService;
+        this.mapper = mapper;
+    }
 
     @Operation(summary = "Listar Produtos", description = "Api para listar todos os registro de Produtos")
     @GetMapping("/listar")

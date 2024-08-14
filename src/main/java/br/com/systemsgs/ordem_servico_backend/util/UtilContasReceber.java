@@ -10,8 +10,12 @@ import java.util.Optional;
 @Component
 public class UtilContasReceber {
 
+    private final ContasReceberRepository contasReceberRepository;
+
     @Autowired
-    private ContasReceberRepository contasReceberRepository;
+    public UtilContasReceber(ContasReceberRepository contasReceberRepository) {
+        this.contasReceberRepository = contasReceberRepository;
+    }
 
     public Optional<BigDecimal> totalContasReceber(){
         return contasReceberRepository.totalContasReceber();

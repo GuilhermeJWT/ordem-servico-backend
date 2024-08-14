@@ -10,8 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class CacheExpireScheduled {
 
+    public final CacheManager cacheManager;
+
     @Autowired
-    public CacheManager cacheManager;
+    public CacheExpireScheduled(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
 
     public void limpandoCaches() {
         cacheManager.getCacheNames().stream()

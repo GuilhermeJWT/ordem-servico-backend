@@ -24,14 +24,16 @@ import java.util.Optional;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
+    private final UtilClientes utilClientes;
+    private final ModelMapper mapper;
 
     @Autowired
-    private UtilClientes utilClientes;
-
-    @Autowired
-    private ModelMapper mapper;
+    public ClienteServiceImpl(ClienteRepository clienteRepository, UtilClientes utilClientes, ModelMapper mapper) {
+        this.clienteRepository = clienteRepository;
+        this.utilClientes = utilClientes;
+        this.mapper = mapper;
+    }
 
     @Cacheable(value = "clientes", key = "#id")
     @Override

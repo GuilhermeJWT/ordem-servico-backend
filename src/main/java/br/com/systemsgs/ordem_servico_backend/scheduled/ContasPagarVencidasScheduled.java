@@ -12,8 +12,12 @@ import java.util.List;
 @Component
 public class ContasPagarVencidasScheduled {
 
+    private final ContasPagarRepository contasPagarRepository;
+
     @Autowired
-    private ContasPagarRepository contasPagarRepository;
+    public ContasPagarVencidasScheduled(ContasPagarRepository contasPagarRepository) {
+        this.contasPagarRepository = contasPagarRepository;
+    }
 
     //Todo dia as 07:05 da manhã, o Job será executado para listar as Contas a Pagar vencida, e atualizar para = VENCIDA
     @Scheduled(cron = "0 5 7 * * *")

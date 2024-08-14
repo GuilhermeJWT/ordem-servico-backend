@@ -29,11 +29,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/api/os/v1")
 public class OrdemServicoController {
 
-    @Autowired
-    private OrdemServicoService ordemServicoService;
+    private final OrdemServicoService ordemServicoService;
+    private final ModelMapper mapper;
 
     @Autowired
-    private ModelMapper mapper;
+    public OrdemServicoController(OrdemServicoService ordemServicoService, ModelMapper mapper) {
+        this.ordemServicoService = ordemServicoService;
+        this.mapper = mapper;
+    }
 
     @Operation(summary = "Listar OS - HATEOAS", description = "Api para listar todos os registro de Ordem de Serviço com Link (HATEOAS)")
     @GetMapping("/listar/v2/link")

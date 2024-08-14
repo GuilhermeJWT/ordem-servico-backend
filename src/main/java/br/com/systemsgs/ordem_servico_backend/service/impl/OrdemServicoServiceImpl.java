@@ -26,20 +26,24 @@ import java.util.Optional;
 @Service
 public class OrdemServicoServiceImpl implements OrdemServicoService {
 
-    @Autowired
-    private OrdemServicoRepository ordemServicoRepository;
+    private final OrdemServicoRepository ordemServicoRepository;
+    private final UtilOrdemServico utilOrdemServico;
+    private final UtilClientes utilClientes;
+    private final ModelMapper mapper;
+    private final UtilTecnicoResponsavel utilTecnicoResponsavel;
 
     @Autowired
-    private UtilOrdemServico utilOrdemServico;
-
-    @Autowired
-    private UtilClientes utilClientes;
-
-    @Autowired
-    private ModelMapper mapper;
-
-    @Autowired
-    private UtilTecnicoResponsavel utilTecnicoResponsavel;
+    public OrdemServicoServiceImpl(OrdemServicoRepository ordemServicoRepository,
+                                   UtilOrdemServico utilOrdemServico,
+                                   UtilClientes utilClientes,
+                                   ModelMapper mapper,
+                                   UtilTecnicoResponsavel utilTecnicoResponsavel) {
+        this.ordemServicoRepository = ordemServicoRepository;
+        this.utilOrdemServico = utilOrdemServico;
+        this.utilClientes = utilClientes;
+        this.mapper = mapper;
+        this.utilTecnicoResponsavel = utilTecnicoResponsavel;
+    }
 
     @Cacheable(value = "os", key = "#id")
     @Override

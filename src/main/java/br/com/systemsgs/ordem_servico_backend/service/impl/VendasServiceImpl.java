@@ -26,20 +26,24 @@ import java.util.stream.Collectors;
 @Service
 public class VendasServiceImpl implements VendaService {
 
-    @Autowired
-    private VendasRepository vendasRepository;
+    private final VendasRepository vendasRepository;
+    private final UtilVendas utilVendas;
+    private final UtilTecnicoResponsavel utilTecnicoResponsavel;
+    private final UtilClientes utilClientes;
+    private final UtilProdutos utilProdutos;
 
     @Autowired
-    private UtilVendas utilVendas;
-
-    @Autowired
-    private UtilTecnicoResponsavel utilTecnicoResponsavel;
-
-    @Autowired
-    private UtilClientes utilClientes;
-
-    @Autowired
-    private UtilProdutos utilProdutos;
+    public VendasServiceImpl(VendasRepository vendasRepository,
+                             UtilVendas utilVendas,
+                             UtilTecnicoResponsavel utilTecnicoResponsavel,
+                             UtilClientes utilClientes,
+                             UtilProdutos utilProdutos) {
+        this.vendasRepository = vendasRepository;
+        this.utilVendas = utilVendas;
+        this.utilTecnicoResponsavel = utilTecnicoResponsavel;
+        this.utilClientes = utilClientes;
+        this.utilProdutos = utilProdutos;
+    }
 
     @Transactional
     @Override

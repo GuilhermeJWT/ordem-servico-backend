@@ -23,14 +23,18 @@ import java.util.List;
 @Service
 public class ContasPagarServiceImpl implements ContasPagarService {
 
-    @Autowired
-    private ContasPagarRepository contasPagarRepository;
+    private final ContasPagarRepository contasPagarRepository;
+    private final UtilFornecedores utilFornecedores;
+    private final ModelMapper mapper;
 
     @Autowired
-    private UtilFornecedores utilFornecedores;
-
-    @Autowired
-    private ModelMapper mapper;
+    public ContasPagarServiceImpl(ContasPagarRepository contasPagarRepository,
+                                  UtilFornecedores utilFornecedores,
+                                  ModelMapper mapper) {
+        this.contasPagarRepository = contasPagarRepository;
+        this.utilFornecedores = utilFornecedores;
+        this.mapper = mapper;
+    }
 
     @Cacheable(value = "contaspagar", key = "#id")
     @Override

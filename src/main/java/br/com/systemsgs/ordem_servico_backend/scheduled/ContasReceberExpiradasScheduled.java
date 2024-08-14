@@ -12,10 +12,14 @@ import java.util.List;
 @Component
 public class ContasReceberExpiradasScheduled {
 
-    @Autowired
-    private ContasReceberRepository contasReceberRepository;
+    private final ContasReceberRepository contasReceberRepository;
 
-     //Todo dia as 07:00 da manhã, o Job será executado para listar as Contas a Receber vencida, e atualizar para = VENCIDA
+    @Autowired
+    public ContasReceberExpiradasScheduled(ContasReceberRepository contasReceberRepository) {
+        this.contasReceberRepository = contasReceberRepository;
+    }
+
+    //Todo dia as 07:00 da manhã, o Job será executado para listar as Contas a Receber vencida, e atualizar para = VENCIDA
     @Scheduled(cron = "0 0 7 * * *")
     public void verificaContasReceberVencidas() {
         contasReceberVencidas();

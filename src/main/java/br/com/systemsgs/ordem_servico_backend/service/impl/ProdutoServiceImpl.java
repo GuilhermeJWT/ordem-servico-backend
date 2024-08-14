@@ -23,14 +23,16 @@ import java.util.Optional;
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
 
-    @Autowired
-    private ProdutoRepository produtoRepository;
+    private final ProdutoRepository produtoRepository;
+    private final UtilProdutos utilProdutos;
+    private final ModelMapper mapper;
 
     @Autowired
-    private UtilProdutos utilProdutos;
-
-    @Autowired
-    private ModelMapper mapper;
+    public ProdutoServiceImpl(ProdutoRepository produtoRepository, UtilProdutos utilProdutos, ModelMapper mapper) {
+        this.produtoRepository = produtoRepository;
+        this.utilProdutos = utilProdutos;
+        this.mapper = mapper;
+    }
 
     @Cacheable(value = "produtos", key = "#id")
     @Override

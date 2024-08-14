@@ -11,8 +11,12 @@ import java.util.Optional;
 @Component
 public class UtilClientes {
 
+    private final ClienteRepository clienteRepository;
+
     @Autowired
-    private ClienteRepository clienteRepository;
+    public UtilClientes(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
 
     public ModelClientes pesquisarClientePeloId(Long id){
          ModelClientes pesquisaCliente = clienteRepository.findById(id).

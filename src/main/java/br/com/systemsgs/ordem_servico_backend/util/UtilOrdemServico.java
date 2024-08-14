@@ -11,8 +11,12 @@ import java.util.Optional;
 @Component
 public class UtilOrdemServico {
 
+    private final OrdemServicoRepository ordemServicoRepository;
+
     @Autowired
-    private OrdemServicoRepository ordemServicoRepository;
+    public UtilOrdemServico(OrdemServicoRepository ordemServicoRepository) {
+        this.ordemServicoRepository = ordemServicoRepository;
+    }
 
     public ModelOrdemServico pesquisaOsPorId(Long id){
         ModelOrdemServico pesquisarOS = ordemServicoRepository.findById(id).

@@ -23,14 +23,18 @@ import java.util.Optional;
 @Service
 public class FornecedorServiceImpl implements FornecedorService {
 
-    @Autowired
-    private FornecedoresRepository fornecedoresRepository;
+    private final FornecedoresRepository fornecedoresRepository;
+    private final UtilFornecedores utilFornecedores;
+    private final ModelMapper mapper;
 
     @Autowired
-    private UtilFornecedores utilFornecedores;
-
-    @Autowired
-    private ModelMapper mapper;
+    public FornecedorServiceImpl(FornecedoresRepository fornecedoresRepository,
+                                 UtilFornecedores utilFornecedores,
+                                 ModelMapper mapper) {
+        this.fornecedoresRepository = fornecedoresRepository;
+        this.utilFornecedores = utilFornecedores;
+        this.mapper = mapper;
+    }
 
     @Cacheable(value = "fornecedores", key = "#id")
     @Override

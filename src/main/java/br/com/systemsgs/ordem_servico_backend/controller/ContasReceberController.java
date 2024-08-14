@@ -21,8 +21,12 @@ import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration
 @RequestMapping("/api/contasreceber/v1")
 public class ContasReceberController {
 
+    private final ContasReceberService contasReceberService;
+
     @Autowired
-    private ContasReceberService contasReceberService;
+    public ContasReceberController(ContasReceberService contasReceberService) {
+        this.contasReceberService = contasReceberService;
+    }
 
     @Operation(summary = "Listar Contas a Receber", description = "Api para listar todos os registro de Contas a Receber")
     @GetMapping("/listar")

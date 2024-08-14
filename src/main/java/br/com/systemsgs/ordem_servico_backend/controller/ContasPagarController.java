@@ -21,8 +21,12 @@ import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration
 @RequestMapping("/api/contaspagar/v1")
 public class ContasPagarController {
 
+    private final ContasPagarService contasPagarService;
+
     @Autowired
-    private ContasPagarService contasPagarService;
+    public ContasPagarController(ContasPagarService contasPagarService) {
+        this.contasPagarService = contasPagarService;
+    }
 
     @Operation(summary = "Listar Contas a Pagar", description = "Api para listar todos os registro de Contas a Pagar")
     @GetMapping("/listar")

@@ -23,11 +23,14 @@ import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration
 @RequestMapping("/api/fornecedores/v1")
 public class FornecedorController {
 
-    @Autowired
-    private FornecedorService fornecedorServiceService;
+    private final FornecedorService fornecedorServiceService;
+    private final ModelMapper mapper;
 
     @Autowired
-    private ModelMapper mapper;
+    public FornecedorController(FornecedorService fornecedorServiceService, ModelMapper mapper) {
+        this.fornecedorServiceService = fornecedorServiceService;
+        this.mapper = mapper;
+    }
 
     @Operation(summary = "Listar Fornecedores", description = "Api para listar todos os registro de Fornecedores")
     @GetMapping("/listar")

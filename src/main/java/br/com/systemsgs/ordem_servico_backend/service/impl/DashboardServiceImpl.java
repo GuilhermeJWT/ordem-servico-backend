@@ -15,23 +15,27 @@ import java.util.Optional;
 @Service
 public class DashboardServiceImpl implements DashboardService {
 
-    @Autowired
-    private UtilVendas utilVendas;
+    private final UtilVendas utilVendas;
+    private final UtilClientes utilClientes;
+    private final UtilProdutos utilProdutos;
+    private final UtilOrdemServico utilOrdemServico;
+    private final UtilContasPagar utilContasPagar;
+    private final UtilContasReceber utilContasReceber;
 
     @Autowired
-    private UtilClientes utilClientes;
-
-    @Autowired
-    private UtilProdutos utilProdutos;
-
-    @Autowired
-    private UtilOrdemServico utilOrdemServico;
-
-    @Autowired
-    private UtilContasPagar utilContasPagar;
-
-    @Autowired
-    private UtilContasReceber utilContasReceber;
+    public DashboardServiceImpl(UtilVendas utilVendas,
+                                UtilClientes utilClientes,
+                                UtilProdutos utilProdutos,
+                                UtilOrdemServico utilOrdemServico,
+                                UtilContasPagar utilContasPagar,
+                                UtilContasReceber utilContasReceber) {
+        this.utilVendas = utilVendas;
+        this.utilClientes = utilClientes;
+        this.utilProdutos = utilProdutos;
+        this.utilOrdemServico = utilOrdemServico;
+        this.utilContasPagar = utilContasPagar;
+        this.utilContasReceber = utilContasReceber;
+    }
 
     @Cacheable(value = "dashboard")
     @Override
