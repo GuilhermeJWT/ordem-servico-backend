@@ -58,8 +58,24 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
 
         assertNotNull(response);
         assertEquals(dadosContasPagar().getId(), response.getId());
+        assertEquals(dadosContasPagar().getData_vencimento(), response.getData_vencimento());
+        assertEquals(dadosContasPagar().getValor(), response.getValor());
+        assertEquals(dadosContasPagar().getObservacao(), response.getObservacao());
+        assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getFormaPagamento());
+        assertEquals(dadosContasPagar().getStatusContas().name(), response.getStatusContas());
+        assertEquals(dadosContasPagar().getFornecedor().getNome(), response.getNomeFornecedor());
 
         verify(contasPagarRepository, times(1)).findById(1L);
+    }
+
+    @DisplayName("Teste para pesquisar uma Conta a Pagar Inexistente")
+    @Test
+    void testPesquisaPorIdContaNaoEncontrada() {
+        when(contasPagarRepository.findById(modelContasPagar.getId())).thenReturn(Optional.empty());
+
+        assertThrows(ContasPagarReceberNaoEncontradaException.class, () -> contasPagarService.pesquisaPorId(1L));
+
+        verify(contasPagarRepository, times(1)).findById(modelContasPagar.getId());
     }
 
     private void startContasPagar(){
