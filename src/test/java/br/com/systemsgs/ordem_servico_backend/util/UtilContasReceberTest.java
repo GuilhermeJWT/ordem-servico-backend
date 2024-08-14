@@ -44,6 +44,30 @@ class UtilContasReceberTest extends ConfigDadosEstaticosEntidades {
         assertEquals(response, dadosDashboard().getTotalContasReceber());
     }
 
+    @DisplayName("Teste para calcular Quantidade de Contas a Receber Vencidas no Dashboard")
+    @Test
+    void testTotalContasReceberVencidas() {
+        when(contasReceberRepository.quantidadeContasReceberVencidas()).thenReturn(dadosDashboard().getQuantidadeContasReceberVencidas());
+
+        Optional<Integer> response = utilContasReceber.quantidadeContasReceberVencidas();
+
+        assertNotNull(response);
+        assertTrue(response.isPresent());
+        assertEquals(response, dadosDashboard().getQuantidadeContasReceberVencidas());
+    }
+
+    @DisplayName("Teste para retornar NullPointerException caso não tenha dados")
+    @Test
+    void totalContasReceberVencidasNullPointerException() {
+        when(contasReceberRepository.quantidadeContasReceberVencidas()).thenThrow(new NullPointerException());
+
+        try {
+            var response = utilContasReceber.quantidadeContasReceberVencidas();
+        }catch (NullPointerException exception){
+            assertEquals(NullPointerException.class, exception.getClass());
+        }
+    }
+
     @DisplayName("Teste para retornar NullPointerException caso não tenha dados")
     @Test
     void totalContasReceberNullPointerException() {
