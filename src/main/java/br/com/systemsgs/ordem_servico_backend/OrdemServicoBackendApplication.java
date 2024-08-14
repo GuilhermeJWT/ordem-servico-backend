@@ -13,5 +13,4 @@ public class OrdemServicoBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OrdemServicoBackendApplication.class, args);
 	}
-
 }

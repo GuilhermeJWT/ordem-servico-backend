@@ -1,6 +1,5 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
-import br.com.systemsgs.ordem_servico_backend.dto.hateoas.ModelProdutosHateoas;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelProdutosDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 import br.com.systemsgs.ordem_servico_backend.service.ProdutoService;
@@ -9,8 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +18,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration.TAG_API_PRODUTOS;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Tag(name = TAG_API_PRODUTOS)
 @RestController
@@ -34,22 +29,6 @@ public class ProdutoController {
 
     @Autowired
     private ModelMapper mapper;
-
-    @Operation(summary = "Listar Produtos - HATEOAS", description = "Api para listar todos os Produtos com Link (HATEOAS)")
-    @GetMapping("/listar/v2/link")
-    public CollectionModel<ModelProdutosHateoas> listarProdutosComLink(){
-        List<ModelProdutosHateoas> listaProdutos = produtoService.listarProdutos()
-                .stream().map(x -> mapper.map(x, ModelProdutosHateoas.class)).collect(Collectors.toList());
-
-        for (ModelProdutosHateoas modelProdutos : listaProdutos) {
-            Long produtoID = modelProdutos.getId();
-            Link produtoLink = linkTo(methodOn(ProdutoController.class).pesquisarPorId(produtoID)).withRel("Pesquisa Produto pelo ID");
-            modelProdutos.add(produtoLink);
-        }
-
-        CollectionModel<ModelProdutosHateoas> result = CollectionModel.of(listaProdutos);
-        return result;
-    }
 
     @Operation(summary = "Listar Produtos", description = "Api para listar todos os registro de Produtos")
     @GetMapping("/listar")

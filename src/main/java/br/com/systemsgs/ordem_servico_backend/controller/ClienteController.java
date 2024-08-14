@@ -47,8 +47,7 @@ public class ClienteController {
             modelClientesHateoas.add(clienteLink);
         }
 
-        CollectionModel<ModelClientesHateoas> result = CollectionModel.of(listaCLientes);
-        return result;
+        return CollectionModel.of(listaCLientes);
     }
 
     @Operation(summary = "Listar Clientes", description = "Api para listar todos os registro de Clientes")

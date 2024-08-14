@@ -47,8 +47,7 @@ public class OrdemServicoController {
             modelOrdemServicoHateoas.add(osLink);
         }
 
-        CollectionModel<ModelOrdemServicoHateoas> result = CollectionModel.of(listaOS);
-        return result;
+        return CollectionModel.of(listaOS);
     }
 
     @Operation(summary = "Listar OS", description = "Api para listar todos os registro de Ordem de Serviço")
