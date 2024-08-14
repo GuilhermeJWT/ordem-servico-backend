@@ -49,6 +49,7 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        contasReceberService = new ContasReceberServiceImpl(contasReceberRepository, utilClientes, mapper);
         startContasReceber();
     }
 

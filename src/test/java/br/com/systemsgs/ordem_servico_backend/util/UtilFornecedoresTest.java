@@ -33,6 +33,7 @@ class UtilFornecedoresTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        utilFornecedores = new UtilFornecedores(fornecedoresRepository);
         startFornecedor();
     }
 

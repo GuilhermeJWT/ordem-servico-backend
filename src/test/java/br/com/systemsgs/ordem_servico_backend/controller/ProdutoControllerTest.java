@@ -49,6 +49,7 @@ class ProdutoControllerTest extends ConfigDadosEstaticosEntidades{
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
+        produtoController = new ProdutoController(produtoService, mapper);
         startProduto();
     }
 

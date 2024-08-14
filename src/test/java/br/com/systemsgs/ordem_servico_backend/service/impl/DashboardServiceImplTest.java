@@ -47,6 +47,13 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         startDashboard();
+        dashboardServiceImpl = new DashboardServiceImpl(
+                utilVendas,
+                utilClientes,
+                utilProdutos,
+                utilOrdemServico,
+                utilContasPagar,
+                utilContasReceber);
     }
 
     @DisplayName("Teste para Mockar os dados do Dashboard")

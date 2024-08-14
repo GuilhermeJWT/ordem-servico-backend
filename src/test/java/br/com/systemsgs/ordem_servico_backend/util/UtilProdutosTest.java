@@ -37,6 +37,7 @@ class UtilProdutosTest extends ConfigDadosEstaticosEntidades{
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        utilProdutos = new UtilProdutos(produtoRepository);
         startProdutoOptional();
     }
 

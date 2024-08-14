@@ -47,6 +47,7 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
+        contasPagarController = new ContasPagarController(contasPagarService);
         startContasPagar();
     }
 

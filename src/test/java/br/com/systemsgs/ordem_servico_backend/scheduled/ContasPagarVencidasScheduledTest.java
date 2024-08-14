@@ -32,6 +32,7 @@ class ContasPagarVencidasScheduledTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        contasPagarVencidasScheduled = new ContasPagarVencidasScheduled(contasPagarRepository);
     }
 
     @DisplayName("Teste Contas Pagar Vencidas - Scheduled")

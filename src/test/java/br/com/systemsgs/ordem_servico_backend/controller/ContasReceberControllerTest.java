@@ -42,6 +42,7 @@ class ContasReceberControllerTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
+        contasReceberController = new ContasReceberController(contasReceberService);
         startContasReceber();
     }
 

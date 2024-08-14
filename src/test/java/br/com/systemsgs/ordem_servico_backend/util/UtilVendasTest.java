@@ -35,6 +35,7 @@ class UtilVendasTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        utilVendas = new UtilVendas(vendasRepository);
         startVendaOptional();
     }
 

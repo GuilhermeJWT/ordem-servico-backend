@@ -32,6 +32,7 @@ class ContasReceberExpiradasScheduledTest extends ConfigDadosEstaticosEntidades 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        contasReceberExpiradasScheduled = new ContasReceberExpiradasScheduled(contasReceberRepository);
     }
 
     @DisplayName("Teste para Contas a Receber Vencidas com Dados - Scheduled")

@@ -34,6 +34,7 @@ class UtilOrdemServicoTest extends ConfigDadosEstaticosEntidades{
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        utilOrdemServico = new UtilOrdemServico(ordemServicoRepository);
         startOrdemServicoOptinal();
     }
 

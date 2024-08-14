@@ -47,6 +47,7 @@ class ProdutoServiceImplTest extends ConfigDadosEstaticosEntidades{
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        produtoService = new ProdutoServiceImpl(produtoRepository, utilProdutos, mapper);
         startProduto();
     }
 

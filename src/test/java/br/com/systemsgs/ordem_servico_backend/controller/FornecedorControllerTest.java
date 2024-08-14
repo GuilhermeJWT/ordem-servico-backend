@@ -47,6 +47,7 @@ class FornecedorControllerTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
+        fornecedorController = new FornecedorController(fornecedorService, mapper);
         startFornecedor();
     }
 

@@ -30,6 +30,7 @@ class UtilContasReceberTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        utilContasReceber = new UtilContasReceber(contasReceberRepository);
     }
 
     @DisplayName("Teste para calcular o Total de Contas a Receber no Dashboard")

@@ -46,6 +46,7 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        contasPagarService = new ContasPagarServiceImpl(contasPagarRepository, utilFornecedores, modelMapper);
         startContasPagar();
     }
 

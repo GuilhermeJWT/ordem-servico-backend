@@ -54,6 +54,12 @@ class VendasServiceImplTest extends ConfigDadosEstaticosEntidades {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         startVendas();
+        vendasService = new VendasServiceImpl(
+                vendasRepository,
+                utilVendas,
+                utilTecnicoResponsavel,
+                utilClientes,
+                utilProdutos);
     }
 
     @DisplayName("Teste para salvar uma Venda")

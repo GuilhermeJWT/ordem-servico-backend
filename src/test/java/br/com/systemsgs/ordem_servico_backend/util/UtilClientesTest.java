@@ -35,6 +35,7 @@ class UtilClientesTest extends ConfigDadosEstaticosEntidades{
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        utilClientes = new UtilClientes(clienteRepository);
         startClienteOptional();
     }
 

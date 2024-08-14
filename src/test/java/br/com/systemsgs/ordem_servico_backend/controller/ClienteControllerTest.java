@@ -64,6 +64,7 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
     void setUp(){
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(clienteController).build();
+        clienteController = new ClienteController(clienteService, mapper);
         startCliente();
     }
 

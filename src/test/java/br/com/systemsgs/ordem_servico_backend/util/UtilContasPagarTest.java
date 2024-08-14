@@ -30,6 +30,7 @@ class UtilContasPagarTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        utilContasPagar = new UtilContasPagar(contasPagarRepository);
     }
 
     @DisplayName("Teste para calcular o Total de Contas a Pagar")

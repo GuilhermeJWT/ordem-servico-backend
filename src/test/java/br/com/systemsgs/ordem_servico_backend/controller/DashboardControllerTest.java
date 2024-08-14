@@ -32,6 +32,7 @@ class DashboardControllerTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
+        dashboardController = new DashboardController(dashboardService);
         startDashboard();
     }
 

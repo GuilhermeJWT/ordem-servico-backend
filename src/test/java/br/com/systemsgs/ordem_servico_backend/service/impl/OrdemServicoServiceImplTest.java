@@ -67,6 +67,12 @@ class OrdemServicoServiceImplTest extends ConfigDadosEstaticosEntidades{
     void setUp() {
         MockitoAnnotations.openMocks(this);
         startOrdemServico();
+        ordemServicoServiceImpl = new OrdemServicoServiceImpl(
+                ordemServicoRepository,
+                utilOrdemServico,
+                utilClientes,
+                mapper,
+                utilTecnicoResponsavel);
     }
 
     @DisplayName("Pesquisa uma OS por ID")

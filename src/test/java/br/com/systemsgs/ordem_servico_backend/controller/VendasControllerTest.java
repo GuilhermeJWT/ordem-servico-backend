@@ -43,6 +43,7 @@ class VendasControllerTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
+        vendasController = new VendasController(vendaService);
         startVenda();
     }
 

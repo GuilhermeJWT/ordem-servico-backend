@@ -62,6 +62,7 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
     void setUp(){
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(ordemServicoController).build();
+        ordemServicoController = new OrdemServicoController(ordemServicoService, mapper);
         startOrdemServico();
     }
 

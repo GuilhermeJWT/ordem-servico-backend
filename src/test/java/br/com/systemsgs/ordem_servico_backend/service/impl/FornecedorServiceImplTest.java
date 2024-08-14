@@ -47,6 +47,7 @@ class FornecedorServiceImplTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        fornecedorServiceImpl = new FornecedorServiceImpl(fornecedoresRepository, utilFornecedores, mapper);
         startFornecedor();
     }
 

@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.util;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelOrdemServicoDTO;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.TecnicoResponsavelNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelTecnicoResponsavel;
 import br.com.systemsgs.ordem_servico_backend.repository.TecnicoRepository;
@@ -17,13 +18,14 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles(value = "test")
 @SpringBootTest
 class UtilTecnicoResponsavelTest extends ConfigDadosEstaticosEntidades {
 
     private Optional<ModelTecnicoResponsavel> modelTecnicoResponsavelOptional;
+    private ModelOrdemServicoDTO modelOrdemServicoDTO;
 
     @InjectMocks
     private UtilTecnicoResponsavel utilTecnicoResponsavel;
@@ -34,6 +36,7 @@ class UtilTecnicoResponsavelTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        utilTecnicoResponsavel = new UtilTecnicoResponsavel(tecnicoRepository);
         startTecnicoResponsavel();
     }
 
@@ -61,10 +64,61 @@ class UtilTecnicoResponsavelTest extends ConfigDadosEstaticosEntidades {
         }
     }
 
+    @DisplayName("Pesquisa Técnico pelo ID - Optional")
+    @Test
+     void testPesquisarTecnicoPeloIdOptional() {
+        when(tecnicoRepository.findById(modelTecnicoResponsavelOptional.get().getId())).thenReturn(modelTecnicoResponsavelOptional);
+
+        ModelTecnicoResponsavel response = utilTecnicoResponsavel.pesquisarTecnicoPeloId(1L);
+
+        assertNotNull(response);
+
+        assertEquals(dadosTecnicoResponsavel().getId(), response.getId());
+        assertEquals(dadosTecnicoResponsavel().getNome(), response.getNome());
+
+        verify(tecnicoRepository, times(1)).findById(modelTecnicoResponsavelOptional.get().getId());
+    }
+
+    @DisplayName("Teste para validar um Técnico existente")
+    @Test
+     void testValidaTecnicoExistente() {
+        when(tecnicoRepository.findById(modelTecnicoResponsavelOptional.get().getId())).thenReturn(modelTecnicoResponsavelOptional);
+
+        ModelOrdemServicoDTO response = utilTecnicoResponsavel.validaTecnicoExistente(modelOrdemServicoDTO);
+
+        assertNotNull(response);
+        assertEquals(dadosTecnicoResponsavel().getId(), response.getTecnicoResponsavel().getId());
+        assertEquals(dadosTecnicoResponsavel().getNome(), response.getTecnicoResponsavel().getNome());
+
+        verify(tecnicoRepository, times(1)).findById(1L);
+    }
+
+    @DisplayName("Teste lançar exception caso não existe um Técnico para validação")
+    @Test
+    public void testValidaTecnicoExistenteNotFound() {
+        when(tecnicoRepository.findById(modelTecnicoResponsavelOptional.get().getId())).thenReturn(Optional.empty());
+
+        assertThrows(TecnicoResponsavelNaoEncontradoException.class, () -> {
+            utilTecnicoResponsavel.validaTecnicoExistente(modelOrdemServicoDTO);
+        });
+
+        verify(tecnicoRepository, times(1)).findById(1L);
+    }
+
     private void startTecnicoResponsavel(){
         modelTecnicoResponsavelOptional = Optional.of(new ModelTecnicoResponsavel(
             dadosTecnicoResponsavel().getId(),
             dadosTecnicoResponsavel().getNome()
         ));
+        modelOrdemServicoDTO = new ModelOrdemServicoDTO(
+                dadosOrdemServico().getId(),
+                dadosOrdemServico().getDefeito(),
+                dadosOrdemServico().getDescricao(),
+                dadosOrdemServico().getLaudo_tecnico(),
+                dadosOrdemServico().getStatus(),
+                dadosOrdemServico().getData_inicial(),
+                dadosOrdemServico().getData_final(),
+                dadosOrdemServico().getCliente(),
+                dadosOrdemServico().getTecnicoResponsavel());
     }
 }

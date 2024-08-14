@@ -47,6 +47,7 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        clienteService = new ClienteServiceImpl(clienteRepository, utilClientes, mapper);
         startCliente();
     }
 
