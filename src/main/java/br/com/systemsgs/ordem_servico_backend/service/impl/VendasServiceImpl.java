@@ -53,7 +53,6 @@ public class VendasServiceImpl implements VendaService {
 
         var cliente = utilClientes.pesquisarClientePeloId(modelVendasDTO.getIdCliente());
         var tecnico = utilTecnicoResponsavel.pesquisarTecnicoPeloId(modelVendasDTO.getIdTecnicoResponsavel());
-
         var ids = modelVendasDTO.getItens().stream().map(p -> p.getId_produto()).collect(Collectors.toList());
         var produtos = utilProdutos.pesquisaListaProdutosPorIds(ids);
 
@@ -67,9 +66,7 @@ public class VendasServiceImpl implements VendaService {
         modelItensVendas.setQuantidade(produtos.stream().map(p -> p.getQuantidade()).collect(Collectors.toList()));
         modelItensVendas.setValorProduto(produtos.stream().map(p -> p.getPreco_venda()).collect(Collectors.toList()));
 
-        var vendaSalva = vendasRepository.save(modelVendas);
-
-        return vendaSalva;
+        return vendasRepository.save(modelVendas);
     }
 
     @Cacheable(value = "vendas", key = "#id")
@@ -114,7 +111,6 @@ public class VendasServiceImpl implements VendaService {
 
     private List<String> pegaDescricaoPedidos(ModelVendas modelVendas){
         var idsProdutos = modelVendas.getItens().stream().map(p -> p.getProduto());
-
         List<Long> listIds = idsProdutos.reduce(new ArrayList<>() , (integer, longs) -> longs);
 
         return utilProdutos.pesquisaDescricaoProdutosPorIds(listIds);

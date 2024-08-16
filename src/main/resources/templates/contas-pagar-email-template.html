@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Contas a Pagar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #007bff;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+            color: #ffffff;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .content table, .content th, .content td {
+            border: 1px solid #ddd;
+        }
+        .content th, .content td {
+            padding: 10px;
+            text-align: left;
+        }
+        .content th {
+            background-color: #f4f4f4;
+            text-transform: uppercase;
+        }
+        .status-vermelho {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        .valor-azul {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .highlight {
+            color: #ff0000;
+            font-weight: bold;
+            font-size: 25px;
+        }
+        .bluelight {
+            color: #007bff;
+            font-weight: bold;
+            font-size: 25px;
+        }
+        .footer {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 0 0 10px 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Relatório de Contas a Pagar</h1>
+    </div>
+    <div class="content">
+        <p>Olá <span th:text="${nomeAdmin}"></span>, Bom Dia!</p>
+        <p>Segue abaixo a lista de Contas a Pagar vencendo hoje:</p>
+        <table>
+            <thead>
+            <tr>
+                <th>Nº</th>
+                <th>Fornecedor</th>
+                <th>Valor</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="conta : ${contasPagar}">
+                <td th:text="${conta.id}"></td>
+                <td th:text="${conta.fornecedor.nome}"></td>
+                <td th:text="${conta.valor}"></td>
+                <td th:text="${conta.statusContas}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="bluelight">Quantidade de Contas a Pagar: <span th:text="${quantidadeContasPagar}"></span></p>
+        <p class="highlight">Soma total de Contas a Peceber: R$ <span th:text="${somaTotalContasPagar}"></span></p>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Desenvolvido por <strong>Guilherme Santos.</strong></p>
+    </div>
+</div>
+</body>
+</html>

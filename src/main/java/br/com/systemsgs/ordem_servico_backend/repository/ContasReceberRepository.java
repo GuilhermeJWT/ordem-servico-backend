@@ -18,7 +18,8 @@ public interface ContasReceberRepository extends JpaRepository<ModelContasRecebe
     @Query(value = "SELECT COUNT(*) from tbl_contas_receber where status_conta_receber = 'INADIMPLENTE'", nativeQuery = true)
     Optional<Integer> quantidadeContasInadimplentes();
 
-    @Query(value = "SELECT * FROM tbl_contas_receber WHERE data_vencimento = CURRENT_DATE", nativeQuery = true)
+    @Query(value = "SELECT * FROM tbl_contas_receber WHERE data_vencimento = CURRENT_DATE AND" +
+            " status_conta_receber != 'VENCIDA'", nativeQuery = true)
     List<ModelContasReceber> pesquisaContasReceberExpiradas();
 
     @Query(value = "SELECT COUNT(*) from tbl_contas_receber where status_conta_receber = 'VENCIDA'", nativeQuery = true)

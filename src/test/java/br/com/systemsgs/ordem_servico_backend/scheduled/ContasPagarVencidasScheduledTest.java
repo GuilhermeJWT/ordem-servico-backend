@@ -3,6 +3,7 @@ package br.com.systemsgs.ordem_servico_backend.scheduled;
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasPagar;
+import br.com.systemsgs.ordem_servico_backend.notification.NotificaEmailService;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasPagarRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,10 +30,13 @@ class ContasPagarVencidasScheduledTest extends ConfigDadosEstaticosEntidades {
     @Mock
     private ContasPagarRepository contasPagarRepository;
 
+    @Mock
+    private NotificaEmailService notificaEmailService;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        contasPagarVencidasScheduled = new ContasPagarVencidasScheduled(contasPagarRepository);
+        contasPagarVencidasScheduled = new ContasPagarVencidasScheduled(contasPagarRepository, notificaEmailService);
     }
 
     @DisplayName("Teste Contas Pagar Vencidas - Scheduled")
@@ -43,7 +47,7 @@ class ContasPagarVencidasScheduledTest extends ConfigDadosEstaticosEntidades {
 
         when(contasPagarRepository.pesquisaContasPagarExpiradas()).thenReturn(contasVencidas);
 
-        contasPagarVencidasScheduled.contasPagarVencidas();
+        contasPagarVencidasScheduled.identificaContasPagarComVencimento();
 
         verify(contasPagarRepository).saveAll(anyList());
         assert contasVencidas.stream().allMatch(conta -> conta.getStatusContas() == StatusContas.VENCIDA);
@@ -54,7 +58,7 @@ class ContasPagarVencidasScheduledTest extends ConfigDadosEstaticosEntidades {
     void testContasPagarVencidasQuandoNaoExistemContasVencidas() {
         when(contasPagarRepository.pesquisaContasPagarExpiradas()).thenReturn(new ArrayList<>());
 
-        contasPagarVencidasScheduled.contasPagarVencidas();
+        contasPagarVencidasScheduled.identificaContasPagarComVencimento();
 
         verify(contasPagarRepository, never()).saveAll(anyList());
     }

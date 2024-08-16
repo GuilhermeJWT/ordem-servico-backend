@@ -3,6 +3,8 @@ package br.com.systemsgs.ordem_servico_backend.scheduled;
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasReceber;
+import br.com.systemsgs.ordem_servico_backend.notification.NotificaEmailService;
+import br.com.systemsgs.ordem_servico_backend.notification.impl.ContasReceberNotificationServiceImpl;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasReceberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,10 +31,15 @@ class ContasReceberExpiradasScheduledTest extends ConfigDadosEstaticosEntidades 
     @Mock
     private ContasReceberRepository contasReceberRepository;
 
+    @Mock
+    private NotificaEmailService notificaEmailService;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        contasReceberExpiradasScheduled = new ContasReceberExpiradasScheduled(contasReceberRepository);
+        contasReceberExpiradasScheduled = new ContasReceberExpiradasScheduled(
+                contasReceberRepository,
+                notificaEmailService);
     }
 
     @DisplayName("Teste para Contas a Receber Vencidas com Dados - Scheduled")
@@ -43,7 +50,7 @@ class ContasReceberExpiradasScheduledTest extends ConfigDadosEstaticosEntidades 
 
         when(contasReceberRepository.pesquisaContasReceberExpiradas()).thenReturn(contasVencidas);
 
-        contasReceberExpiradasScheduled.contasReceberVencidas();
+        contasReceberExpiradasScheduled.verificaContasReceberVencidas();
 
         verify(contasReceberRepository).saveAll(anyList());
         assert contasVencidas.stream().allMatch(conta -> conta.getStatusContasReceber() == StatusContas.VENCIDA);
@@ -54,7 +61,7 @@ class ContasReceberExpiradasScheduledTest extends ConfigDadosEstaticosEntidades 
     void testContasReceberVencidasQuandoNaoExistemContasVencidas() {
         when(contasReceberRepository.pesquisaContasReceberExpiradas()).thenReturn(new ArrayList<>());
 
-        contasReceberExpiradasScheduled.contasReceberVencidas();
+        contasReceberExpiradasScheduled.verificaContasReceberVencidas();
 
         verify(contasReceberRepository, never()).saveAll(anyList());
     }
