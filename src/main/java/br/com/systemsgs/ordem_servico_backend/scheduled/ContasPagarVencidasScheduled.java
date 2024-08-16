@@ -2,8 +2,10 @@ package br.com.systemsgs.ordem_servico_backend.scheduled;
 
 import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasPagar;
+import br.com.systemsgs.ordem_servico_backend.notification.NotificaEmailService;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasPagarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -13,19 +15,18 @@ import java.util.List;
 public class ContasPagarVencidasScheduled {
 
     private final ContasPagarRepository contasPagarRepository;
+    private final NotificaEmailService notificaEmailService;
 
     @Autowired
-    public ContasPagarVencidasScheduled(ContasPagarRepository contasPagarRepository) {
+    public ContasPagarVencidasScheduled(ContasPagarRepository contasPagarRepository,
+                                        @Qualifier("contasPagarNotificationServiceImpl")
+                                        NotificaEmailService notificaEmailService) {
         this.contasPagarRepository = contasPagarRepository;
+        this.notificaEmailService = notificaEmailService;
     }
 
-    //Todo dia as 07:05 da manhã, o Job será executado para listar as Contas a Pagar vencida, e atualizar para = VENCIDA
-    @Scheduled(cron = "0 5 7 * * *")
+    @Scheduled(cron = "0 0 7 * * *")
     public void identificaContasPagarComVencimento(){
-        contasPagarVencidas();
-    }
-
-    public void contasPagarVencidas(){
         List<ModelContasPagar> contasPagarVencidasHoje = contasPagarRepository.pesquisaContasPagarExpiradas();
 
         if(!contasPagarVencidasHoje.isEmpty()){
@@ -33,6 +34,7 @@ public class ContasPagarVencidasScheduled {
                     .forEach(status -> status.setStatusContas(StatusContas.VENCIDA));
 
             contasPagarRepository.saveAll(contasPagarVencidasHoje);
+            notificaEmailService.notificaEmail(contasPagarVencidasHoje);
         }
     }
 }
