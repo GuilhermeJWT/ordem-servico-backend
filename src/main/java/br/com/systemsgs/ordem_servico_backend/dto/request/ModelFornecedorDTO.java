@@ -20,18 +20,18 @@ public class ModelFornecedorDTO {
 
     private Long id;
 
-    @Size(max = 250, message = "Nome do Fornecedor deve ter no máximo 250 Caracteres.")
-    @NotBlank(message = "Nome do Fornecedor deve ser Informado.")
+    @Size(max = 250, message = "{nome.maximo.caracteres}")
+    @NotBlank(message = "{nome.obrigatorio}")
     private String nome;
 
-    @Size(max = 250, message = "Nome Fantasia deve ter no máximo 250 Caracteres.")
+    @Size(max = 250, message = "{nome.fantasia.maximo.caracteres}")
     private String nomeFantasia;
 
     @Enumerated(EnumType.STRING)
     private TipoPessoa tipoPessoa = TipoPessoa.PESSOA_JURIDICA;
 
-    @Size(max = 18, message = "Cnpj do Fornecedor deve ter no máximo 18 Caracteres.")
-    @CNPJ(message = "Informe um CNPJ Válido.")
+    @Size(max = 18, message = "{cnpj.maximo.caracteres}")
+    @CNPJ(message = "{cnpj.invalido}")
     private String cnpj;
 
     private ModelEndereco endereco;

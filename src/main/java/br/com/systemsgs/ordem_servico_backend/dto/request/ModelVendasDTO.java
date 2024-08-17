@@ -20,19 +20,19 @@ import java.util.List;
 public class ModelVendasDTO {
 
     @JsonProperty("desconto")
-    @DecimalMin(value = "0.0", inclusive = false, message = "O preço deve ser maior que 0.")
-    @DecimalMax(value = "999999.0", message = "Valor muito alto para o Desconto.")
+    @DecimalMin(value = "0.1", inclusive = false, message = "{desconto.minimo}")
+    @DecimalMax(value = "999999.0", message = "{desconto.alto}")
     private BigDecimal desconto = BigDecimal.ZERO;
 
     @JsonProperty("id_cliente")
-    @NotNull(message = "Informe um Cliente.")
+    @NotNull(message = "{cliente.obrigatorio}")
     private Long idCliente;
 
     @JsonProperty("id_tecnico_responsavel")
-    @NotNull(message = "Informe um Técnico Responsavel pela Venda.")
+    @NotNull(message = "{tecnico.responsavel.obrigatorio}")
     private Long idTecnicoResponsavel;
 
     @JsonProperty("itens")
-    @NotNull(message = "Informe pelomenos 1 Produto para a Venda")
+    @NotNull(message = "{produto.obrigatorio}")
     private List<ModelItensVendasDTO> itens = new ArrayList<>();
 }

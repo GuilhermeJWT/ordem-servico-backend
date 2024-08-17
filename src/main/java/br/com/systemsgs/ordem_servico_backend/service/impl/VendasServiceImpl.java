@@ -2,8 +2,7 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelVendasDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.VendasResponse;
-import br.com.systemsgs.ordem_servico_backend.model.ModelItensVendas;
-import br.com.systemsgs.ordem_servico_backend.model.ModelVendas;
+import br.com.systemsgs.ordem_servico_backend.model.*;
 import br.com.systemsgs.ordem_servico_backend.repository.VendasRepository;
 import br.com.systemsgs.ordem_servico_backend.service.VendaService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
@@ -33,9 +32,7 @@ public class VendasServiceImpl implements VendaService {
     private final UtilProdutos utilProdutos;
 
     @Autowired
-    public VendasServiceImpl(VendasRepository vendasRepository,
-                             UtilVendas utilVendas,
-                             UtilTecnicoResponsavel utilTecnicoResponsavel,
+    public VendasServiceImpl(VendasRepository vendasRepository, UtilVendas utilVendas, UtilTecnicoResponsavel utilTecnicoResponsavel,
                              UtilClientes utilClientes,
                              UtilProdutos utilProdutos) {
         this.vendasRepository = vendasRepository;
@@ -56,15 +53,7 @@ public class VendasServiceImpl implements VendaService {
         var ids = modelVendasDTO.getItens().stream().map(p -> p.getId_produto()).collect(Collectors.toList());
         var produtos = utilProdutos.pesquisaListaProdutosPorIds(ids);
 
-        modelVendas.setCliente(cliente);
-        modelVendas.setTecnicoResponsavel(tecnico);
-        modelVendas.setDesconto(modelVendasDTO.getDesconto());
-        modelVendas.setTotalVenda(calculaTotalVenda(modelVendasDTO));
-        modelVendas.setTotalItens(calculaTotalItens(modelVendasDTO));
-        modelVendas.setItens(itensVenda(modelVendasDTO));
-        modelItensVendas.setProduto(produtos.stream().map(p -> p.getId()).collect(Collectors.toList()));
-        modelItensVendas.setQuantidade(produtos.stream().map(p -> p.getQuantidade()).collect(Collectors.toList()));
-        modelItensVendas.setValorProduto(produtos.stream().map(p -> p.getPreco_venda()).collect(Collectors.toList()));
+        setDadosVendas(modelVendasDTO, modelVendas, cliente, tecnico, modelItensVendas, produtos);
 
         return vendasRepository.save(modelVendas);
     }
@@ -86,6 +75,19 @@ public class VendasServiceImpl implements VendaService {
         vendasResponse.setDescricaoProdutos(pegaDescricaoPedidos(pesquisaVenda));
 
         return vendasResponse;
+    }
+
+    private void setDadosVendas(ModelVendasDTO modelVendasDTO, ModelVendas modelVendas, ModelClientes cliente, ModelTecnicoResponsavel tecnico,
+                                ModelItensVendas modelItensVendas, List<ModelProdutos> produtos) {
+        modelVendas.setCliente(cliente);
+        modelVendas.setTecnicoResponsavel(tecnico);
+        modelVendas.setDesconto(modelVendasDTO.getDesconto());
+        modelVendas.setTotalVenda(calculaTotalVenda(modelVendasDTO));
+        modelVendas.setTotalItens(calculaTotalItens(modelVendasDTO));
+        modelVendas.setItens(itensVenda(modelVendasDTO));
+        modelItensVendas.setProduto(produtos.stream().map(p -> p.getId()).collect(Collectors.toList()));
+        modelItensVendas.setQuantidade(produtos.stream().map(p -> p.getQuantidade()).collect(Collectors.toList()));
+        modelItensVendas.setValorProduto(produtos.stream().map(p -> p.getPreco_venda()).collect(Collectors.toList()));
     }
 
     private BigDecimal calculaTotalVenda(ModelVendasDTO modelVendasDTO) {

@@ -25,10 +25,5 @@ pipeline {
                 sh './mvnw sonar:sonar sonar-quality-gate:check -Dsonar.host.url=http://192.168.18.15:9000/ -Dsonar.login=admin -Dsonar.password=sonarqube -Dsonar.token=${SONAR_TOKEN}'
             }
 		}
-		stage ('Manual Approval - Deploy'){
-            steps {
-              input "Deseja aprovar o Deploy para Produção?"
-            }
-		}
 	}
 }

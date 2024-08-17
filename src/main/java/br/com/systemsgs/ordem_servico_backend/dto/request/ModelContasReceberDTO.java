@@ -23,30 +23,30 @@ public class ModelContasReceberDTO {
 
     private Long id;
 
-    @FutureOrPresent(message = "Data de Vencimento deve ser no presente ou futuro.")
+    @FutureOrPresent(message = "{data.futuro}")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
     private Date data_vencimento;
 
-    @NotNull(message = "Informe o Valor.")
-    @DecimalMin(value = "0.0", inclusive = false, message = "O preço deve ser maior que 0.")
-    @DecimalMax(value = "999999.0", message = "Valor muito alto para a conta.")
+    @NotNull(message = "{valor.obrigatorio}")
+    @DecimalMin(value = "0.0", inclusive = false, message = "{preco.maior}")
+    @DecimalMax(value = "999999.0", message = "{valor.alto}")
     private BigDecimal valor = BigDecimal.ZERO;
 
-    @Size(max = 250, message = "Observação da conta deve ter no máximo 250 Caracteres")
+    @Size(max = 250, message = "{observacao.conta.maximo.caracteres}")
     private String observacao = "Sem Observação.";
 
-    @NotNull(message = "Forma de Pagamento deve ser Informada.")
+    @NotNull(message = "{forma.pagamento.obrigatoria}")
     @Enumerated(EnumType.STRING)
     private FormaPagamento formaPagamento;
 
-    @NotNull(message = "Status da Conta deve ser Informada.")
+    @NotNull(message = "{status.conta.obrigatoria}")
     @Enumerated(EnumType.STRING)
     private StatusContas statusContas;
 
     @JsonProperty("codigo_cliente")
-    @NotNull(message = "Cliente deve ser Informado.")
+    @NotNull(message = "{cliente.obrigatorio}")
     private Long codigoCliente;
 
 }

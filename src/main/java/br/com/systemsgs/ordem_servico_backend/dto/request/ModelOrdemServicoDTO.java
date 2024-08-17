@@ -25,35 +25,35 @@ public class ModelOrdemServicoDTO extends RepresentationModel<ModelOrdemServicoD
 
     private Long id;
 
-    @Size(max = 250, message = "Defeito deve ter no máximo 250 Caracteres.")
+    @Size(max = 250, message = "{defeito.maximo.caracteres}")
     private String defeito;
 
-    @Size(max = 250, message = "Descricao deve ter no máximo 250 Caracteres.")
+    @Size(max = 250, message = "{descricao.maximo.caracteres}")
     private String descricao;
 
-    @Size(max = 250, message = "Laudo Técnico deve ter no máximo 250 Caracteres.")
+    @Size(max = 250, message = "{laudo.tecnico.maximo.caracteres}")
     private String laudo_tecnico;
 
-    @NotNull(message = "Status deve ser Informado.")
+    @NotNull(message = "{status.obrigatorio}")
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @NotNull(message = "A Data Inicial deve ser Informada.")
+    @NotNull(message = "{data.inicial.obrigatoria}")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
     private Date data_inicial;
 
-    @NotNull(message = "A Data Final deve ser Informada.")
+    @NotNull(message = "{data.final.obrigatoria}")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
     private Date data_final;
 
-    @NotNull(message = "Informe um Cliente.")
+    @NotNull(message = "{cliente.obrigatorio}")
     private ModelClientes cliente;
 
-    @NotNull(message = "Informe o Técnico Responsavel")
+    @NotNull(message = "{tecnico.responsavel.obrigatorio}")
     @JsonProperty("tecnico_responsavel")
     private ModelTecnicoResponsavel tecnicoResponsavel;
 }

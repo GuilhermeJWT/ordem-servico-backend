@@ -64,9 +64,7 @@ public class ContasPagarServiceImpl implements ContasPagarService {
         modelContasPagar.setData_vencimento(modelContasPagarDTO.getData_vencimento());
         modelContasPagar.setStatusContas(modelContasPagarDTO.getStatusContas());
 
-        var contaSalva = contasPagarRepository.save(modelContasPagar);
-
-        return converteEntidadeEmResponse(contaSalva);
+        return converteEntidadeEmResponse(contasPagarRepository.save(modelContasPagar));
     }
 
     @CacheEvict(value = "contaspagar", key = "#id")
