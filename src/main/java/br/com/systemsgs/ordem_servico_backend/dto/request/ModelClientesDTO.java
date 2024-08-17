@@ -17,34 +17,34 @@ public class ModelClientesDTO{
 
     private Long id;
 
-    @Size(max = 250, message = "Nome do Cliente deve ter no máximo 250 Caracteres.")
-    @NotBlank(message = "Nome deve ser Informado.")
+    @Size(max = 250, message = "{nome.maximo.cinquenta.caracteres}")
+    @NotBlank(message = "{nome.obrigatorio}")
     private String nome;
 
-    @Size(max = 15, message = "Cpf deve ter no máximo 15 Caracteres.")
-    @CPF(message = "Informe um CPF Válido.")
-    @NotBlank(message = "CPF deve ser Informado.")
+    @Size(max = 15, message = "{cpf.maximo.caracteres}")
+    @CPF(message = "{cpf.invalido}")
+    @NotBlank(message = "{cpf.obrigatorio}")
     private String cpf;
 
-    @Size(max = 16, message = "Número de celular deve ter no máximo 16 Caracteres.")
+    @Size(max = 16, message = "{celular.maximo.caracteres}")
     private String celular;
 
-    @Size(max = 60, message = "Email do Cliente deve ter no máximo 60 Caracteres.")
-    @Email(message = "Informe um E-mail Válido.")
+    @Size(max = 60, message = "{email.maximo.caracteres}")
+    @Email(message = "{email.invalido}")
     private String email;
 
-    @Size(max = 150, message = "Endereço do Cliente deve ter no máximo 150 Caracteres.")
+    @Size(max = 150, message = "{endereco.maximo.caracteres}")
     private String endereco;
 
-    @Size(max = 150, message = "Complemento do Endereço deve ter no máximo 150 Caracteres.")
+    @Size(max = 150, message = "{complemento.maximo.caracteres}")
     private String complemento;
 
-    @Size(max = 40, message = "Cidade deve ter no máximo 40 Caracteres.")
+    @Size(max = 40, message = "{cidade.maximo.caracteres}")
     private String cidade;
 
-    @Size(max = 25, message = "Estado deve ter no máximo 25 Caracteres.")
+    @Size(max = 25, message = "{estado.maximo.caracteres}")
     private String estado;
 
-    @Size(max = 10, message = "Cep deve ter no máximo 10 Caracteres.")
+    @Size(max = 10, message = "{cep.maximo.caracteres}")
     private String cep;
 }

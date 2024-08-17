@@ -17,28 +17,28 @@ public class ModelProdutosDTO extends RepresentationModel<ModelProdutosDTO> {
 
     private Long id;
 
-    @Size(max = 250, message = "Descricao deve ter no máximo 250 Caracteres.")
-    @NotBlank(message = "Descrição deve ser Informada.")
+    @Size(max = 250, message = "{descricao.maximo.caracteres}")
+    @NotBlank(message = "{descricao.obrigatoria}")
     private String descricao;
 
-    @Positive(message = "A Quantidade deve ser um Valor Positivo. ")
-    @Min(value = 1,message = "Quantidade Minima deve ser 1.")
-    @NotNull(message = "Quantidade deve ser Informada.")
+    @Positive(message = "{quantidade.valor.positivo}")
+    @Min(value = 1,message = "{quantidade.minima}")
+    @NotNull(message = "{quantidade.produtos.obrigatorio}")
     private Integer quantidade;
 
-    @Positive(message = "A Quantidade Minima deve ser um Valor Positivo.")
-    @Min(value = 1,message = "Quantidade Minima deve ser 1.")
+    @Positive(message = "{quantidade.minima.positiva}")
+    @Min(value = 1,message = "{quantidade.minima}")
     private Integer quantidade_minima;
 
-    @Positive(message = "O Preço de Compra deve ser um Valor Positivo.")
-    @Min(value = 1, message = "Preço de Compra deve ser maior que R$ 1.00.")
+    @Positive(message = "{preco.compra.valor.positivo}")
+    @Min(value = 1, message = "{preco.compra.minimo}")
     private BigDecimal preco_compra;
 
-    @Positive(message = "O Preço de Venda deve ser um Valor Positivo.")
-    @Min(value = 1, message = "Preço de Venda deve ser maior que R$ 1.00.")
+    @Positive(message = "{preco.venda.positivo}")
+    @Min(value = 1, message = "{preco.venda.minimo}")
     private BigDecimal preco_venda;
 
-    @Min(value = 8, message = "Código de Barras deve ter no minimo 8 Números.")
+    @Min(value = 8, message = "{codigo.barras.minimo}")
     private String codigo_barras;
 
 }

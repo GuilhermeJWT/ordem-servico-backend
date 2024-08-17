@@ -16,11 +16,11 @@ public class ModelUserDTO {
 
     private Long id;
 
-    @NotBlank(message = "Nome deve ser Informado.")
+    @NotBlank(message = "{nome.obrigatorio}")
     private String nome;
 
-    @Email(message = "Informe um E-mail Válido.")
-    @NotNull(message = "E-mail deve ser Informado.")
+    @Email(message = "{email.invalido}")
+    @NotNull(message = "{email.obrigatorio}")
     private String email;
 
     @NotBlank(message = "Senha deve ser Informada.")
