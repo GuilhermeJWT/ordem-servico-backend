@@ -65,9 +65,7 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         modelContasReceber.setStatusContasReceber(modelContasReceberDTO.getStatusContas());
         modelContasReceber.setCliente(cliente);
 
-        var contaReceberSalva = contasReceberRepository.save(modelContasReceber);
-
-        return converteEntidadeEmResponse(contaReceberSalva);
+        return converteEntidadeEmResponse(contasReceberRepository.save(modelContasReceber));
     }
 
     @CachePut(value = "contasreceber", key = "#id")
