@@ -1,0 +1,470 @@
+{
+	"info": {
+		"_postman_id": "3b39ae2a-b890-481a-92d4-6b09f3a56d6f",
+		"name": "Ordem de Serviço -  BackEnd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14886998"
+	},
+	"item": [
+		{
+			"name": "Vendas",
+			"item": [
+				{
+					"name": "Salvar Venda",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"desconto\" : 15,\n    \"id_cliente\" : 7,\n    \"id_tecnico_responsavel\" : 1,\n    \"itens\" : [{\n        \"id_produto\" : 6,\n        \"valor_produto\" : 158,\n        \"quantidade\" : 5\n        }\n     ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/v1/vendas/salvar"
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisa Venda por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWUtb3JkZW0tc2Vydmljby1iYWNrZW5kIiwiaWF0IjoxNzIxMzEzODIwLCJleHAiOjE3MjEzMjEwMjAsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.H_eMLoeOJfMmvp_P3PzomF1KHeVWT1sPOjQ8hqJ5yXU"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/v1/vendas/pesquisar/18"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Listar Clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/clientes/v1/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisar Cliente por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/clientes/v1/pesquisar/7"
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Clientes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\" : \"Guilherme Cliente\",\n    \"cpf\" : \"839.366.860-33\",\n    \"celular\" : \"19 98888888\",\n    \"email\" : \"clienteteste@gmail.com\",\n    \"endereco\" : \"Rua do Centro\",\n    \"cidade\" : \"Caconde\",\n    \"estado\" : \"SP\",\n    \"cep\" : \"13770-000\",\n    \"complemento\" : \"Perto da centro\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/clientes/v1/salvar"
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Clientes",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\" : \"Guilherme Atualizado\",\n    \"cpf\" : \"546.162.640-82\",\n    \"celular\" : \"19 98247174\",\n    \"email\" : \"emailatualizado@gmail.com\",\n    \"endereco\" : \"Rua atualizada Centro\",\n    \"cidade\" : \"Caconde\",\n    \"estado\" : \"SP\",\n    \"cep\" : \"13770-000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/clientes/v1/atualizar/7"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8081/api/clientes/v1/deletar/7"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Clientes - Hateoas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/clientes/v1/listar/v2/link"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produtos",
+			"item": [
+				{
+					"name": "Listar Produtos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/produtos/v1/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisar Produto por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/produtos/v1/pesquisar/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Produtos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descricao\" : \"Açucar e pão\",\n    \"quantidade\" : 10,\n    \"quantidade_minima\" : 1,\n    \"preco_compra\" : 35.0,\n    \"preco_venda\" : 50.5,\n    \"codigo_barras\" : \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/produtos/v1/salvar"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Produtos",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8081/api/produtos/v1/deletar/4"
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Produtos",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descricao\": \"Notebook Gamer ATUALIZADO\",\n    \"quantidade\": 20,\n    \"quantidade_minima\": 5,\n    \"preco_compra\": 500.25,\n    \"preco_venda\": 800,\n    \"codigo_barras\": \"1946753214860\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/produtos/v1/atualizar/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ordem de Serviço",
+			"item": [
+				{
+					"name": "Salvar OS",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"defeito\" : \"Tela veio quebrada\",\n    \"descricao\" : \"Cliente trouxe um notebook com a tela quebrada\",\n    \"laudo_tecnico\" : \"Deve ser trocada a tela\",\n    \"status\" : \"EM_ANDAMENTO\",\n    \"data_inicial\" : \"13/06/2024\",\n    \"data_final\" : \"15/06/2024\",\n    \"tecnico_responsavel\" : {\n        \"id\" : 1\n    },\n    \"cliente\" : {\n            \"id\" : 2\n        }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/os/v1/salvar"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar OS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/os/v1/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisar OS por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/os/v1/pesquisar/11"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar OS",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8081/api/os/v1/deletar/18"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar OS - Hateoas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/os/v1/listar/v2/link"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Dados Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/dashboard/v1/dados"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contas a Pagar",
+			"item": [
+				{
+					"name": "Listar Contas a Pagar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/contaspagar/v1/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisar Contas a Pagar por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/contaspagar/v1/pesquisar/7"
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Contas a Pagar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data_vencimento\" : \"23/10/2026\",\n    \"valor\" : 865,\n    \"observacao\" : \"Preciso pagar a conta de liz\",\n    \"forma_pagamento\": \"PIX\",\n    \"status_contas\": \"INADIMPLENTE\",\n    \"codigo_fornecedor\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/contaspagar/v1/salvar"
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Contas a Pagar pelo ID e Entidade",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"data_vencimento\": \"25/11/2024\",\n  \"valor\": 13000,\n  \"observacao\": \"Alterando a observação\",\n  \"forma_pagamento\": \"DINHEIRO\",\n  \"status_contas\": \"EM_ABERTO\",\n  \"codigo_fornecedor\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/contaspagar/v1/atualizar/7"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Contas a Pagar pelo ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8081/api/contaspagar/v1/deletar/9"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fornecedores",
+			"item": [
+				{
+					"name": "Listar Fornecedores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/fornecedores/v1/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisar Fornecedores por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/fornecedores/v1/pesquisar/2"
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Fornecedores",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Guilherme Fornecedor\",\n  \"nomeFantasia\": \"Distribuidora de Bebidas\",\n  \"tipoPessoa\": \"PESSOA_FISICA\",\n  \"cnpj\": \"45.861.155/0001-50\",\n  \"endereco\": {\n    \"endereco\": \"RUa 1\",\n    \"complemento\": \"Perto do Centro\",\n    \"cidade\": \"Caconde\",\n    \"estado\": \"SP\",\n    \"cep\": \"13770-000\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/fornecedores/v1/salvar"
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Fornecedores",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Fornecedor Atualizado\",\n  \"nomeFantasia\": \"FAntasia atualizada\",\n  \"tipoPessoa\": \"PESSOA_FISICA\",\n  \"cnpj\": \"12.457.836/0001-07\",\n  \"endereco\": {\n    \"endereco\": \"endereço atualizado\",\n    \"complemento\": \"perto do campo\",\n    \"cidade\": \"sao paulo\",\n    \"estado\": \"rj\",\n    \"cep\": \"11544-000\"\n  }  \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/fornecedores/v1/atualizar/2"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Fornecedores pelo ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8081/api/fornecedores/v1/deletar/3"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contas a Receber",
+			"item": [
+				{
+					"name": "Listar Contas a Receber",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/contasreceber/v1/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "Pesquisar Contas a Receber pelo ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8081/api/contasreceber/v1/pesquisar/13"
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Contas a Receber",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data_vencimento\": \"23/11/2025\",\n  \"valor\": 1359,\n  \"observacao\": \"Criando uma nova conta a receber\",\n  \"formaPagamento\": \"DINHEIRO\",\n  \"statusContas\": \"EM_ABERTO\",\n  \"codigo_cliente\": 11\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/contasreceber/v1/salvar"
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Contas a Receber pelo ID e Entidade",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"id\": 13,\n  \"data_vencimento\": \"26/11/2025\",\n  \"valor\": 750,\n  \"observacao\": \" Atualizando a Observação\",\n  \"formaPagamento\": \"DINHEIRO\",\n  \"statusContas\": \"EM_ABERTO\",\n  \"codigo_cliente\": 7\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8081/api/contasreceber/v1/atualizar/14"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Contas a Receber pelo ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8081/api/contasreceber/v1/deletar/1"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
