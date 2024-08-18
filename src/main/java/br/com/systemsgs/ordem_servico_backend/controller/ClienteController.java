@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -48,7 +49,7 @@ public class ClienteController {
     }
 
     @Operation(summary = "Listar Clientes Paginado", description = "Api para listar Clientes Paginados - Padrão (10) Clientes")
-    @GetMapping("/listar/v2")
+    @GetMapping(value = "/listar/v2", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<ClienteResponse> listarClientesPaginados(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
