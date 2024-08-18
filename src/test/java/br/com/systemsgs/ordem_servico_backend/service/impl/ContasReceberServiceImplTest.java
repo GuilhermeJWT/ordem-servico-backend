@@ -15,12 +15,17 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
@@ -68,6 +73,32 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
 
         verify(contasReceberRepository, times(1)).findById(modelContasReceber.getId());
         verify(mapper, times(1)).map(modelContasReceber, ContasReceberResponse.class);
+    }
+
+    @DisplayName("Teste para retornar Contas a Receber Paginados")
+    @Test
+    void testListarContasReceberPaginada() {
+        ModelContasReceber modelContasReceber1 = dadosContasReceber();
+        ModelContasReceber modelContasReceber2 = dadosContasReceber();
+
+        ContasReceberResponse contasReceberResponse1 = contasReceberResponse;
+        ContasReceberResponse contasReceberResponse2 = contasReceberResponse;
+
+        List<ModelContasReceber> contasReceberList = Arrays.asList(modelContasReceber1, modelContasReceber2);
+        Page<ModelContasReceber> contasReceberPage = new PageImpl<>(contasReceberList, PageRequest.of(0, 10), contasReceberList.size());
+
+        when(contasReceberRepository.findAll(PageRequest.of(0, 10))).thenReturn(contasReceberPage);
+
+        when(mapper.map(modelContasReceber1, ContasReceberResponse.class)).thenReturn(contasReceberResponse1);
+        when(mapper.map(modelContasReceber2, ContasReceberResponse.class)).thenReturn(contasReceberResponse2);
+
+        Page<ContasReceberResponse> response = contasReceberService.listarContasReceberPaginada(0, 10);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getContent()).hasSize(2);
+        assertThat(response.getContent().get(0)).isEqualTo(contasReceberResponse1);
+        assertThat(response.getContent().get(1)).isEqualTo(contasReceberResponse2);
+
     }
 
     @DisplayName("Teste pesquisa Conta a Receber Inexistente - 404")
