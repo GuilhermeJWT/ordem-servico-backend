@@ -135,10 +135,10 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
 
         when(clienteService.listarClientesPaginado(0, 10)).thenReturn(clientesPage);
 
-        Page<ClienteResponse> result = clienteController.listarClientesPaginados(0, 10);
+        Page<ClienteResponse> response = clienteController.listarClientesPaginados(0, 10);
 
-        assertThat(result).isNotNull();
-        assertThat(result.getContent()).isEmpty();
+        assertThat(response).isNotNull();
+        assertThat(response.getContent()).isEmpty();
     }
 
     @DisplayName("Teste para listar Clientes com Link - Hateoas")

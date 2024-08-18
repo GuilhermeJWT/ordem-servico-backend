@@ -15,11 +15,16 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -78,6 +83,39 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
         assertThrows(ContasPagarReceberNaoEncontradaException.class, () -> contasPagarService.pesquisaPorId(1L));
 
         verify(contasPagarRepository, times(1)).findById(modelContasPagar.getId());
+    }
+
+    @DisplayName("Teste para retornar Contas a Pagar Paginados")
+    @Test
+    void testListarContasPagarPaginada() {
+        ModelContasPagar modelContasPagar1 = dadosContasPagar();
+        ModelContasPagar modelContasPagar2 = dadosContasPagar();
+
+        ContasPagarResponse contasPagarResponse1 = contasPagarResponse;
+        ContasPagarResponse contasPagarResponse2 = contasPagarResponse;
+
+        List<ModelContasPagar> contasPagarList = Arrays.asList(modelContasPagar1, modelContasPagar2);
+        Page<ModelContasPagar> contasPagarPage = new PageImpl<>(contasPagarList, PageRequest.of(0, 10), contasPagarList.size());
+
+        when(contasPagarRepository.findAll(PageRequest.of(0, 10))).thenReturn(contasPagarPage);
+
+        when(modelMapper.map(modelContasPagar1, ContasPagarResponse.class)).thenReturn(contasPagarResponse1);
+        when(modelMapper.map(modelContasPagar2, ContasPagarResponse.class)).thenReturn(contasPagarResponse2);
+
+        Page<ContasPagarResponse> response = contasPagarService.listarContasPagarPaginada(0, 10);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getContent()).hasSize(2);
+        assertThat(response.getContent().get(0)).isEqualTo(contasPagarResponse1);
+        assertThat(response.getContent().get(1)).isEqualTo(contasPagarResponse2);
+
+        assertEquals(dadosContasPagar().getId(), response.getContent().get(0).getId());
+        assertEquals(dadosContasPagar().getData_vencimento(), response.getContent().get(0).getData_vencimento());
+        assertEquals(dadosContasPagar().getValor(), response.getContent().get(0).getValor());
+        assertEquals(dadosContasPagar().getObservacao(), response.getContent().get(0).getObservacao());
+        assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getContent().get(0).getFormaPagamento());
+        assertEquals(dadosContasPagar().getStatusContas().name(), response.getContent().get(0).getStatusContas());
+        assertEquals(dadosContasPagar().getFornecedor().getNome(), response.getContent().get(0).getNomeFornecedor());
     }
 
     @DisplayName("Teste para listar Contas a Pagar")

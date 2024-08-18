@@ -139,10 +139,10 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
 
         when(clienteRepository.findAll(PageRequest.of(0, 10))).thenReturn(clientesPage);
 
-        Page<ClienteResponse> result = clienteService.listarClientesPaginado(0, 10);
+        Page<ClienteResponse> response = clienteService.listarClientesPaginado(0, 10);
 
-        assertThat(result).isNotNull();
-        assertThat(result.getContent()).isEmpty();
+        assertThat(response).isNotNull();
+        assertThat(response.getContent()).isEmpty();
     }
 
     @DisplayName("Retorna uma lista de Clientes")

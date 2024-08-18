@@ -14,12 +14,17 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -96,6 +101,47 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getBody().getFormaPagamento());
         assertEquals(dadosContasPagar().getStatusContas().name(), response.getBody().getStatusContas());
         assertEquals(dadosContasPagar().getFornecedor().getNome(), response.getBody().getNomeFornecedor());
+    }
+
+    @DisplayName("Teste para retornar a Paginação de Contas a Pagar")
+    @Test
+    void testDeveRetornarPaginacaoDeContasPagar() {
+        ContasPagarResponse contasPagarResponse1 = contasPagarResponse;
+        ContasPagarResponse contasPagarResponse2 = contasPagarResponse;
+
+        List<ContasPagarResponse> contasPagarResponseList = Arrays.asList(contasPagarResponse1, contasPagarResponse2);
+        Page<ContasPagarResponse> pageContasPagar = new PageImpl<>(contasPagarResponseList,
+                PageRequest.of(0, 10), contasPagarResponseList.size());
+
+        when(contasPagarService.listarContasPagarPaginada(0, 10)).thenReturn(pageContasPagar);
+
+        Page<ContasPagarResponse> response = contasPagarController.listarContasPagarPaginada(0, 10);
+
+        assertNotNull(response);
+        assertNotNull(response.getContent());
+        assertEquals(PageImpl.class, response.getClass());
+        assertEquals(ContasPagarResponse.class, response.getContent().get(0).getClass());
+
+        assertEquals(dadosContasPagar().getId(), response.getContent().get(0).getId());
+        assertEquals(dadosContasPagar().getData_vencimento(), response.getContent().get(0).getData_vencimento());
+        assertEquals(dadosContasPagar().getValor(), response.getContent().get(0).getValor());
+        assertEquals(dadosContasPagar().getObservacao(), response.getContent().get(0).getObservacao());
+        assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getContent().get(0).getFormaPagamento());
+        assertEquals(dadosContasPagar().getStatusContas().name(), response.getContent().get(0).getStatusContas());
+        assertEquals(dadosContasPagar().getFornecedor().getNome(), response.getContent().get(0).getNomeFornecedor());
+    }
+
+    @DisplayName("Teste lista Contas Pagar Paginada Vazia")
+    @Test
+    void listarContasPagarPaginadasComPaginaVazia() {
+        Page<ContasPagarResponse> contasPagarResponsePage = new PageImpl<>(List.of(), PageRequest.of(0, 10), 0);
+
+        when(contasPagarService.listarContasPagarPaginada(0, 10)).thenReturn(contasPagarResponsePage);
+
+        Page<ContasPagarResponse> response = contasPagarController.listarContasPagarPaginada(0, 10);
+
+        assertThat(response.getContent()).isNotNull();
+        assertThat(response.getContent()).isEmpty();
     }
 
     @DisplayName("Pesquisa uma Conta a Pagar inexistente e retorna 404")

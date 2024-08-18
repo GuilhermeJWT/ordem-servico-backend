@@ -37,7 +37,7 @@ public class ContasPagarController {
         return ResponseEntity.ok().body(contasPagarService.listarContasPagar());
     }
 
-    @Operation(summary = "Listar Contas a Pagar Paginada", description = "Api para listar Contas a Pagadar Paginados - Padrão (10) Contas")
+    @Operation(summary = "Listar Contas a Pagar Paginada", description = "Api para listar Contas a Pagar Paginada - Padrão (10) Contas")
     @GetMapping(value = "/listar/v2", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<ContasPagarResponse> listarContasPagarPaginada(
             @RequestParam(value = "page", defaultValue = "0") int page,
