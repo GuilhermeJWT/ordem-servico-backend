@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -38,6 +39,14 @@ public class FornecedorController {
        return ResponseEntity.ok().body(fornecedorServiceService.listarFornecedores().
                stream().map(x -> mapper.map(x, ModelFornecedorDTO.class))
                .collect(Collectors.toList()));
+    }
+
+    @Operation(summary = "Listar Forncedores Paginados", description = "Api para listar Fornecedores Paginados - Padrão (10) Contas")
+    @GetMapping(value = "/listar/v2")
+    public Page<ModelFornecedorDTO> listarFornecedoresPaginado(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        return fornecedorServiceService.listarFornecedoresPaginados(page, size);
     }
 
     @Operation(summary = "Pesquisa por ID", description = "Api para listar um Fornecedor por ID")

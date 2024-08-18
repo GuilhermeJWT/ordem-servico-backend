@@ -14,6 +14,9 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,6 +50,13 @@ public class FornecedorServiceImpl implements FornecedorService {
     @Override
     public List<ModelFornecedor> listarFornecedores() {
         return fornecedoresRepository.findAll();
+    }
+
+    @Override
+    public Page<ModelFornecedorDTO> listarFornecedoresPaginados(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return fornecedoresRepository.findAll(pageable).map(fornecedores -> mapper.map(fornecedores, ModelFornecedorDTO.class));
     }
 
     @Transactional
