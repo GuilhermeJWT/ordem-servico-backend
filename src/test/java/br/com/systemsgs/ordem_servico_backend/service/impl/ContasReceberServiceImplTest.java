@@ -61,11 +61,8 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
     @DisplayName("Teste para pesquisar uma Conta a Receber por ID")
     @Test
     void testPesquisaContasReceberPorId() {
-        ModelContasReceber modelContasReceber = dadosContasReceber();
-        ContasReceberResponse clienteResponse = contasReceberResponse;
-
         when(contasReceberRepository.findById(modelContasReceber.getId())).thenReturn(Optional.of(modelContasReceber));
-        when(mapper.map(modelContasReceber, ContasReceberResponse.class)).thenReturn(clienteResponse);
+        when(mapper.map(modelContasReceber, ContasReceberResponse.class)).thenReturn(contasReceberResponse);
 
         ContasReceberResponse response = contasReceberService.pesquisaPorId(modelContasReceber.getId());
 
@@ -78,26 +75,20 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
     @DisplayName("Teste para retornar Contas a Receber Paginados")
     @Test
     void testListarContasReceberPaginada() {
-        ModelContasReceber modelContasReceber1 = dadosContasReceber();
-        ModelContasReceber modelContasReceber2 = dadosContasReceber();
-
-        ContasReceberResponse contasReceberResponse1 = contasReceberResponse;
-        ContasReceberResponse contasReceberResponse2 = contasReceberResponse;
-
-        List<ModelContasReceber> contasReceberList = Arrays.asList(modelContasReceber1, modelContasReceber2);
+        List<ModelContasReceber> contasReceberList = Arrays.asList(modelContasReceber, modelContasReceber);
         Page<ModelContasReceber> contasReceberPage = new PageImpl<>(contasReceberList, PageRequest.of(0, 10), contasReceberList.size());
 
         when(contasReceberRepository.findAll(PageRequest.of(0, 10))).thenReturn(contasReceberPage);
 
-        when(mapper.map(modelContasReceber1, ContasReceberResponse.class)).thenReturn(contasReceberResponse1);
-        when(mapper.map(modelContasReceber2, ContasReceberResponse.class)).thenReturn(contasReceberResponse2);
+        when(mapper.map(modelContasReceber, ContasReceberResponse.class)).thenReturn(contasReceberResponse);
+        when(mapper.map(modelContasReceber, ContasReceberResponse.class)).thenReturn(contasReceberResponse);
 
         Page<ContasReceberResponse> response = contasReceberService.listarContasReceberPaginada(0, 10);
 
         assertThat(response).isNotNull();
         assertThat(response.getContent()).hasSize(2);
-        assertThat(response.getContent().get(0)).isEqualTo(contasReceberResponse1);
-        assertThat(response.getContent().get(1)).isEqualTo(contasReceberResponse2);
+        assertThat(response.getContent().get(0)).isEqualTo(contasReceberResponse);
+        assertThat(response.getContent().get(1)).isEqualTo(contasReceberResponse);
 
     }
 

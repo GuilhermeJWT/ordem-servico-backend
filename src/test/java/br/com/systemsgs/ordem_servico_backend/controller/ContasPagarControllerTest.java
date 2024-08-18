@@ -106,10 +106,7 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
     @DisplayName("Teste para retornar a Paginação de Contas a Pagar")
     @Test
     void testDeveRetornarPaginacaoDeContasPagar() {
-        ContasPagarResponse contasPagarResponse1 = contasPagarResponse;
-        ContasPagarResponse contasPagarResponse2 = contasPagarResponse;
-
-        List<ContasPagarResponse> contasPagarResponseList = Arrays.asList(contasPagarResponse1, contasPagarResponse2);
+        List<ContasPagarResponse> contasPagarResponseList = Arrays.asList(contasPagarResponse, contasPagarResponse);
         Page<ContasPagarResponse> pageContasPagar = new PageImpl<>(contasPagarResponseList,
                 PageRequest.of(0, 10), contasPagarResponseList.size());
 

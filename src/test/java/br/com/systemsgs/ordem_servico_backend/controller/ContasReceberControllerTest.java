@@ -76,10 +76,7 @@ class ContasReceberControllerTest extends ConfigDadosEstaticosEntidades {
     @DisplayName("Teste para retornar a Paginação de Contas a Receber")
     @Test
     void testDeveRetornarPaginacaoDeContasReceber() {
-        ContasReceberResponse contasReceberResponse1 = contasReceberResponse;
-        ContasReceberResponse contasReceberResponse2 = contasReceberResponse;
-
-        List<ContasReceberResponse> contasReceberResponseList = Arrays.asList(contasReceberResponse1, contasReceberResponse2);
+        List<ContasReceberResponse> contasReceberResponseList = Arrays.asList(contasReceberResponse, contasReceberResponse);
         Page<ContasReceberResponse> pageContasReceber = new PageImpl<>(contasReceberResponseList,
                 PageRequest.of(0, 10), contasReceberResponseList.size());
 

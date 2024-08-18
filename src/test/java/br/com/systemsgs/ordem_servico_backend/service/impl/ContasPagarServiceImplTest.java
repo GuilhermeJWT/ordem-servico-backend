@@ -88,26 +88,19 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
     @DisplayName("Teste para retornar Contas a Pagar Paginados")
     @Test
     void testListarContasPagarPaginada() {
-        ModelContasPagar modelContasPagar1 = dadosContasPagar();
-        ModelContasPagar modelContasPagar2 = dadosContasPagar();
-
-        ContasPagarResponse contasPagarResponse1 = contasPagarResponse;
-        ContasPagarResponse contasPagarResponse2 = contasPagarResponse;
-
-        List<ModelContasPagar> contasPagarList = Arrays.asList(modelContasPagar1, modelContasPagar2);
+        var contasPagarList = Arrays.asList(modelContasPagar, modelContasPagar);
         Page<ModelContasPagar> contasPagarPage = new PageImpl<>(contasPagarList, PageRequest.of(0, 10), contasPagarList.size());
 
         when(contasPagarRepository.findAll(PageRequest.of(0, 10))).thenReturn(contasPagarPage);
-
-        when(modelMapper.map(modelContasPagar1, ContasPagarResponse.class)).thenReturn(contasPagarResponse1);
-        when(modelMapper.map(modelContasPagar2, ContasPagarResponse.class)).thenReturn(contasPagarResponse2);
+        when(modelMapper.map(modelContasPagar, ContasPagarResponse.class)).thenReturn(contasPagarResponse);
+        when(modelMapper.map(modelContasPagar, ContasPagarResponse.class)).thenReturn(contasPagarResponse);
 
         Page<ContasPagarResponse> response = contasPagarService.listarContasPagarPaginada(0, 10);
 
         assertThat(response).isNotNull();
         assertThat(response.getContent()).hasSize(2);
-        assertThat(response.getContent().get(0)).isEqualTo(contasPagarResponse1);
-        assertThat(response.getContent().get(1)).isEqualTo(contasPagarResponse2);
+        assertThat(response.getContent().get(0)).isEqualTo(contasPagarResponse);
+        assertThat(response.getContent().get(1)).isEqualTo(contasPagarResponse);
 
         assertEquals(dadosContasPagar().getId(), response.getContent().get(0).getId());
         assertEquals(dadosContasPagar().getData_vencimento(), response.getContent().get(0).getData_vencimento());
