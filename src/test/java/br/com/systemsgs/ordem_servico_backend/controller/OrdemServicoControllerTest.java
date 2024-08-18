@@ -20,8 +20,6 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,12 +54,9 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
     @Mock
     private ModelMapper mapper;
 
-    private MockMvc mockMvc;
-
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(ordemServicoController).build();
         ordemServicoController = new OrdemServicoController(ordemServicoService, mapper);
         startOrdemServico();
     }

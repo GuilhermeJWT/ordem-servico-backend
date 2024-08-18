@@ -38,7 +38,7 @@ public class ContasPagarController {
     }
 
     @Operation(summary = "Listar Contas a Pagar Paginada", description = "Api para listar Contas a Pagar Paginada - Padrão (10) Contas")
-    @GetMapping(value = "/listar/v2", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/listar/v2")
     public Page<ContasPagarResponse> listarContasPagarPaginada(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {

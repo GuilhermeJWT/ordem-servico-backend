@@ -1,7 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasReceberDTO;
-import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasReceberResponse;
 import br.com.systemsgs.ordem_servico_backend.service.ContasReceberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,7 +37,7 @@ public class ContasReceberController {
     }
 
     @Operation(summary = "Listar Contas a Receber Paginada", description = "Api para listar Contas a Receber Paginadas - Padrão (10) Contas")
-    @GetMapping(value = "/listar/v2", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/listar/v2")
     public Page<ContasReceberResponse> listarContasReceberPaginada(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {

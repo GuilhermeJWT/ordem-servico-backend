@@ -49,7 +49,7 @@ public class ClienteController {
     }
 
     @Operation(summary = "Listar Clientes Paginado", description = "Api para listar Clientes Paginados - Padrão (10) Clientes")
-    @GetMapping(value = "/listar/v2", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/listar/v2")
     public Page<ClienteResponse> listarClientesPaginados(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
