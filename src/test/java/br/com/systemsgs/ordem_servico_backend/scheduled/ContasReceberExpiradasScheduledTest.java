@@ -4,7 +4,6 @@ import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasReceber;
 import br.com.systemsgs.ordem_servico_backend.notification.NotificaEmailService;
-import br.com.systemsgs.ordem_servico_backend.notification.impl.ContasReceberNotificationServiceImpl;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasReceberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

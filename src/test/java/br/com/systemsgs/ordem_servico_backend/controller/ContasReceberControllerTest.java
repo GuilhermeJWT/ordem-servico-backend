@@ -13,12 +13,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
@@ -66,6 +71,44 @@ class ContasReceberControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(dadosContasReceber().getFormaPagamento().name(), response.getBody().get(0).getFormaPagamento());
         assertEquals(dadosContasReceber().getStatusContasReceber().name(), response.getBody().get(0).getStatusContasReceber());
         assertEquals(dadosContasReceber().getCliente().getNome(), response.getBody().get(0).getNomeCliente());
+    }
+
+    @DisplayName("Teste para retornar a Paginação de Contas a Receber")
+    @Test
+    void testDeveRetornarPaginacaoDeContasReceber() {
+        List<ContasReceberResponse> contasReceberResponseList = Arrays.asList(contasReceberResponse, contasReceberResponse);
+        Page<ContasReceberResponse> pageContasReceber = new PageImpl<>(contasReceberResponseList,
+                PageRequest.of(0, 10), contasReceberResponseList.size());
+
+        when(contasReceberService.listarContasReceberPaginada(0, 10)).thenReturn(pageContasReceber);
+
+        Page<ContasReceberResponse> response = contasReceberController.listarContasReceberPaginada(0, 10);
+
+        assertNotNull(response);
+        assertNotNull(response.getContent());
+        assertEquals(PageImpl.class, response.getClass());
+        assertEquals(ContasReceberResponse.class, response.getContent().get(0).getClass());
+
+        assertEquals(dadosContasReceber().getId(), response.getContent().get(0).getId());
+        assertEquals(dadosContasReceber().getData_vencimento(), response.getContent().get(0).getData_vencimento());
+        assertEquals(dadosContasReceber().getValor(), response.getContent().get(0).getValor());
+        assertEquals(dadosContasReceber().getObservacao(), response.getContent().get(0).getObservacao());
+        assertEquals(dadosContasReceber().getFormaPagamento().name(), response.getContent().get(0).getFormaPagamento());
+        assertEquals(dadosContasReceber().getStatusContasReceber().name(), response.getContent().get(0).getStatusContasReceber());
+        assertEquals(dadosContasReceber().getCliente().getNome(), response.getContent().get(0).getNomeCliente());
+    }
+
+    @DisplayName("Teste lista Contas Receber Paginada Vazia")
+    @Test
+    void listarContasReceberPaginadasComPaginaVazia() {
+        Page<ContasReceberResponse> contasReceberResponsePage = new PageImpl<>(List.of(), PageRequest.of(0, 10), 0);
+
+        when(contasReceberService.listarContasReceberPaginada(0, 10)).thenReturn(contasReceberResponsePage);
+
+        Page<ContasReceberResponse> response = contasReceberController.listarContasReceberPaginada(0, 10);
+
+        assertThat(response.getContent()).isNotNull();
+        assertThat(response.getContent()).isEmpty();
     }
 
     @DisplayName("Pesquisa uma Conta a Receber pelo ID e testa o Retorno do Body - retorna 200")

@@ -15,6 +15,9 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,6 +86,13 @@ public class ContasPagarServiceImpl implements ContasPagarService {
         var contasPagarAtualizada = contasPagarRepository.save(contasPagarPesquisada);
 
         return converteEntidadeEmResponse(contasPagarAtualizada);
+    }
+
+    @Override
+    public Page<ContasPagarResponse> listarContasPagarPaginada(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return contasPagarRepository.findAll(pageable).map(contas -> mapper.map(contas, ContasPagarResponse.class));
     }
 
     private List<ContasPagarResponse> converteListaContasResponse(List<ModelContasPagar> listModelsContasPagar){

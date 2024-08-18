@@ -65,7 +65,6 @@ class VendasServiceImplTest extends ConfigDadosEstaticosEntidades {
     @DisplayName("Teste para salvar uma Venda")
     @Test
     void testSalvarVendaComSucesso() {
-
         when(utilClientes.pesquisarClientePeloId(modelVendasDTO.getIdCliente())).thenReturn(dadosClientes());
         when(utilTecnicoResponsavel.pesquisarTecnicoPeloId(modelVendasDTO.getIdTecnicoResponsavel())).thenReturn(dadosTecnicoResponsavel());
         when(utilProdutos.pesquisaListaProdutosPorIds(anyList())).thenReturn(modelProdutosList);
@@ -73,9 +72,10 @@ class VendasServiceImplTest extends ConfigDadosEstaticosEntidades {
 
         ModelVendas response = vendasService.salvarVenda(modelVendasDTO);
 
-        verify(vendasRepository, times(1)).save(any(ModelVendas.class));
         assertNotNull(response);
         assertEquals(dadosVenda().getDesconto(), response.getDesconto());
+
+        verify(vendasRepository, times(1)).save(any(ModelVendas.class));
     }
 
     @DisplayName("Teste para Pesquisar uma Venda pelo ID")
@@ -85,10 +85,10 @@ class VendasServiceImplTest extends ConfigDadosEstaticosEntidades {
 
         when(utilVendas.pesquisarVendaPeloId(dadosVenda().getIdVenda())).thenReturn(modelVendas);
 
-        VendasResponse result = vendasService.pesquisaVendaPorId(dadosVenda().getIdVenda());
+        VendasResponse response = vendasService.pesquisaVendaPorId(dadosVenda().getIdVenda());
 
         verify(utilVendas, times(1)).pesquisarVendaPeloId(dadosVenda().getIdVenda());
-        assertEquals(dadosVenda().getIdVenda(), result.getIdVenda());
+        assertEquals(dadosVenda().getIdVenda(), response.getIdVenda());
     }
 
     @DisplayName("Teste para Pesquisar uma Venda pelo ID Inexistente - 404")

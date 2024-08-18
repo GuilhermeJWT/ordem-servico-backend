@@ -2,6 +2,7 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelClientesDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
@@ -14,12 +15,18 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,6 +38,7 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
     private ModelClientes modelClientes;
     private ModelClientesDTO modelClientesDTO;
     private Optional<ModelClientes> modelClientesOptional;
+    private ClienteResponse clienteResponse;
 
     @InjectMocks
     private ClienteServiceImpl clienteService;
@@ -85,6 +93,56 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
             assertEquals(mensagemErro().get(0), exception.getMessage());
         }
 
+    }
+
+    @DisplayName("Teste para retornar os Clientes Paginados")
+    @Test
+    void testListarClientesPaginado() {
+        ModelClientes cliente1 = dadosClientes();
+        ModelClientes cliente2 = dadosClientes();
+
+        ClienteResponse clienteResponse1 = clienteResponse;
+        ClienteResponse clienteResponse2 = clienteResponse;
+
+        List<ModelClientes> clientesList = Arrays.asList(cliente1, cliente2);
+        Page<ModelClientes> clientesPage = new PageImpl<>(clientesList, PageRequest.of(0, 10), clientesList.size());
+
+        when(clienteRepository.findAll(PageRequest.of(0, 10))).thenReturn(clientesPage);
+
+        when(mapper.map(cliente1, ClienteResponse.class)).thenReturn(clienteResponse1);
+        when(mapper.map(cliente2, ClienteResponse.class)).thenReturn(clienteResponse2);
+
+        Page<ClienteResponse> response = clienteService.listarClientesPaginado(0, 10);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getContent()).hasSize(2);
+        assertThat(response.getContent().get(0)).isEqualTo(clienteResponse1);
+        assertThat(response.getContent().get(1)).isEqualTo(clienteResponse2);
+
+        assertEquals(dadosClientes().getId(), response.getContent().get(0).getId());
+        assertEquals(dadosClientes().getNome(), response.getContent().get(0).getNome());
+        assertEquals(dadosClientes().getCelular(), response.getContent().get(0).getCelular());
+        assertEquals(dadosClientes().getCpf(), response.getContent().get(0).getCpf());
+        assertEquals(dadosClientes().getEmail(), response.getContent().get(0).getEmail());
+
+        assertEquals(dadosClientes().getEndereco().getEndereco(), response.getContent().get(0).getEndereco().getEndereco());
+        assertEquals(dadosClientes().getEndereco().getComplemento(), response.getContent().get(0).getEndereco().getComplemento());
+        assertEquals(dadosClientes().getEndereco().getCidade(), response.getContent().get(0).getEndereco().getCidade());
+        assertEquals(dadosClientes().getEndereco().getEstado(), response.getContent().get(0).getEndereco().getEstado());
+        assertEquals(dadosClientes().getEndereco().getCep(), response.getContent().get(0).getEndereco().getCep());
+    }
+
+    @DisplayName("Teste para Paginação de Clientes vazia - Paginação sem dados")
+    @Test
+    void listarClientesPaginadoComPaginaVazia() {
+        Page<ModelClientes> clientesPage = new PageImpl<>(Collections.emptyList(), PageRequest.of(0, 10), 0);
+
+        when(clienteRepository.findAll(PageRequest.of(0, 10))).thenReturn(clientesPage);
+
+        Page<ClienteResponse> response = clienteService.listarClientesPaginado(0, 10);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getContent()).isEmpty();
     }
 
     @DisplayName("Retorna uma lista de Clientes")
@@ -194,6 +252,14 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
                 dadosClientes().getEmail(),
                 dadosClientes().getEndereco(),
                 dadosClientes().getOrdemServicos())
+        );
+        clienteResponse = new ClienteResponse(
+                dadosClientes().getId(),
+                dadosClientes().getNome(),
+                dadosClientes().getCpf(),
+                dadosClientes().getCelular(),
+                dadosClientes().getEmail(),
+                dadosEndereco()
         );
     }
 }

@@ -79,6 +79,15 @@ class ExceptionControllerAdviceTest extends ConfigDadosEstaticosEntidades {
         retornaAssertException(apiRestErrors);
     }
 
+    @DisplayName("Retorna Exception - Endpoint não Encontrado! - 404")
+    @Test
+    void testEndpointNaoEncontradoException() {
+        ApiRestErrors apiRestErrors = exceptionControllerAdvice.
+                endpointNaoEncontradoException();
+
+        retornaAssertException(apiRestErrors);
+    }
+
     @DisplayName("Retorna Exception - Cliente não Encontrado! - 404")
     @Test
     void testClienteNaoEncontradoException() {

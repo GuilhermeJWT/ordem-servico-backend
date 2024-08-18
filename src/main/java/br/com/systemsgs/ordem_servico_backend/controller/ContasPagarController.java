@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
+import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasPagarDTO;
 import br.com.systemsgs.ordem_servico_backend.service.ContasPagarService;
@@ -7,6 +8,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -32,6 +35,14 @@ public class ContasPagarController {
     @GetMapping("/listar")
     public ResponseEntity<List<ContasPagarResponse>> listarContasPagar(){
         return ResponseEntity.ok().body(contasPagarService.listarContasPagar());
+    }
+
+    @Operation(summary = "Listar Contas a Pagar Paginada", description = "Api para listar Contas a Pagar Paginada - Padrão (10) Contas")
+    @GetMapping(value = "/listar/v2")
+    public Page<ContasPagarResponse> listarContasPagarPaginada(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        return contasPagarService.listarContasPagarPaginada(page, size);
     }
 
     @Operation(summary = "Pesquisa por ID", description = "Api para listar uma Conta a Pagar por ID")

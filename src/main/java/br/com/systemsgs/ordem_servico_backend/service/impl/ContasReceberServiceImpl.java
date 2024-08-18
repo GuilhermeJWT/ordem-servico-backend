@@ -15,6 +15,9 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -80,6 +83,13 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         return converteEntidadeEmResponse(contaReceberAtualizada);
     }
 
+    @Override
+    public Page<ContasReceberResponse> listarContasReceberPaginada(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return contasReceberRepository.findAll(pageable).map(contas -> mapper.map(contas, ContasReceberResponse.class));
+    }
+
     @CacheEvict(value = "contasreceber", key = "#id")
     @Override
     public void deletarContasReceber(Long id) {
@@ -95,9 +105,6 @@ public class ContasReceberServiceImpl implements ContasReceberService {
     }
 
     private ModelContasReceber pesquisaContasReceberPeloId(Long id){
-        ModelContasReceber pesquisaContaReceber = contasReceberRepository.
-                findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
-
-        return pesquisaContaReceber;
+        return contasReceberRepository.findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
     }
 }

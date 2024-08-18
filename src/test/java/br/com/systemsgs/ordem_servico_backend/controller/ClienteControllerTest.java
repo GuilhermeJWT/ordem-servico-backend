@@ -15,14 +15,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +41,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @ActiveProfiles(value = "test")
+@AutoConfigureMockMvc
 @SpringBootTest
 class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
 
@@ -58,12 +61,9 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
     @Mock
     private ModelMapper mapper;
 
-    private MockMvc mockMvc;
-
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(clienteController).build();
         clienteController = new ClienteController(clienteService, mapper);
         startCliente();
     }
@@ -97,9 +97,53 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
 
     }
 
+    @DisplayName("Teste para retornar a Paginação de Clientes")
+    @Test
+    void testDeveRetornarPaginacaoDeClientes() {
+        ClienteResponse cliente1 = clienteResponse;
+        ClienteResponse cliente2 = clienteResponse;
+
+        List<ClienteResponse> clientesList = Arrays.asList(cliente1, cliente2);
+        Page<ClienteResponse> clientesPage = new PageImpl<>(clientesList, PageRequest.of(0, 10), clientesList.size());
+
+        when(clienteService.listarClientesPaginado(0, 10)).thenReturn(clientesPage);
+
+        Page<ClienteResponse> response = clienteController.listarClientesPaginados(0, 10);
+
+        assertNotNull(response);
+        assertNotNull(response.getContent());
+        assertEquals(PageImpl.class, response.getClass());
+        assertEquals(ClienteResponse.class, response.getContent().get(0).getClass());
+
+        assertEquals(dadosClientes().getId(), response.getContent().get(0).getId());
+        assertEquals(dadosClientes().getNome(), response.getContent().get(0).getNome());
+        assertEquals(dadosClientes().getCelular(), response.getContent().get(0).getCelular());
+        assertEquals(dadosClientes().getCpf(), response.getContent().get(0).getCpf());
+        assertEquals(dadosClientes().getEmail(), response.getContent().get(0).getEmail());
+
+        assertEquals(dadosClientes().getEndereco().getEndereco(), response.getContent().get(0).getEndereco().getEndereco());
+        assertEquals(dadosClientes().getEndereco().getComplemento(), response.getContent().get(0).getEndereco().getComplemento());
+        assertEquals(dadosClientes().getEndereco().getCidade(), response.getContent().get(0).getEndereco().getCidade());
+        assertEquals(dadosClientes().getEndereco().getEstado(), response.getContent().get(0).getEndereco().getEstado());
+        assertEquals(dadosClientes().getEndereco().getCep(), response.getContent().get(0).getEndereco().getCep());
+    }
+
+    @DisplayName("Teste lista Paginada Vazia")
+    @Test
+    void listarClientesPaginadosComPaginaVazia() {
+        Page<ClienteResponse> clientesPage = new PageImpl<>(List.of(), PageRequest.of(0, 10), 0);
+
+        when(clienteService.listarClientesPaginado(0, 10)).thenReturn(clientesPage);
+
+        Page<ClienteResponse> response = clienteController.listarClientesPaginados(0, 10);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getContent()).isEmpty();
+    }
+
     @DisplayName("Teste para listar Clientes com Link - Hateoas")
     @Test
-    public void testListarClientesComLinkHateoas() {
+    void testListarClientesComLinkHateoas() {
         ModelClientes cliente1 = dadosClientes();
         ModelClientes cliente2 = dadosClientes();
 

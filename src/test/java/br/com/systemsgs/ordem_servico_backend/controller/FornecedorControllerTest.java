@@ -14,13 +14,18 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -105,6 +110,50 @@ class FornecedorControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(dadosFornecedores().getEndereco().getCidade(), response.getBody().getEndereco().getCidade());
         assertEquals(dadosFornecedores().getEndereco().getEstado(), response.getBody().getEndereco().getEstado());
         assertEquals(dadosFornecedores().getEndereco().getCep(), response.getBody().getEndereco().getCep());
+    }
+
+    @DisplayName("Teste para retornar a Paginação de Fornecedores")
+    @Test
+    void testDeveRetornarPaginacaoDeFornecedores() {
+        ModelFornecedorDTO fornecedor1 = modelFornecedorDTO;
+        ModelFornecedorDTO fornecedor2 = modelFornecedorDTO;
+
+        List<ModelFornecedorDTO> fornecedoresList = Arrays.asList(fornecedor1, fornecedor2);
+        Page<ModelFornecedorDTO> fornecedorPage = new PageImpl<>(fornecedoresList, PageRequest.of(0, 10), fornecedoresList.size());
+
+        when(fornecedorService.listarFornecedoresPaginados(0, 10)).thenReturn(fornecedorPage);
+
+        Page<ModelFornecedorDTO> response = fornecedorController.listarFornecedoresPaginado(0, 10);
+
+        assertNotNull(response);
+        assertNotNull(response.getContent());
+        assertEquals(PageImpl.class, response.getClass());
+        assertEquals(ModelFornecedorDTO.class, response.getContent().get(0).getClass());
+
+        assertEquals(dadosFornecedores().getId(), response.getContent().get(0).getId());
+        assertEquals(dadosFornecedores().getNome(), response.getContent().get(0).getNome());
+        assertEquals(dadosFornecedores().getNomeFantasia(), response.getContent().get(0).getNomeFantasia());
+        assertEquals(dadosFornecedores().getTipoPessoa(), response.getContent().get(0).getTipoPessoa());
+        assertEquals(dadosFornecedores().getCnpj(), response.getContent().get(0).getCnpj());
+
+        assertEquals(dadosFornecedores().getEndereco().getEndereco(), response.getContent().get(0).getEndereco().getEndereco());
+        assertEquals(dadosFornecedores().getEndereco().getComplemento(), response.getContent().get(0).getEndereco().getComplemento());
+        assertEquals(dadosFornecedores().getEndereco().getCidade(), response.getContent().get(0).getEndereco().getCidade());
+        assertEquals(dadosFornecedores().getEndereco().getEstado(), response.getContent().get(0).getEndereco().getEstado());
+        assertEquals(dadosFornecedores().getEndereco().getCep(), response.getContent().get(0).getEndereco().getCep());
+    }
+
+    @DisplayName("Teste lista Paginada Vazia")
+    @Test
+    void listarFornecedoresPaginadosComPaginaVazia() {
+        Page<ModelFornecedorDTO> fornecedoresPage = new PageImpl<>(List.of(), PageRequest.of(0, 10), 0);
+
+        when(fornecedorService.listarFornecedoresPaginados(0, 10)).thenReturn(fornecedoresPage);
+
+        Page<ModelFornecedorDTO> response = fornecedorController.listarFornecedoresPaginado(0, 10);
+
+        assertThat(response).isNotNull();
+        assertThat(response.getContent()).isEmpty();
     }
 
     @DisplayName("Pesquisa um Fornecedor inexistente e retorna 404")

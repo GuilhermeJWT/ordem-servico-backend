@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelClientesDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelEndereco;
@@ -15,6 +16,9 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,6 +70,13 @@ public class ClienteServiceImpl implements ClienteService {
         modelClientes.setEndereco(modelEndereco);
 
         return clienteRepository.save(modelClientes);
+    }
+
+    @Override
+    public Page<ClienteResponse> listarClientesPaginado(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return clienteRepository.findAll(pageable).map(clientes -> mapper.map(clientes, ClienteResponse.class));
     }
 
     @CacheEvict(value = "clientes", key = "#id")
