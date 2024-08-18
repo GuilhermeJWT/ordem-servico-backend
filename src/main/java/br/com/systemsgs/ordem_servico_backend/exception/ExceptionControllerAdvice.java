@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,6 +49,12 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestErrors metodoHttpNaoSuportadoException(){
         return new ApiRestErrors(new MetodoHttpNaoSuportadoException().getMessage());
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiRestErrors endpointNaoEncontradoException(EndpointNaoEncontradoException endpointNaoEncontradoException){
+        return new ApiRestErrors(new EndpointNaoEncontradoException().getMessage());
     }
 
     @ExceptionHandler(FornecedorNaoEncontradoException.class)
