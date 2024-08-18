@@ -53,7 +53,7 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(NoResourceFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiRestErrors endpointNaoEncontradoException(EndpointNaoEncontradoException endpointNaoEncontradoException){
+    public ApiRestErrors endpointNaoEncontradoException(){
         return new ApiRestErrors(new EndpointNaoEncontradoException().getMessage());
     }
 

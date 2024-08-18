@@ -83,7 +83,7 @@ class ExceptionControllerAdviceTest extends ConfigDadosEstaticosEntidades {
     @Test
     void testEndpointNaoEncontradoException() {
         ApiRestErrors apiRestErrors = exceptionControllerAdvice.
-                endpointNaoEncontradoException(new EndpointNaoEncontradoException());
+                endpointNaoEncontradoException();
 
         retornaAssertException(apiRestErrors);
     }
