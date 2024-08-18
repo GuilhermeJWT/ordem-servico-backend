@@ -1,12 +1,15 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasReceberDTO;
+import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasReceberResponse;
 import br.com.systemsgs.ordem_servico_backend.service.ContasReceberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -32,6 +35,14 @@ public class ContasReceberController {
     @GetMapping("/listar")
     public ResponseEntity<List<ContasReceberResponse>> listarContasReceber(){
         return ResponseEntity.ok().body(contasReceberService.listarContasReceber());
+    }
+
+    @Operation(summary = "Listar Contas a Receber Paginada", description = "Api para listar Contas a Receber Paginadas - Padrão (10) Contas")
+    @GetMapping(value = "/listar/v2", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Page<ContasReceberResponse> listarContasReceberPaginada(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        return contasReceberService.listarContasReceberPaginada(page, size);
     }
 
     @Operation(summary = "Pesquisa por ID", description = "Api para listar uma Conta a Receber por ID")
