@@ -2,6 +2,7 @@ package br.com.systemsgs.ordem_servico_backend.service;
 
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasPagarDTO;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface ContasPagarService {
 
     ContasPagarResponse alterarContasPagar(Long id, ModelContasPagarDTO modelContasPagarDTO);
 
+    Page<ContasPagarResponse> listarContasPagarPaginada(int page, int size);
 }
