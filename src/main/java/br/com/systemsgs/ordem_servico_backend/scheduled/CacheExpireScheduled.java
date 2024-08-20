@@ -22,7 +22,7 @@ public class CacheExpireScheduled {
                 .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
     }
 
-    @Scheduled(fixedRate = 3600000) // 1 Hora
+    @Scheduled(fixedRate = 3600000)
     public void jobCache() {
         limpandoCaches();
         log.info("Limpando os Caches da aplicação...");

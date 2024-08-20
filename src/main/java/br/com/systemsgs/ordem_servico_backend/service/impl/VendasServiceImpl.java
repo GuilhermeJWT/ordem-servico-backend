@@ -55,7 +55,10 @@ public class VendasServiceImpl implements VendaService {
 
         setDadosVendas(modelVendasDTO, modelVendas, cliente, tecnico, modelItensVendas, produtos);
 
-        return vendasRepository.save(modelVendas);
+        var vendaSalva = vendasRepository.save(modelVendas);
+        utilProdutos.baixaEstoqueProdutos(modelVendasDTO);
+
+        return vendaSalva;
     }
 
     @Cacheable(value = "vendas", key = "#id")

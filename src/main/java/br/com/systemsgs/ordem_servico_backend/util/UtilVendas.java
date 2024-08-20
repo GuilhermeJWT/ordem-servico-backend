@@ -20,10 +20,7 @@ public class UtilVendas {
     }
 
     public ModelVendas pesquisarVendaPeloId(Long id){
-        ModelVendas pesquisaVenda = vendasRepository.findById(id).
-                orElseThrow(() -> new VendaNaoEncontradaException());
-
-        return pesquisaVenda;
+        return vendasRepository.findById(id).orElseThrow(() -> new VendaNaoEncontradaException());
     }
 
     public Optional<BigDecimal> calculaTotalVendas(){

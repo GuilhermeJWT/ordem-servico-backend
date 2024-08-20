@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.util;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
+import br.com.systemsgs.ordem_servico_backend.dto.request.ModelVendasDTO;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelProdutos;
 import br.com.systemsgs.ordem_servico_backend.repository.ProdutoRepository;
@@ -13,20 +14,21 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles(value = "test")
 @SpringBootTest
 class UtilProdutosTest extends ConfigDadosEstaticosEntidades{
 
+    private ModelProdutos modelProdutos;
+    private ModelVendasDTO modelVendasDTO;
     private Optional<ModelProdutos> modelProdutosOptional;
     private List<ModelProdutos> listModelProdutos;
+    private ModelVendasDTO modelVendasDTOEmpty = new ModelVendasDTO();
 
     @InjectMocks
     private UtilProdutos utilProdutos;
@@ -39,6 +41,30 @@ class UtilProdutosTest extends ConfigDadosEstaticosEntidades{
         MockitoAnnotations.openMocks(this);
         utilProdutos = new UtilProdutos(produtoRepository);
         startProdutoOptional();
+    }
+
+    @DisplayName("Teste para realizar Baixa no Estoque dos produtos durante uma Venda")
+    @Test
+    void testBaixaEstoqueProdutosDadosValidos() {
+        when(produtoRepository.findAllById(Arrays.asList(modelProdutos.getId())))
+                .thenReturn(Arrays.asList(modelProdutos));
+
+        utilProdutos.baixaEstoqueProdutos(modelVendasDTO);
+
+        assertEquals(0, modelProdutos.getQuantidade());
+
+        verify(produtoRepository).save(modelProdutos);
+    }
+
+    @DisplayName("Teste para não chamar o método de Salva o Produto, para baixa no Estoque")
+    @Test
+    void testBaixaEstoqueProdutosListaVazia() {
+        when(produtoRepository.findAllById(Arrays.asList(1L, 2L)))
+                .thenReturn(Collections.emptyList());
+
+        utilProdutos.baixaEstoqueProdutos(modelVendasDTOEmpty);
+
+        verify(produtoRepository, never()).save(modelProdutos);
     }
 
     @DisplayName("Pesquisa um Produto por ID e retorna a Entidade para Validação")
@@ -128,6 +154,15 @@ class UtilProdutosTest extends ConfigDadosEstaticosEntidades{
     }
 
     private void startProdutoOptional(){
+        modelProdutos = new ModelProdutos(
+                dadosProdutos().getId(),
+                dadosProdutos().getDescricao(),
+                dadosProdutos().getQuantidade(),
+                dadosProdutos().getQuantidade_minima(),
+                dadosProdutos().getPreco_compra(),
+                dadosProdutos().getPreco_venda(),
+                dadosProdutos().getCodigo_barras()
+        );
         modelProdutosOptional = Optional.of(new ModelProdutos(
                 dadosProdutos().getId(),
                 dadosProdutos().getDescricao(),
@@ -139,6 +174,12 @@ class UtilProdutosTest extends ConfigDadosEstaticosEntidades{
         ));
         listModelProdutos = Arrays.asList(
                 dadosProdutos()
+        );
+        modelVendasDTO = new ModelVendasDTO(
+                dadosVenda().getDesconto(),
+                dadosClientes().getId(),
+                dadosTecnicoResponsavel().getId(),
+                dadosItensVendasDTO()
         );
     }
 }

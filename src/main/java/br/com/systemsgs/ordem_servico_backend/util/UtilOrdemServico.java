@@ -19,10 +19,7 @@ public class UtilOrdemServico {
     }
 
     public ModelOrdemServico pesquisaOsPorId(Long id){
-        ModelOrdemServico pesquisarOS = ordemServicoRepository.findById(id).
-                orElseThrow(() -> new RecursoNaoEncontradoException());
-
-        return pesquisarOS;
+        return ordemServicoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException());
     }
 
     public Optional<Integer> quantidadeOsRealizadas(){

@@ -42,10 +42,7 @@ public class ContasReceberServiceImpl implements ContasReceberService {
     @Cacheable(value = "contasreceber", key = "#id")
     @Override
     public ContasReceberResponse pesquisaPorId(Long id) {
-        var pesquisaContaReceber = contasReceberRepository.findById(id)
-                .orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
-
-        return converteEntidadeEmResponse(pesquisaContaReceber);
+        return converteEntidadeEmResponse(contasReceberRepository.findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException()));
     }
 
     @Cacheable(value = "contasreceber")
@@ -74,7 +71,8 @@ public class ContasReceberServiceImpl implements ContasReceberService {
     @CachePut(value = "contasreceber", key = "#id")
     @Override
     public ContasReceberResponse alterarContasReceber(Long id, ModelContasReceberDTO modelContasReceberDTO) {
-        ModelContasReceber contaReceberPesquisada = pesquisaContasReceberPeloId(modelContasReceberDTO.getId());
+        ModelContasReceber contaReceberPesquisada = contasReceberRepository.findById(modelContasReceberDTO.getId())
+                .orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
         mapper.map(modelContasReceberDTO, ModelContasReceber.class);
         BeanUtils.copyProperties(modelContasReceberDTO, contaReceberPesquisada, "id");
 
@@ -104,7 +102,4 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         return mapper.map(modelContasReceber, ContasReceberResponse.class);
     }
 
-    private ModelContasReceber pesquisaContasReceberPeloId(Long id){
-        return contasReceberRepository.findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
-    }
 }

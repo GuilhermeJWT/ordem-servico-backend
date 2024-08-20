@@ -17,9 +17,6 @@ public class UtilFornecedores {
     }
 
     public ModelFornecedor pesquisarFornecedorPeloId(Long id){
-         ModelFornecedor pesquisaFornecedor = fornecedoresRepository.findById(id).
-                 orElseThrow(() -> new FornecedorNaoEncontradoException());
-
-        return pesquisaFornecedor;
+        return fornecedoresRepository.findById(id).orElseThrow(() -> new FornecedorNaoEncontradoException());
     }
 }

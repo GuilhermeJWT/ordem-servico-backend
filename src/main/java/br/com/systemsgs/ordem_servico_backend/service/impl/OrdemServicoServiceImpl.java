@@ -1,7 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelOrdemServicoDTO;
-import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
@@ -20,7 +19,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @CacheConfig(cacheNames = "os")
 @Service
@@ -48,8 +46,7 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     @Cacheable(value = "os", key = "#id")
     @Override
     public ModelOrdemServico pesquisaPorId(Long id) {
-        Optional<ModelOrdemServico> modelOrdemServico = ordemServicoRepository.findById(id);
-        return modelOrdemServico.orElseThrow(() -> new RecursoNaoEncontradoException());
+        return ordemServicoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException());
     }
 
     @Cacheable(value = "os")
@@ -63,9 +60,8 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     public ModelOrdemServico salvarOS(ModelOrdemServicoDTO modelOrdemServicoDTO) {
          validaCliente(modelOrdemServicoDTO);
          utilTecnicoResponsavel.validaTecnicoExistente(modelOrdemServicoDTO);
-         ModelOrdemServico osConvertida = mapper.map(modelOrdemServicoDTO, ModelOrdemServico.class);
 
-        return ordemServicoRepository.save(osConvertida);
+        return ordemServicoRepository.save(mapper.map(modelOrdemServicoDTO, ModelOrdemServico.class));
     }
 
     @CacheEvict(value = "os", key = "#id")
@@ -89,9 +85,6 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     public ModelOrdemServicoDTO validaCliente(ModelOrdemServicoDTO modelOrdemServicoDTO){
         ModelClientes pesquisaCliente = utilClientes.pesquisarClientePeloId(modelOrdemServicoDTO.getCliente().getId());
 
-        if(pesquisaCliente == null){
-            throw new ClienteNaoEncontradoException();
-        }
         modelOrdemServicoDTO.getCliente().setNome(pesquisaCliente.getNome());
         modelOrdemServicoDTO.getCliente().setCpf(pesquisaCliente.getCpf());
         modelOrdemServicoDTO.getCliente().setCelular(pesquisaCliente.getCelular());

@@ -18,10 +18,7 @@ public class UtilTecnicoResponsavel {
     }
 
     public ModelTecnicoResponsavel pesquisarTecnicoPeloId(Long id){
-        ModelTecnicoResponsavel pesquisaTecnico = tecnicoRepository.findById(id).
-                orElseThrow(() -> new TecnicoResponsavelNaoEncontradoException());
-
-        return pesquisaTecnico;
+        return tecnicoRepository.findById(id).orElseThrow(() -> new TecnicoResponsavelNaoEncontradoException());
     }
 
     public ModelOrdemServicoDTO validaTecnicoExistente(ModelOrdemServicoDTO modelOrdemServicoDTO){
