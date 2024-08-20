@@ -51,7 +51,7 @@ class ContasReceberExpiradasScheduledTest extends ConfigDadosEstaticosEntidades 
 
         contasReceberExpiradasScheduled.verificaContasReceberVencidas();
 
-        verify(contasReceberRepository).saveAll(anyList());
+        verify(contasReceberRepository).saveAll(contasVencidas);
         assert contasVencidas.stream().allMatch(conta -> conta.getStatusContasReceber() == StatusContas.VENCIDA);
     }
 

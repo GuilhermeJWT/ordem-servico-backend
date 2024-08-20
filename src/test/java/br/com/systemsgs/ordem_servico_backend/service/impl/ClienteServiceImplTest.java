@@ -62,7 +62,7 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
     @DisplayName("Pesquisa um Cliente por ID")
     @Test
     void pesquisaClientePorId() {
-        when(clienteRepository.findById(anyLong())).thenReturn(modelClientesOptional);
+        when(clienteRepository.findById(modelClientes.getId())).thenReturn(modelClientesOptional);
 
         ModelClientes response = clienteService.pesquisaPorId(dadosClientes().getId());
 
@@ -84,7 +84,7 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
     @DisplayName("Pesquisa um Cliente Inexistente por ID - retorna 404")
     @Test
     void pesquisaClienteInexistenteRetornaNotFound(){
-        when(clienteRepository.findById(anyLong())).thenThrow(new ClienteNaoEncontradoException());
+        when(clienteRepository.findById(modelClientes.getId())).thenThrow(new ClienteNaoEncontradoException());
 
         try{
             clienteService.pesquisaPorId(dadosClientes().getId());
@@ -98,26 +98,20 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
     @DisplayName("Teste para retornar os Clientes Paginados")
     @Test
     void testListarClientesPaginado() {
-        ModelClientes cliente1 = dadosClientes();
-        ModelClientes cliente2 = dadosClientes();
-
-        ClienteResponse clienteResponse1 = clienteResponse;
-        ClienteResponse clienteResponse2 = clienteResponse;
-
-        List<ModelClientes> clientesList = Arrays.asList(cliente1, cliente2);
+        List<ModelClientes> clientesList = Arrays.asList(modelClientes, modelClientes);
         Page<ModelClientes> clientesPage = new PageImpl<>(clientesList, PageRequest.of(0, 10), clientesList.size());
 
         when(clienteRepository.findAll(PageRequest.of(0, 10))).thenReturn(clientesPage);
 
-        when(mapper.map(cliente1, ClienteResponse.class)).thenReturn(clienteResponse1);
-        when(mapper.map(cliente2, ClienteResponse.class)).thenReturn(clienteResponse2);
+        when(mapper.map(modelClientes, ClienteResponse.class)).thenReturn(clienteResponse);
+        when(mapper.map(modelClientes, ClienteResponse.class)).thenReturn(clienteResponse);
 
         Page<ClienteResponse> response = clienteService.listarClientesPaginado(0, 10);
 
         assertThat(response).isNotNull();
         assertThat(response.getContent()).hasSize(2);
-        assertThat(response.getContent().get(0)).isEqualTo(clienteResponse1);
-        assertThat(response.getContent().get(1)).isEqualTo(clienteResponse2);
+        assertThat(response.getContent().get(0)).isEqualTo(clienteResponse);
+        assertThat(response.getContent().get(1)).isEqualTo(clienteResponse);
 
         assertEquals(dadosClientes().getId(), response.getContent().get(0).getId());
         assertEquals(dadosClientes().getNome(), response.getContent().get(0).getNome());
@@ -177,6 +171,7 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
         ModelClientes response = clienteService.salvarClientes(modelClientesDTO);
 
         assertNotNull(response);
+
         assertEquals(dadosClientes().getId(), response.getId());
         assertEquals(dadosClientes().getNome(), response.getNome());
         assertEquals(dadosClientes().getCelular(), response.getCelular());
@@ -193,17 +188,17 @@ class ClienteServiceImplTest extends ConfigDadosEstaticosEntidades{
     @DisplayName("Deleta com Cliente com Sucesso")
     @Test
     void deletarCliente() {
-        doNothing().when(clienteRepository).deleteById(anyLong());
+        doNothing().when(clienteRepository).deleteById(modelClientes.getId());
 
         clienteService.deletarCliente(dadosClientes().getId());
-        verify(clienteRepository, times(1)).deleteById(anyLong());
+        verify(clienteRepository, times(1)).deleteById(modelClientes.getId());
     }
 
     @DisplayName("Atualiza um Cliente com Sucesso")
     @Test
     void updateClientes() {
-        when(clienteRepository.save(any())).thenReturn(modelClientes);
-        when(utilClientes.pesquisarClientePeloId(anyLong())).thenReturn(modelClientes);
+        when(clienteRepository.save(modelClientes)).thenReturn(modelClientes);
+        when(utilClientes.pesquisarClientePeloId(modelClientes.getId())).thenReturn(modelClientes);
 
         ModelClientes response = clienteService.
                 updateClientes(dadosClientes().getId(), modelClientesDTO);
