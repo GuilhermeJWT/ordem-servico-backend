@@ -11,7 +11,7 @@ pipeline {
         		 sh "./mvnw test"
         	 }
         }
-		stage ('Build Docke Image'){
+		stage ('Build Docker Image'){
         	steps{
         		script{
         		    sh 'docker build -t guilhermesantosdocker/ordem-servico-backend .'
@@ -22,7 +22,6 @@ pipeline {
             steps{
                 script{
                     withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker') {
-                        sh 'docker login -u guilhermesantosdocker -p ${PASSWORD_DOCKER_HUB}'
                         sh 'docker push guilhermesantosdocker/ordem-servico-backend'
                     }
                 }
