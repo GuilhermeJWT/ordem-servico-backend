@@ -46,6 +46,7 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
     private ModelClientes modelClientes;
     private ModelClientesDTO modelClientesDTO;
     private ClienteResponse clienteResponse;
+    private ModelClientesHateoas modelClientesHateoas;
 
     @InjectMocks
     private ClienteController clienteController;
@@ -70,7 +71,7 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
     @Test
     void retornaListaClientes200() {
         when(clienteService.listarClientes()).thenReturn(List.of(modelClientes));
-        when(mapper.map(any(), any())).thenReturn(clienteResponse);
+        when(mapper.map(modelClientes, ClienteResponse.class)).thenReturn(clienteResponse);
 
         ResponseEntity<List<ClienteResponse>> response = clienteController.listarClientes();
 
@@ -98,10 +99,7 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
     @DisplayName("Teste para retornar a Paginação de Clientes")
     @Test
     void testDeveRetornarPaginacaoDeClientes() {
-        ClienteResponse cliente1 = clienteResponse;
-        ClienteResponse cliente2 = clienteResponse;
-
-        List<ClienteResponse> clientesList = Arrays.asList(cliente1, cliente2);
+        List<ClienteResponse> clientesList = Arrays.asList(clienteResponse, clienteResponse);
         Page<ClienteResponse> clientesPage = new PageImpl<>(clientesList, PageRequest.of(0, 10), clientesList.size());
 
         when(clienteService.listarClientesPaginado(0, 10)).thenReturn(clientesPage);
@@ -142,31 +140,19 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
     @DisplayName("Teste para listar Clientes com Link - Hateoas")
     @Test
     void testListarClientesComLinkHateoas() {
-        ModelClientes cliente1 = dadosClientes();
-        ModelClientes cliente2 = dadosClientes();
-
-        List<ModelClientes> clienteList = Arrays.asList(cliente1, cliente2);
-
-        ModelClientesHateoas hateoas1 = new ModelClientesHateoas();
-        hateoas1.setId(1L);
-
-        ModelClientesHateoas hateoas2 = new ModelClientesHateoas();
-        hateoas2.setId(2L);
+        List<ModelClientes> clienteList = Arrays.asList(modelClientes, modelClientes);
 
         when(clienteService.listarClientes()).thenReturn(clienteList);
-        when(mapper.map(cliente1, ModelClientesHateoas.class)).thenReturn(hateoas1);
-        when(mapper.map(cliente2, ModelClientesHateoas.class)).thenReturn(hateoas2);
+        when(mapper.map(modelClientes, ModelClientesHateoas.class)).thenReturn(modelClientesHateoas);
 
         CollectionModel<ModelClientesHateoas> response = clienteController.listarCLientesComLink();
 
         Link link1 = linkTo(methodOn(ClienteController.class).pesquisarPorId(1L)).withRel("Pesquisa Cliente pelo ID: ");
-        Link link2 = linkTo(methodOn(ClienteController.class).pesquisarPorId(2L)).withRel("Pesquisa Cliente pelo ID: ");
 
-        assertThat(hateoas1.getLinks()).contains(link1);
-        assertThat(hateoas2.getLinks()).contains(link2);
+        assertThat(modelClientesHateoas.getLinks()).contains(link1);
         assertThat(response).isNotNull();
         assertThat(response.getContent()).hasSize(2);
-        assertThat(response.getContent()).containsExactly(hateoas1, hateoas2);
+        assertThat(response.getContent()).containsExactly(modelClientesHateoas, modelClientesHateoas);
     }
 
     @DisplayName("Teste lista de Clientes com Link Vazio - Hateoas")
@@ -302,6 +288,14 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
                 dadosClientes().getEndereco().getCep()
         );
         clienteResponse = new ClienteResponse(
+                dadosClientes().getId(),
+                dadosClientes().getNome(),
+                dadosClientes().getCpf(),
+                dadosClientes().getCelular(),
+                dadosClientes().getEmail(),
+                dadosEndereco()
+        );
+        modelClientesHateoas = new ModelClientesHateoas(
                 dadosClientes().getId(),
                 dadosClientes().getNome(),
                 dadosClientes().getCpf(),

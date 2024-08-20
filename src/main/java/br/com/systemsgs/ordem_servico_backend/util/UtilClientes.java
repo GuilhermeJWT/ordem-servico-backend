@@ -19,10 +19,7 @@ public class UtilClientes {
     }
 
     public ModelClientes pesquisarClientePeloId(Long id){
-         ModelClientes pesquisaCliente = clienteRepository.findById(id).
-                 orElseThrow(() -> new ClienteNaoEncontradoException());
-
-        return pesquisaCliente;
+        return clienteRepository.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException());
     }
 
     public Optional<Integer> somaQuantidadeClientesCadastrados(){

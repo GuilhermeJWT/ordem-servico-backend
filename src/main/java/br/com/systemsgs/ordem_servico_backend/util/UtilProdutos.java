@@ -40,10 +40,7 @@ public class UtilProdutos {
     }
 
     public ModelProdutos pesquisaProdutoPorId(Long id){
-        ModelProdutos pesquisaProduto = produtoRepository.findById(id).
-                orElseThrow(() -> new RecursoNaoEncontradoException());
-
-        return pesquisaProduto;
+        return produtoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException());
     }
 
     public List<ModelProdutos> pesquisaListaProdutosPorIds(List<Long> id){

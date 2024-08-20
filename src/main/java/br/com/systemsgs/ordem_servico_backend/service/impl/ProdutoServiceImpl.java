@@ -17,7 +17,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @CacheConfig(cacheNames = "produtos")
 @Service
@@ -37,8 +36,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     @Cacheable(value = "produtos", key = "#id")
     @Override
     public ModelProdutos pesquisaPorId(Long id) {
-        Optional<ModelProdutos> modelProdutos = produtoRepository.findById(id);
-        return modelProdutos.orElseThrow(() -> new RecursoNaoEncontradoException());
+        return produtoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException());
     }
 
     @Cacheable(value = "produtos")
@@ -50,8 +48,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     @Transactional
     @Override
     public ModelProdutos salvarProdutos(ModelProdutosDTO modelProdutosDTO) {
-        ModelProdutos produtoConvertido = mapper.map(modelProdutosDTO, ModelProdutos.class);
-        return produtoRepository.save(produtoConvertido);
+        return produtoRepository.save(mapper.map(modelProdutosDTO, ModelProdutos.class));
     }
 
     @CacheEvict(value = "produtos", key = "#id")

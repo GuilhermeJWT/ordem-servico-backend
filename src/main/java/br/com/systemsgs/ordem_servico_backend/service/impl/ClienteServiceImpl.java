@@ -42,8 +42,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Cacheable(value = "clientes", key = "#id")
     @Override
     public ModelClientes pesquisaPorId(Long id) {
-        Optional<ModelClientes> modelClientes = clienteRepository.findById(id);
-        return modelClientes.orElseThrow(() -> new ClienteNaoEncontradoException());
+        return clienteRepository.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException());
     }
 
     @Cacheable(value = "clientes")

@@ -42,9 +42,7 @@ public class ContasPagarServiceImpl implements ContasPagarService {
     @Cacheable(value = "contaspagar", key = "#id")
     @Override
     public ContasPagarResponse pesquisaPorId(Long id) {
-        var pesquisaConta = contasPagarRepository.findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException());
-
-        return converteEntidadeEmResponse(pesquisaConta);
+        return converteEntidadeEmResponse(contasPagarRepository.findById(id).orElseThrow(() -> new ContasPagarReceberNaoEncontradaException()));
     }
 
     @Cacheable(value = "contaspagar")

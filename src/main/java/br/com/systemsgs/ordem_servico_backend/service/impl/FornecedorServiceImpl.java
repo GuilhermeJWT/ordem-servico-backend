@@ -42,8 +42,7 @@ public class FornecedorServiceImpl implements FornecedorService {
     @Cacheable(value = "fornecedores", key = "#id")
     @Override
     public ModelFornecedor pesquisaPorId(Long id) {
-        Optional<ModelFornecedor> modelFornecedor = fornecedoresRepository.findById(id);
-        return modelFornecedor.orElseThrow(() -> new FornecedorNaoEncontradoException());
+        return fornecedoresRepository.findById(id).orElseThrow(() -> new FornecedorNaoEncontradoException());
     }
 
     @Cacheable(value = "fornecedores")
@@ -62,8 +61,7 @@ public class FornecedorServiceImpl implements FornecedorService {
     @Transactional
     @Override
     public ModelFornecedor salvarFornecedor(ModelFornecedorDTO modelFornecedorDTO) {
-        ModelFornecedor fornecedorConvertido = mapper.map(modelFornecedorDTO, ModelFornecedor.class);
-        return fornecedoresRepository.save(fornecedorConvertido);
+        return fornecedoresRepository.save(mapper.map(modelFornecedorDTO, ModelFornecedor.class));
     }
 
     @CacheEvict(value = "fornecedores", key = "#id")
