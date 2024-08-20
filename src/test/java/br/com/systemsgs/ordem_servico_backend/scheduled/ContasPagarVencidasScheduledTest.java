@@ -49,7 +49,7 @@ class ContasPagarVencidasScheduledTest extends ConfigDadosEstaticosEntidades {
 
         contasPagarVencidasScheduled.identificaContasPagarComVencimento();
 
-        verify(contasPagarRepository).saveAll(anyList());
+        verify(contasPagarRepository).saveAll(contasVencidas);
         assert contasVencidas.stream().allMatch(conta -> conta.getStatusContas() == StatusContas.VENCIDA);
     }
 
