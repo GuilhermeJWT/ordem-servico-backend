@@ -1,6 +1,5 @@
 package br.com.systemsgs.ordem_servico_backend.controller;
 
-import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasPagarDTO;
 import br.com.systemsgs.ordem_servico_backend.service.ContasPagarService;
@@ -9,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
