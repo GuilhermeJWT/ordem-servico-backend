@@ -11,22 +11,6 @@ pipeline {
         		 sh "./mvnw test"
         	 }
         }
-		stage ('Build Docker Image'){
-        	steps{
-        		script{
-        		    sh 'docker build -t guilhermesantosdocker/ordem-servico-backend .'
-        		}
-        	}
-        }
-        stage ('Push Docker Hub'){
-            steps{
-                script{
-                    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker') {
-                        sh 'docker push guilhermesantosdocker/ordem-servico-backend'
-                    }
-                }
-            }
-        }
 		stage('Sonarqube Analysis'){
 		    steps {
 		        script {
@@ -40,6 +24,25 @@ pipeline {
             steps {
                 sh './mvnw sonar:sonar sonar-quality-gate:check -Dsonar.host.url=http://192.168.18.15:9000/ -Dsonar.login=admin -Dsonar.password=sonarqube -Dsonar.token=${SONAR_TOKEN}'
             }
+		}
+		stage ('Build Docker Image'){
+		    steps{
+		        script{
+		            sh 'docker build -t guilhermesantosdocker/ordem-servico-backend .'
+		        }
+		    }
+		}
+		stage ('Push Docker Hub'){
+		    steps{
+		        script{
+		            withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker') {
+		              sh 'docker push guilhermesantosdocker/ordem-servico-backend'
+		            }
+		        }
+		    }
+		}
+		stage ('Aproval Manual'){
+		    input "Aprovação Manual para Deploy?"
 		}
 	}
 }
