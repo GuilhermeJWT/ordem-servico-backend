@@ -41,8 +41,5 @@ pipeline {
 		        }
 		    }
 		}
-		stage ('Aproval Manual'){
-		    input "Aprovação Manual para Deploy?"
-		}
 	}
 }
