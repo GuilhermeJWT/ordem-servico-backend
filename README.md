@@ -26,6 +26,8 @@
   <li>Mock de Integração: Mockito & MockMvc</li>
   <li>Analise de Cobertura: Jacoco</li>
 </ol>
+<img src="https://github.com/user-attachments/assets/91d6f740-ae43-4c78-af29-3fecdf7d40ec">
+<h3>Quality Gate</h3>
 <img src="https://github.com/user-attachments/assets/dec17218-6884-45b0-b394-3f037033df19">
 <H2>Monitoramento e Métricas: Prometheus/Grafana</H2>
 <p>No arquivo <b>prometheus.yml</b> contem as configurações de conexão do Prometheus com a aplicação, em seguida o Grafana se conecta e monta o Dashboard: </p>
