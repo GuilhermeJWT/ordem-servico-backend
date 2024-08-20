@@ -19,7 +19,7 @@
 </ol>
 <H2>Versão antiga da Pipeline - Jenkins</h2>
 <p>No diretório raiz do projeto, possui o arquivo: <b>Jenkinsfile</b>, contendo todos os Stages da Pipeline</p>
-<img src="https://github.com/GuilhermeJWT/ordem-servico-backend/assets/63434009/7c7ccfef-7449-445c-9e7c-f0e02852571f)](https://github.com/GuilhermeJWT/ordem-servico-backend/assets/63434009/7c7ccfef-7449-445c-9e7c-f0e02852571f">
+<img src="https://github.com/user-attachments/assets/e8461a1b-e6a3-432b-94c1-d02043748202">
 <H2>Análise do Código com SonarQube & Quality Gate:</H2>
 <ol>
   <li>Testes Unitários: Junit</li>
