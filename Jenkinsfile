@@ -21,7 +21,7 @@ pipeline {
         stage ('Push Docker Hub'){
             steps{
                 script{
-                    withCredentials([string(credentialsId: 'dockerhub', variable: 'PASSWORD_DOCKER_HUB')]){
+                    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker') {
                         sh 'docker login -u guilhermesantosdocker -p ${PASSWORD_DOCKER_HUB}'
                         sh 'docker push guilhermesantosdocker/ordem-servico-backend'
                     }
