@@ -6,6 +6,23 @@ pipeline {
 				sh "./mvnw package"
 			}
 		}
+		stage ('Build Docke Image'){
+        	steps{
+        		script{
+        		    sh 'docker build -t guilhermesantosdocker/ordem-servico-backend .'
+        		}
+        	}
+        }
+        stage ('Push Docker Hub'){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'dockerhub', variable: 'PASSWORD_DOCKER_HUB')]){
+                        sh 'docker login -u guilhermesantosdocker -p ${PASSWORD_DOCKER_HUB}'
+                        sh 'docker push guilhermesantosdocker/ordem-servico-backend'
+                    }
+                }
+            }
+        }
 		stage('Unit Test') {
 		    steps {
 		       sh "./mvnw test"
