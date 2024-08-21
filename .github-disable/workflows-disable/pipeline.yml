@@ -2,7 +2,7 @@ name: Pipeline - Ordem Serviço Backend
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
 
 jobs:
     build:
