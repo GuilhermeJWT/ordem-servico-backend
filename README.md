@@ -1,10 +1,11 @@
 <H1>Ordem Serviço Backend</h1>
 <p>Projeto simples contendo 36 endpoints para a Assistência Técnica:</p>
 <ol>
-  <li>Realizar vendas dos produtos da Assistência Técnica</li>
+  <li>Realizar Vendas dos produtos da Assistência Técnica</li>
   <li>Cadastrar Ordens de Serviço</li>
-  <li>Cadastro de Clientes e Produtos da Assistência Técnica</li>
+  <li>Cadastro de Clientes,Produtos, Fornecedores e Estoque da Assistência Técnica</li>
   <li>Módulo de cadastro de Contas a Pagar e Receber</li>
+  <li>Notifica por E-mail Contas a Pagar e Receber vencidas</li>
 </ol>
 <H2>Tecnologias envolvidas no Projeto</h2>
 <ol>
