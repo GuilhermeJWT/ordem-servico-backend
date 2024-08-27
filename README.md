@@ -20,7 +20,7 @@
 </ol>
 <H2>Pipeline - Jenkins</h2>
 <p>No diretório raiz do projeto, possui o arquivo: <b>Jenkinsfile</b>, contendo todos os Stages da Pipeline</p>
-<img src="https://github.com/user-attachments/assets/e8461a1b-e6a3-432b-94c1-d02043748202">
+<img src="https://github.com/user-attachments/assets/440f5f55-f028-4b58-baf8-24c29f692f19">
 <H2>Análise do Código com SonarQube & Quality Gate:</H2>
 <ol>
   <li>Testes Unitários: Junit</li>
@@ -35,4 +35,4 @@
 <ol>
   <li>Serviços rodando no Docker: <b>docker-compose.yml</b></li>
 </ol>
-<img src="https://github.com/GuilhermeJWT/ordem-servico-backend/assets/63434009/ca9fbdd9-5d3d-4c32-9a00-2a8fa6d9db6f">
+<img src="https://github.com/user-attachments/assets/2cfbec09-1ca0-415a-88ad-929e5466640b">
