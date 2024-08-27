@@ -1,5 +1,5 @@
 <H1>Ordem Serviço Backend</h1>
-<p>Projeto simples contendo 36 endpoints para a Assistência Técnica:</p>
+<p>Projeto simples contendo 39 endpoints para a Assistência Técnica:</p>
 <ol>
   <li>Realizar Vendas dos produtos da Assistência Técnica</li>
   <li>Cadastrar Ordens de Serviço</li>
