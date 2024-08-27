@@ -34,7 +34,7 @@ pipeline {
 		    steps{
 		        script{
 		            withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker') {
-		              sh 'docker build -t guilhermesantosdocker/ordem-servico-backend .'
+		              sh 'sudo docker build -t guilhermesantosdocker/ordem-servico-backend .'
 		            }
 		        }
 		    }
@@ -43,7 +43,7 @@ pipeline {
 		    steps{
 		        script{
 		            withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker') {
-		              sh 'docker push guilhermesantosdocker/ordem-servico-backend'
+		              sh 'sudo docker push guilhermesantosdocker/ordem-servico-backend'
 		            }
 		        }
 		    }
