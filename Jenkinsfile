@@ -1,9 +1,9 @@
 pipeline {
 	agent any
 	stages {
-		stage('Build Backend'){
+		stage('Compile Backend'){
 			steps {
-				sh "./mvnw package"
+				sh "./mvnw compile"
 			}
 		}
 		stage('Unit Test') {
@@ -23,6 +23,11 @@ pipeline {
                 sh './mvnw sonar:sonar sonar-quality-gate:check -Dsonar.host.url=http://192.168.18.15:9000/ -Dsonar.login=admin -Dsonar.password=sonarqube -Dsonar.token=${SONAR_TOKEN}'
             }
 		}
+		stage('Build Backend'){
+        	steps {
+        		sh "./mvnw package"
+        	}
+        }
 		stage ('Build Docker Image'){
 		    steps{
 		        script{
