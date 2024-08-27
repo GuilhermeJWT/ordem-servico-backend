@@ -33,7 +33,9 @@ pipeline {
 		stage ('Build Docker Image'){
 		    steps{
 		        script{
-		            sh 'docker build -t guilhermesantosdocker/ordem-servico-backend .'
+		            withDockerRegistry(credentialsId: 'dockerhub', toolName: 'Docker') {
+		              sh 'docker build -t guilhermesantosdocker/ordem-servico-backend .'
+		            }
 		        }
 		    }
 		}
