@@ -54,10 +54,10 @@ pipeline {
 	        junit allowEmptyResults: true, stdioRetention: '', testResults: 'target/surefire-reports/*.xml'
 	    }
 	    unsuccessful {
-	        emailext attachLog: true, body: 'Olhar os Logs de Erro:', subject: 'Erro na Pipeline - Ordem Serviço Backend', to: 'guiromanno@gmail.com'
+	        emailext attachLog: true, body: 'Olhar os Logs de Erro:', subject: 'Erro no Build - $PROJECT_NAME - $BUILD_NUMBER - $BUILD_STATUS', to: 'guiromanno@gmail.com'
 	    }
 	    fixed {
-        	emailext attachLog: true, body: 'Olhar os Logs de Sucesso:', subject: 'Build resolvido!!!', to: 'guiromanno@gmail.com'
+        	emailext attachLog: true, body: 'Olhar os Logs de Sucesso:', subject: 'Build $BUILD_NUMBER - $BUILD_STATUS!!!', to: 'guiromanno@gmail.com'
         }
 	}
 }
