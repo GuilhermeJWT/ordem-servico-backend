@@ -11,6 +11,16 @@ pipeline {
         		 sh "./mvnw test"
         	 }
         }
+        stage ('OWASP Check Vulnerabilities'){
+        	steps{
+        		   dependencyCheck additionalArguments: '''
+                        -o './'
+                        -s './'
+                        -f 'ALL'
+                        --prettyPrint''' , odcInstallation: 'OWASP Check Vulnerabilities'
+                        dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+        	}
+        }
 		stage('Sonarqube Analysis'){
 		    steps {
 		        script {
