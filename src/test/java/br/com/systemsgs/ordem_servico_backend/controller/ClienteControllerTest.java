@@ -77,7 +77,7 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
 
         assertNotNull(response);
         assertNotNull(response.getBody());
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(ArrayList.class, response.getBody().getClass());
         assertEquals(ClienteResponse.class, response.getBody().get(0).getClass());
