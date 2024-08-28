@@ -13,8 +13,13 @@ pipeline {
         }
         stage ('OWASP Check Vulnerabilities'){
         	steps{
-        		 dependencyCheck additionalArguments: '--scan', odcInstallation: 'OWASP-Check-Vulnerabilities'
-                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+        		 dependencyCheck additionalArguments: '''
+                  -o './'
+                 -s './'
+                 -f 'ALL'
+                 --prettyPrint''', odcInstallation: 'OWASP-Check-Vulnerabilities'
+
+                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
         	}
         }
 		stage('Sonarqube Analysis'){
