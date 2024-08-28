@@ -53,5 +53,11 @@ pipeline {
 	    always {
 	        junit allowEmptyResults: true, stdioRetention: '', testResults: 'target/surefire-reports/*.xml'
 	    }
+	    unsuccessful {
+	        emailext attachLog: true, body: 'Olhar os Logs de Erro:', subject: 'Erro na Pipeline - Ordem Serviço Backend', to: 'guiromanno@gmail.com'
+	    }
+	    fixed {
+        	emailext attachLog: true, body: 'Olhar os Logs de Sucesso:', subject: 'Build resolvido!!!', to: 'guiromanno@gmail.com'
+        }
 	}
 }
