@@ -22,6 +22,19 @@
 <H2>Pipeline CI/CD - Jenkins</h2>
 <p>No diretório raiz do projeto, possui o arquivo: <b>Jenkinsfile</b>, contendo todos os Stages da Pipeline.</p>
 <img src="https://github.com/user-attachments/assets/440f5f55-f028-4b58-baf8-24c29f692f19">
+<H2>Explicando todos os Stages da Pipeline:</h2>
+<ol>
+  <li><strong>Declarative: Checkout SCM</strong>: Clone do projeto no Github.</li>
+  <li><strong>Compile Backend</strong>: Verifica a compilação do projeto.</li>
+  <li><strong>Unit Test</strong>: Executa todos os testes do projeto, para ver se novas funcionalidades foram mantidas, sem comprometer alguma funcionalidade.</li>
+  <li><strong>OWASP Check Vulnerabilities</strong>: Executa uma analise de segurança no código, antes de subir o código para produção, preciso garantir que ele não possui vulnerabilidades.</li>
+  <li><strong>Sonarqube Analysis</strong>: Executa uma analise completa do código, verificando possiveis code smells (código ruim), além de verificar boas práticas de desenvolvimento e manutenção do código.</li>
+  <li><strong>Quality Gate</strong>: Verifica se o Quality Gate aprovou o código, se o projeto tem mais de 80% de cobertura de testes, e poucos códigos duplicados.</li>
+  <li><strong>Build Backend</strong>: Após todos os stages passarem, é hora de realizar o Build do projeto, para prepara-lo para deploy.</li>
+  <li><strong>Build Docker Image</strong>: Executa o build da imagem do projeto, no arquivo <strong>Dockerfile</strong> contém as configurações da imagem.</li>
+  <li><strong>Push Docker Hub</strong>: Realiza o push da imagem para o Docker Hub, caso você clone o projeto modifique para a sua conta a nova imagem.</li>
+  <li><strong>Declarative: Post Actions</strong>: Após a Pipeline executar, ela possui configurações de envio de e-mail para o desenvolvedor(eu), com informações do Build e logs do erro, se o Build passou ele apenas grava um relatório dos testes(Tendência de resultados de teste).</li>
+</ol> 
 <H2>Análise do Código com SonarQube & Quality Gate:</H2>
 <ol>
   <li>Testes Unitários: Junit</li>
