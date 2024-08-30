@@ -5,7 +5,7 @@ pipeline {
       DEPLOY_DIR = '/app/ordemservicobackend' //diretório criador no ec2, onde vai ficar o jar da aplicação - sudo mkdir -p /app/ordemservicobackend
       APP_NAME = 'ordemservicobackend' //nome da aplicação
       JAR_FILE = 'ordem-servico-backend.jar' //jar da aplicação
-      EC2_HOST = '3.90.65.250' //ec2
+      EC2_HOST = '10-0-0-216' //ec2
       SSH_CREDENTIALS = 'EC2-SSH-Credentials' //credentialsId configurada no plugin SSH Agent
     }
 	stages {
