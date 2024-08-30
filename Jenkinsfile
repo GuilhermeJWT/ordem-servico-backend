@@ -34,20 +34,15 @@ pipeline {
             }
         }
 		stage ('Deploy to EC2'){
-            steps{
-                sshagent(['EC2-SSH-Credentials']) {
-                    sh """
-                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} 'mkdir -p ${DEPLOY_DIR}'
-                        scp -o StrictHostKeyChecking=no target/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}/
-                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} '
-                            echo "Listando arquivos no diretório de deploy após a cópia:"
-                            ls -l ${DEPLOY_DIR}
-                            echo "Iniciando a aplicação com nohup..."
-                            cd ${DEPLOY_DIR}
-                            nohup java -jar ordem-servico-backend.jar > ordemservicobackend.log 2>&1 &
-                            exit
-                        '
-                    """
+            steps {
+                def sshCredentialsId = 'EC2-SSH-Credentials'
+                sshagent([sshCredentialsId]) {
+                    script {
+                        def jarFile = 'target/ordem-servico-backend.jar'
+                        def remoteDir = '/app/ordemservicobackend'
+
+                        sh "scp -o StrictHostKeyChecking=no ${jarFile} ubuntu@${EC2_HOST}:${DEPLOY_DIR}/ordem-servico-backend.jar"
+                    }
                 }
             }
 		}
