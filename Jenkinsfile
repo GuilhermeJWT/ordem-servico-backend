@@ -19,7 +19,7 @@ pipeline {
                 sshagent([SSH_CREDENTIALS]) {
                     sh """
                         scp -o StrictHostKeyChecking=no target/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}
-                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} "cd ${DEPLOY_DIR} && nohup java -jar ordem-servico-backend.jar --spring.profiles.active=prod > ordemservicobackend.log 2>&1 & EOF"
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} "cd ${DEPLOY_DIR} && nohup java -jar ordem-servico-backend.jar --spring.profiles.active=prod > ordemservicobackend.log 2>&1"
                     """
                 }
             }
