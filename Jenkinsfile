@@ -1,5 +1,13 @@
 pipeline {
 	agent any
+	environment {
+      SSH_KEY_PATH = '/home/guilherme/AWS-KEYS/ordem-servico-backend-ec2-chave.pem' //colocar a chave em uma variavel mais segura
+      DEPLOY_DIR = '/app/ordemservicobackend' //diretório criador no ec2, onde vai ficar o jar da aplicação - sudo mkdir -p /app/ordemservicobackend
+      APP_NAME = 'ordemservicobackend' //nome da aplicação
+      JAR_FILE = 'ordem-servico-backend.jar' //jar da aplicação
+      EC2_HOST = 'ubuntu@ip-10-0-0-216' //ec2
+      SSH_CREDENTIALS = 'EC2-SSH-Credentials' //credentialsId configurada no plugin SSH Agent
+    }
 	stages {
 		stage('Compile Backend'){
 			steps {
