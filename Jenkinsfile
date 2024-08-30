@@ -36,24 +36,21 @@ pipeline {
 		stage ('Deploy to EC2'){
             steps{
                 sshagent(['EC2-SSH-Credentials']) {
-                    sh """
-                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << 'EOF'
-                        echo "Listando arquivos no diretório de deploy antes da cópia..."
-                        ls -l ${DEPLOY_DIR}
-                        exit
+                        sh """
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << EOF
+                            mkdir -p ${DEPLOY_DIR}
+                            exit
                         EOF
-                        echo "Transferindo arquivo JAR para o servidor EC2..."
-                        scp -o StrictHostKeyChecking=no target/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}/
-
-                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << 'EOF'
-                        echo "Listando arquivos no diretório de deploy após a cópia..."
-                        ls -l ${DEPLOY_DIR}
-                        echo "Iniciando a aplicação..."
-                        cd ${DEPLOY_DIR}
-                        nohup java -jar ordem-servico-backend.jar > ordemservicobackend.log 2>&1 &
-                        exit
+                        """
+                        sh """
+                        scp -o StrictHostKeyChecking=no build/libs/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}/
+                        """
+                        sh """
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << EOF
+                            nohup java -jar ${DEPLOY_DIR}/ordem-servico-backend.jar > ${DEPLOY_DIR}/ordemservicobackend.log 2>&1 &
+                            exit
                         EOF
-                    """
+                        """
                 }
             }
 		}
