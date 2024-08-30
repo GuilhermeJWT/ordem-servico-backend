@@ -36,24 +36,34 @@ pipeline {
 		stage ('Deploy to EC2'){
             steps{
                 sshagent(['EC2-SSH-Credentials']) {
-                        sh """
-                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << EOF
-                            mkdir -p ${DEPLOY_DIR}
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} 'mkdir -p ${DEPLOY_DIR}'
+                        scp -o StrictHostKeyChecking=no target/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}/
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} '
+                            echo "Listando arquivos no diretório de deploy após a cópia:"
+                            ls -l ${DEPLOY_DIR}
+                            echo "Iniciando a aplicação com nohup..."
+                            cd ${DEPLOY_DIR}
+                            nohup java -jar ordem-servico-backend.jar > ordemservicobackend.log 2>&1 &
                             exit
-                        EOF
-                        """
-                        sh """
-                        scp -o StrictHostKeyChecking=no build/libs/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}/
-                        """
-                        sh """
-                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << EOF
-                            nohup java -jar ${DEPLOY_DIR}/ordem-servico-backend.jar > ${DEPLOY_DIR}/ordemservicobackend.log 2>&1 &
-                            exit
-                        EOF
-                        """
+                        '
+                    """
                 }
             }
 		}
+        stage('Health Check') {
+            steps {
+                script {
+                    retry(5) {  // Tenta 5 vezes
+                        sleep(time: 25, unit: 'SECONDS')  // Espera 25 segundos entre cada tentativa
+                        def response = sh(script: "curl -s http://${EC2_HOST}:8081/api/health/check", returnStdout: true).trim()
+                        if (response != "UP") {
+                            error("Aplicação ainda não iniciou, ou ocorrou algum erro durante o processo, observe os logs.")
+                        }
+                    }
+                }
+            }
+        }
 		stage('Unit Test') {
         	steps {
         		 sh "./mvnw test"
