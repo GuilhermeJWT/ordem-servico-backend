@@ -9,9 +9,9 @@ pipeline {
       SSH_CREDENTIALS = 'EC2-SSH-Credentials' //credentialsId configurada no plugin SSH Agent
     }
 	stages {
-		stage('Compile Backend'){
+		stage('Build Backend'){
 			steps {
-				sh "./mvnw compile"
+				sh "./mvnw package"
 			}
 		}
         stage('Transfer Artifact to EC2') {
@@ -76,11 +76,6 @@ pipeline {
                 }
             }
 		}
-		stage('Build Backend'){
-        	steps {
-        		sh "./mvnw package"
-        	}
-        }
 		stage ('Build Docker Image'){
 		    steps{
 		        script{
