@@ -35,8 +35,7 @@ pipeline {
         }
 		stage ('Deploy to EC2'){
             steps {
-                def sshCredentialsId = 'EC2-SSH-Credentials'
-                sshagent([sshCredentialsId]) {
+                sshagent(['EC2-SSH-Credentials']) {
                     script {
                         def jarFile = 'target/ordem-servico-backend.jar'
                         def remoteDir = '/app/ordemservicobackend'
