@@ -17,10 +17,22 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 sshagent([SSH_CREDENTIALS]) {
+                script {
+                    def jarFile = 'target/ordem-servico-backend.jar'
+                    def remoteDir = '/app/ordemservicobackend'
+
+                    sh "scp -o StrictHostKeyChecking=no ${jarFile} ubuntu@${EC2_HOST}:${remoteDir}/ordem-servico-backend.jar"
+
                     sh """
-                        scp -o StrictHostKeyChecking=no target/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}
-                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} "cd ${DEPLOY_DIR} && nohup java -jar ordem-servico-backend.jar --spring.profiles.active=prod"
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} <<EOF
+                        mkdir -p ${remoteDir}
+                        cd ${remoteDir}
+                        rm -f ordem-servico-backend.jar ordemservicobackend.log
+                        # Execute a aplicação em segundo plano e redirecione a saída para um arquivo de log
+                        nohup java -jar ordem-servico-backend.jar > ordemservicobackend.log 2>&1 &
+                        EOF
                     """
+                    }
                 }
             }
         }
@@ -29,7 +41,7 @@ pipeline {
                 script {
                     retry(5) {  // Tenta 5 vezes
                         sleep(time: 25, unit: 'SECONDS')  // Espera 25 segundos entre cada tentativa
-                        def response = sh(script: "curl -s http://${EC2_HOST}:8081/api/health/check", returnStdout: true).trim()
+                        def response = sh(script: "curl -s http://${EC2_HOST}:8085/api/health/check", returnStdout: true).trim()
                         if (response != "UP") {
                             error("Aplicação ainda não iniciou, ou ocorrou algum erro durante o processo, observe os logs.")
                         }
