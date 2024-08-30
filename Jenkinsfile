@@ -5,7 +5,7 @@ pipeline {
       DEPLOY_DIR = '/app/ordemservicobackend' //diretório criador no ec2, onde vai ficar o jar da aplicação - sudo mkdir -p /app/ordemservicobackend
       APP_NAME = 'ordemservicobackend' //nome da aplicação
       JAR_FILE = 'ordem-servico-backend.jar' //jar da aplicação
-      EC2_HOST = 'ubuntu@ip-10-0-0-216' //ec2
+      EC2_HOST = 'ip-10-0-0-216' //ec2
       SSH_CREDENTIALS = 'EC2-SSH-Credentials' //credentialsId configurada no plugin SSH Agent
     }
 	stages {
@@ -13,6 +13,38 @@ pipeline {
 			steps {
 				sh "./mvnw compile"
 			}
+		}
+        stage('Transfer Artifact to EC2') {
+            steps {
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: SSH_CREDENTIALS,
+                            transfers: [
+                                sshTransfer(
+                                    sourceFiles: "target/${JAR_FILE}",
+                                    removePrefix: 'target',
+                                    remoteDirectory: DEPLOY_DIR
+                                )
+                            ],
+                            verbose: true
+                        )
+                    ]
+                )
+            }
+        }
+		stage ('Deploy to EC2'){
+            steps{
+                sshagent(['EC2-SSH-Credentials']) {
+                    sh """
+                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << EOF
+                    cd ${DEPLOY_DIR}
+                    pgrep -f ${JAR_FILE} | xargs -r kill -9
+                    nohup java -jar -Dspring.profiles.active=prod ${JAR_FILE} > ${APP_NAME}.log 2>&1 &
+                    EOF
+                    """
+                }
+            }
 		}
 		stage('Unit Test') {
         	steps {
