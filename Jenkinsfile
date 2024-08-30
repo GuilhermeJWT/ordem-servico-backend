@@ -29,8 +29,7 @@ pipeline {
                         cd ${remoteDir}
                         rm -f ordem-servico-backend.jar ordemservicobackend.log
                         # Execute a aplicação em segundo plano e redirecione a saída para um arquivo de log
-                        nohup java -jar ordem-servico-backend.jar > ordemservicobackend.log 2>&1 &
-                        EOF
+                        nohup java -jar ordem-servico-backend.jar > ordemservicobackend.log
                     """
                     }
                 }
