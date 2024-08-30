@@ -17,21 +17,17 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 sshagent([SSH_CREDENTIALS]) {
-                script {
-                    def jarFile = 'target/ordem-servico-backend.jar'
-                    def remoteDir = '/app/ordemservicobackend'
+            sh """
+                scp -o StrictHostKeyChecking=no target/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}
+                ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << 'EOF'
+                cd ${DEPLOY_DIR}
+                rm -f ordem-servico-backend.jar ordemservicobackend.log
+                mv ordem-servico-backend.jar ordemservicobackend.jar
 
-                    sh "scp -o StrictHostKeyChecking=no ${jarFile} ubuntu@${EC2_HOST}:${remoteDir}/ordem-servico-backend.jar"
-
-                    sh """
-                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} <<EOF
-                        mkdir -p ${remoteDir}
-                        cd ${remoteDir}
-                        rm -f ordem-servico-backend.jar ordemservicobackend.log
-                        # Execute a aplicação em segundo plano e redirecione a saída para um arquivo de log
-                        nohup java -jar ordem-servico-backend.jar > ordemservicobackend.log
-                    """
-                    }
+                # Executa o JAR em segundo plano e redireciona a saída para um log
+                nohup java -jar ordemservicobackend.jar --spring.profiles.active=prod > ordemservicobackend.log 2>&1 || exit 1
+                EOF
+            """
                 }
             }
         }
