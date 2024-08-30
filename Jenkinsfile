@@ -18,22 +18,12 @@ pipeline {
                 sshagent([SSH_CREDENTIALS]) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << 'EOF'
-                        echo "Criando diretório de deploy se não existir..."
-                        mkdir -p ${DEPLOY_DIR}
-                        echo "Listando arquivos no diretório de deploy antes da cópia..."
-                        ls -l ${DEPLOY_DIR}
-                        exit
-                        EOF
-                        echo "Transferindo arquivo JAR para o servidor EC2..."
                         scp -o StrictHostKeyChecking=no target/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}/
                         ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << 'EOF'
-                        echo "Listando arquivos no diretório de deploy após a cópia..."
-                        ls -l ${DEPLOY_DIR}
                         echo "Iniciando a aplicação..."
                         cd ${DEPLOY_DIR}
-                        nohup java -jar ordem-servico-backend.jar > ordemservicobackend.log 2>&1 &
+                        nohup java -jar ordem-servico-backend.jar --spring.profiles.active=prod > ordemservicobackend.log 2>&1 &
                         exit
-                        EOF
                     """
                 }
             }
