@@ -37,11 +37,16 @@ pipeline {
             steps{
                 sshagent(['EC2-SSH-Credentials']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << EOF
-                    cd ${DEPLOY_DIR}
-                    pgrep -f ${JAR_FILE} | xargs -r kill -9
-                    nohup java -jar -Dspring.profiles.active=prod ${JAR_FILE} > ${APP_NAME}.log 2>&1 &
-                    EOF
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << 'EOF'
+                        mkdir -p ${DEPLOY_DIR}
+                        exit
+                        EOF
+                        scp -o StrictHostKeyChecking=no target/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}/
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << 'EOF'
+                        cd ${DEPLOY_DIR}
+                        nohup java -jar ordem-servico-backend.jar > ordemservicobackend.log 2>&1 &
+                        exit
+                        EOF
                     """
                 }
             }
