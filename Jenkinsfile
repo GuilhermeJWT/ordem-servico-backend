@@ -14,37 +14,16 @@ pipeline {
 				sh "./mvnw package"
 			}
 		}
-        stage('Transfer Artifact to EC2') {
+        stage('Deploy to EC2') {
             steps {
-                sshPublisher(
-                    publishers: [
-                        sshPublisherDesc(
-                            configName: SSH_CREDENTIALS,
-                            transfers: [
-                                sshTransfer(
-                                    sourceFiles: "target/${JAR_FILE}",
-                                    removePrefix: 'target',
-                                    remoteDirectory: DEPLOY_DIR
-                                )
-                            ],
-                            verbose: true
-                        )
-                    ]
-                )
-            }
-        }
-		stage ('Deploy to EC2'){
-            steps {
-                sshagent(['EC2-SSH-Credentials']) {
-                    script {
-                        def jarFile = 'target/ordem-servico-backend.jar'
-                        def remoteDir = '/app/ordemservicobackend'
-
-                        sh "scp -o StrictHostKeyChecking=no ${jarFile} ubuntu@${EC2_HOST}:${DEPLOY_DIR}/ordem-servico-backend.jar"
-                    }
+                sshagent([SSH_CREDENTIALS]) {
+                    sh """
+                        scp -o StrictHostKeyChecking=no target/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} "cd ${DEPLOY_DIR} && nohup java -jar ordem-servico-backend.jar --spring.profiles.active=prod"
+                    """
                 }
             }
-		}
+        }
         stage('Health Check') {
             steps {
                 script {
