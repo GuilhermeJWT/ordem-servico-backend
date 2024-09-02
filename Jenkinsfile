@@ -93,6 +93,7 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} "cd ${DEPLOY_DIR} && nohup java -jar ordem-servico-backend.jar --spring.profiles.active=prod"
                     """
                 }
+                echo 'Deploy finalizado...'
             }
         }
 	}
