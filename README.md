@@ -21,7 +21,7 @@
 </ol>
 <H2>Pipeline CI/CD - Jenkins</h2>
 <p>No diretório raiz do projeto, possui o arquivo: <b>Jenkinsfile</b>, contendo todos os Stages da Pipeline.</p>
-<img src="https://github.com/user-attachments/assets/440f5f55-f028-4b58-baf8-24c29f692f19">
+<img src="https://github.com/user-attachments/assets/ec6c3aca-8d97-4573-8c9f-b7914212811d">
 <H2>Explicando todos os Stages da Pipeline:</h2>
 <ol>
   <li><strong>Declarative: Checkout SCM</strong>: Clone do projeto no Github.</li>
@@ -33,6 +33,8 @@
   <li><strong>Build Backend</strong>: Após todos os stages passarem, é hora de realizar o Build do projeto, para prepara-lo para deploy.</li>
   <li><strong>Build Docker Image</strong>: Executa o build da imagem do projeto, no arquivo <strong>Dockerfile</strong> contém as configurações da imagem.</li>
   <li><strong>Push Docker Hub</strong>: Realiza o push da imagem para o Docker Hub, caso você clone o projeto modifique para a sua conta a nova imagem.</li>
+  <li><strong>Transfer Artifact to EC2</strong>: Transferência de alguns recursos para o EC2.</li>
+  <li><strong>Deploy to EC2</strong>: Deploy da aplicação no EC2.</li>
   <li><strong>Declarative: Post Actions</strong>: Após a Pipeline executar, ela possui configurações de envio de e-mail para o desenvolvedor(eu), com informações do Build e logs do erro, se o Build passou ele apenas grava um relatório dos testes(Tendência de resultados de teste).</li>
 </ol> 
 <H2>Análise do Código com SonarQube & Quality Gate:</H2>
