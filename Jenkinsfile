@@ -8,44 +8,11 @@ pipeline {
       SSH_CREDENTIALS = 'EC2-SSH-Credentials' //credentialsId configurada no plugin SSH Agent
     }
 	stages {
-		stage('Build Backend'){
+		stage('Compile Backend'){
 			steps {
-				sh "./mvnw package"
+				sh "./mvnw compile"
 			}
 		}
-        stage('Transfer Artifact to EC2') {
-            steps {
-                sshPublisher(
-                    publishers: [
-                        sshPublisherDesc(
-                            configName: SSH_CREDENTIALS,
-                            transfers: [
-                                sshTransfer(
-                                    sourceFiles: "target/${JAR_FILE}",
-                                    removePrefix: 'target',
-                                    remoteDirectory: DEPLOY_DIR
-                                )
-                            ],
-                            verbose: true
-                        )
-                    ]
-                )
-            }
-        }
-        stage('Deploy to EC2') {
-            steps {
-                sshagent([SSH_CREDENTIALS]) {
-                    sh """
-                    ssh -o StrictHostKeyChecking=no ec2-user@${EC2_HOST} << EOF
-                    cd ${DEPLOY_DIR}
-                    pgrep -f ${JAR_FILE} | xargs -r kill -9
-                    nohup java -jar -Dspring.profiles.active=prod ${JAR_FILE} > ${APP_NAME}.log 2>&1 &
-                    EOF
-                    """
-                }
-                echo 'Deploy finalizado...'
-            }
-        }
 		stage('Unit Test') {
         	steps {
         		 sh "./mvnw test"
@@ -76,6 +43,11 @@ pipeline {
                 }
             }
 		}
+		stage('Build Backend'){
+			steps {
+				sh "./mvnw package"
+			}
+		}
 		stage ('Build Docker Image'){
 		    steps{
 		        script{
@@ -94,6 +66,36 @@ pipeline {
 		        }
 		    }
 		}
+        stage('Transfer Artifact to EC2') {
+            steps {
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: SSH_CREDENTIALS,
+                            transfers: [
+                                sshTransfer(
+                                    sourceFiles: "target/${JAR_FILE}",
+                                    removePrefix: 'target',
+                                    remoteDirectory: DEPLOY_DIR
+                                )
+                            ],
+                            verbose: true
+                        )
+                    ]
+                )
+            }
+        }
+        stage('Deploy to EC2') {
+            steps {
+                sshagent([SSH_CREDENTIALS]) {
+                    sh """
+                        scp -o StrictHostKeyChecking=no target/ordem-servico-backend.jar ubuntu@${EC2_HOST}:${DEPLOY_DIR}
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} "cd ${DEPLOY_DIR} && nohup java -jar ordem-servico-backend.jar --spring.profiles.active=prod"
+                    """
+                }
+                echo 'Deploy finalizado...'
+            }
+        }
 	}
 	post {
 	    always {
