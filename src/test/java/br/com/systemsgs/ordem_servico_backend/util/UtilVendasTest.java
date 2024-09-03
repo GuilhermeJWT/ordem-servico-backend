@@ -74,13 +74,13 @@ class UtilVendasTest extends ConfigDadosEstaticosEntidades {
     @DisplayName("Teste para calcula o Total de Vendas para o Dashboard")
     @Test
     void testCalculaTotalVendas(){
-        when(vendasRepository.calculaTotalVendasTodoPeriodo()).thenReturn(dadosDashboard().getTotal_vendas());
+        when(vendasRepository.calculaTotalVendasTodoPeriodo()).thenReturn(dadosDashboard().getTotalVendas());
 
         Optional<BigDecimal> response = utilVendas.calculaTotalVendas();
 
         assertNotNull(response);
         assertTrue(response.isPresent());
-        assertEquals(response, dadosDashboard().getTotal_vendas());
+        assertEquals(response, dadosDashboard().getTotalVendas());
     }
 
     @DisplayName("Teste para retornar NullPointerException caso não tenha dados")

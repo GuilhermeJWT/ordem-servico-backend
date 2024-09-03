@@ -19,7 +19,7 @@ public class ContasReceberResponse {
     private Long id;
 
     @JsonProperty("data_vencimento")
-    private Date data_vencimento;
+    private Date dataVencimento;
 
     @JsonProperty("valor_conta_receber")
     private BigDecimal valor;

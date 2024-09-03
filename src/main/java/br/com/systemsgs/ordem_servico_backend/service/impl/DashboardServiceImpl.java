@@ -54,7 +54,7 @@ public class DashboardServiceImpl implements DashboardService {
         var quantidadeContasReceberInadimplentes = utilContasReceber.quantidadeContasInadimplentes();
         var quantidadeContasReceberVencidas = utilContasReceber.quantidadeContasReceberVencidas();
 
-        dashboardResponse.setTotal_vendas(Optional.of(totalVendas.orElse(new BigDecimal(0))));
+        dashboardResponse.setTotalVendas(Optional.of(totalVendas.orElse(new BigDecimal(0))));
         dashboardResponse.setQuantidadeItensVendidosTodoPeriodo(Optional.of(totalItensVendidos.orElse(0)));
         dashboardResponse.setQuantidadeClientesCadastrados(Optional.of(quantidadeClientes.orElse(0)));
         dashboardResponse.setQuantidadeProdutosEstoqueAtual(Optional.of(quantidadeEstoque.orElse(0)));

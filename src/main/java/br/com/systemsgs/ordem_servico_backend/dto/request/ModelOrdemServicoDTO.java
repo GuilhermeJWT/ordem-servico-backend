@@ -32,7 +32,7 @@ public class ModelOrdemServicoDTO extends RepresentationModel<ModelOrdemServicoD
     private String descricao;
 
     @Size(max = 250, message = "{laudo.tecnico.maximo.caracteres}")
-    private String laudo_tecnico;
+    private String laudoTecnico;
 
     @NotNull(message = "{status.obrigatorio}")
     @Enumerated(EnumType.STRING)
@@ -42,13 +42,13 @@ public class ModelOrdemServicoDTO extends RepresentationModel<ModelOrdemServicoD
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
-    private Date data_inicial;
+    private Date dataInicial;
 
     @NotNull(message = "{data.final.obrigatoria}")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
-    private Date data_final;
+    private Date dataFinal;
 
     @NotNull(message = "{cliente.obrigatorio}")
     private ModelClientes cliente;

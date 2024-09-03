@@ -50,10 +50,10 @@ class UtilOrdemServicoTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosOrdemServico().getId(), response.getId());
         assertEquals(dadosOrdemServico().getDefeito(), response.getDefeito());
         assertEquals(dadosOrdemServico().getDescricao(), response.getDescricao());
-        assertEquals(dadosOrdemServico().getLaudo_tecnico(), response.getLaudo_tecnico());
+        assertEquals(dadosOrdemServico().getLaudoTecnico(), response.getLaudoTecnico());
         assertEquals(dadosOrdemServico().getStatus(), response.getStatus());
-        assertEquals(dadosOrdemServico().getData_inicial(), response.getData_inicial());
-        assertEquals(dadosOrdemServico().getData_final(), response.getData_final());
+        assertEquals(dadosOrdemServico().getDataInicial(), response.getDataInicial());
+        assertEquals(dadosOrdemServico().getDataFinal(), response.getDataFinal());
 
         assertEquals(dadosOrdemServico().getCliente().getId(), response.getCliente().getId());
         assertEquals(dadosOrdemServico().getCliente().getNome(), response.getCliente().getNome());
@@ -136,10 +136,10 @@ class UtilOrdemServicoTest extends ConfigDadosEstaticosEntidades{
                 dadosOrdemServico().getId(),
                 dadosOrdemServico().getDefeito(),
                 dadosOrdemServico().getDescricao(),
-                dadosOrdemServico().getLaudo_tecnico(),
+                dadosOrdemServico().getLaudoTecnico(),
                 dadosOrdemServico().getStatus(),
-                dadosOrdemServico().getData_inicial(),
-                dadosOrdemServico().getData_final(),
+                dadosOrdemServico().getDataInicial(),
+                dadosOrdemServico().getDataFinal(),
                 dadosOrdemServico().getCliente(),
                 dadosOrdemServico().getTecnicoResponsavel()
         ));

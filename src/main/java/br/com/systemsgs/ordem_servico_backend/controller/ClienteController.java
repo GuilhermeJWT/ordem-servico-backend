@@ -59,7 +59,7 @@ public class ClienteController {
     @GetMapping("/listar/v3/link")
     public CollectionModel<ModelClientesHateoas> listarCLientesComLink(){
         List<ModelClientesHateoas> listaCLientes = clienteService.listarClientes().
-                stream().map(x -> mapper.map(x, ModelClientesHateoas.class)).collect(Collectors.toList());
+                stream().map(x -> mapper.map(x, ModelClientesHateoas.class)).toList();
 
         for (ModelClientesHateoas modelClientesHateoas : listaCLientes) {
             Long clienteID = modelClientesHateoas.getId();

@@ -62,7 +62,7 @@ public class ConfigDadosEstaticosEntidades {
     public DashboardResponse dadosDashboard(){
         DashboardResponse dashboardResponse = new DashboardResponse();
 
-        dashboardResponse.setTotal_vendas(Optional.of(new BigDecimal(3500)));
+        dashboardResponse.setTotalVendas(Optional.of(new BigDecimal(3500)));
         dashboardResponse.setQuantidadeItensVendidosTodoPeriodo(Optional.of(150));
         dashboardResponse.setQuantidadeClientesCadastrados(Optional.of(60));
         dashboardResponse.setQuantidadeProdutosEstoqueAtual(Optional.of(580));
@@ -80,7 +80,7 @@ public class ConfigDadosEstaticosEntidades {
     public DashboardResponse dadosDashboardZerados(){
         DashboardResponse dashboardResponse = new DashboardResponse();
 
-        dashboardResponse.setTotal_vendas(Optional.of(new BigDecimal(0)));
+        dashboardResponse.setTotalVendas(Optional.of(new BigDecimal(0)));
         dashboardResponse.setQuantidadeItensVendidosTodoPeriodo(Optional.of(0));
         dashboardResponse.setQuantidadeClientesCadastrados(Optional.of(0));
         dashboardResponse.setQuantidadeProdutosEstoqueAtual(Optional.of(0));
@@ -121,8 +121,8 @@ public class ConfigDadosEstaticosEntidades {
         ModelContasPagar contasPagarResponse = new ModelContasPagar();
 
         contasPagarResponse.setId(1L);
-        contasPagarResponse.setData_vencimento(new Date("2024/11/25"));
-        contasPagarResponse.setData_emissao(new Date("24/25/07"));
+        contasPagarResponse.setDataVencimento(new Date("2024/11/25"));
+        contasPagarResponse.setDataEmissao(new Date("24/25/07"));
         contasPagarResponse.setValor(new BigDecimal(100));
         contasPagarResponse.setObservacao("Pagar o Fornecedor Guilherme");
         contasPagarResponse.setFormaPagamento(FormaPagamento.BOLETO);
@@ -136,9 +136,9 @@ public class ConfigDadosEstaticosEntidades {
         ModelContasReceber contasReceberResponse = new ModelContasReceber();
 
         contasReceberResponse.setId(1L);
-        contasReceberResponse.setData_vencimento(new Date("2024/11/25"));
+        contasReceberResponse.setDataVencimento(new Date("2024/11/25"));
         contasReceberResponse.setValor(new BigDecimal(100));
-        contasReceberResponse.setData_emissao(new Date("24/25/07"));
+        contasReceberResponse.setDataEmissao(new Date("24/25/07"));
         contasReceberResponse.setObservacao("Receber uma compra de Equipamentos do Cliente Guilherme");
         contasReceberResponse.setFormaPagamento(FormaPagamento.CARTAO_CREDITO);
         contasReceberResponse.setStatusContasReceber(StatusContas.ATRASADA);
@@ -192,10 +192,10 @@ public class ConfigDadosEstaticosEntidades {
         produtoResponse.setId(1L);
         produtoResponse.setDescricao("Notebook Gamer");
         produtoResponse.setQuantidade(5);
-        produtoResponse.setQuantidade_minima(1);
-        produtoResponse.setPreco_compra(BigDecimal.valueOf(1000L));
-        produtoResponse.setPreco_venda(BigDecimal.valueOf(2000L));
-        produtoResponse.setCodigo_barras("789835741123");
+        produtoResponse.setQuantidadeMinima(1);
+        produtoResponse.setPrecoCompra(BigDecimal.valueOf(1000L));
+        produtoResponse.setPrecoVenda(BigDecimal.valueOf(2000L));
+        produtoResponse.setCodigoBarras("789835741123");
 
         return produtoResponse;
     }
@@ -215,10 +215,10 @@ public class ConfigDadosEstaticosEntidades {
         ordemServicoResponse.setId(1L);
         ordemServicoResponse.setDefeito("Trocar a tela");
         ordemServicoResponse.setDescricao("Descricao OS");
-        ordemServicoResponse.setLaudo_tecnico("Precisa trocar a tela");
+        ordemServicoResponse.setLaudoTecnico("Precisa trocar a tela");
         ordemServicoResponse.setStatus(Status.ORCAMENTO);
-        ordemServicoResponse.setData_inicial(new Date("2024/06/21"));
-        ordemServicoResponse.setData_final(new Date("2024/06/22"));
+        ordemServicoResponse.setDataInicial(new Date("2024/06/21"));
+        ordemServicoResponse.setDataFinal(new Date("2024/06/22"));
         ordemServicoResponse.setCliente(dadosClientes());
         ordemServicoResponse.setTecnicoResponsavel(dadosTecnicoResponsavel());
 

@@ -31,7 +31,7 @@ public class ModelContasPagarDTO {
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
-    private Date data_vencimento;
+    private Date dataVencimento;
 
     @NotNull(message = "{valor.obrigatorio}")
     @DecimalMin(value = "0.0", inclusive = false, message = "{preco.maior}")

@@ -63,7 +63,7 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
 
     @DisplayName("Teste para listar Ordens de Serviço com Link - Hateoas")
     @Test
-    public void testListarOsComLinkHateoas() {
+     void testListarOsComLinkHateoas() {
         ModelOrdemServico ordemServico1 = dadosOrdemServico();
         ModelOrdemServico ordemServico2 = dadosOrdemServico();
 
@@ -109,10 +109,10 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosOrdemServico().getId(), response.getBody().get(0).getId());
         assertEquals(dadosOrdemServico().getDefeito(), response.getBody().get(0).getDefeito());
         assertEquals(dadosOrdemServico().getDescricao(), response.getBody().get(0).getDescricao());
-        assertEquals(dadosOrdemServico().getLaudo_tecnico(), response.getBody().get(0).getLaudo_tecnico());
+        assertEquals(dadosOrdemServico().getLaudoTecnico(), response.getBody().get(0).getLaudoTecnico());
         assertEquals(dadosOrdemServico().getStatus(), response.getBody().get(0).getStatus());
-        assertEquals(dadosOrdemServico().getData_inicial(), response.getBody().get(0).getData_inicial());
-        assertEquals(dadosOrdemServico().getData_final(), response.getBody().get(0).getData_final());
+        assertEquals(dadosOrdemServico().getDataInicial(), response.getBody().get(0).getDataInicial());
+        assertEquals(dadosOrdemServico().getDataFinal(), response.getBody().get(0).getDataFinal());
 
         assertEquals(dadosOrdemServico().getCliente().getId(), response.getBody().get(0).getCliente().getId());
         assertEquals(dadosOrdemServico().getCliente().getNome(), response.getBody().get(0).getCliente().getNome());
@@ -147,10 +147,10 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosOrdemServico().getId(), response.getBody().getId());
         assertEquals(dadosOrdemServico().getDefeito(), response.getBody().getDefeito());
         assertEquals(dadosOrdemServico().getDescricao(), response.getBody().getDescricao());
-        assertEquals(dadosOrdemServico().getLaudo_tecnico(), response.getBody().getLaudo_tecnico());
+        assertEquals(dadosOrdemServico().getLaudoTecnico(), response.getBody().getLaudoTecnico());
         assertEquals(dadosOrdemServico().getStatus(), response.getBody().getStatus());
-        assertEquals(dadosOrdemServico().getData_inicial(), response.getBody().getData_inicial());
-        assertEquals(dadosOrdemServico().getData_final(), response.getBody().getData_final());
+        assertEquals(dadosOrdemServico().getDataInicial(), response.getBody().getDataInicial());
+        assertEquals(dadosOrdemServico().getDataFinal(), response.getBody().getDataFinal());
 
         assertEquals(dadosOrdemServico().getCliente().getId(), response.getBody().getCliente().getId());
         assertEquals(dadosOrdemServico().getCliente().getNome(), response.getBody().getCliente().getNome());
@@ -212,10 +212,10 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosOrdemServico().getId(), response.getBody().getId());
         assertEquals(dadosOrdemServico().getDefeito(), response.getBody().getDefeito());
         assertEquals(dadosOrdemServico().getDescricao(), response.getBody().getDescricao());
-        assertEquals(dadosOrdemServico().getLaudo_tecnico(), response.getBody().getLaudo_tecnico());
+        assertEquals(dadosOrdemServico().getLaudoTecnico(), response.getBody().getLaudoTecnico());
         assertEquals(dadosOrdemServico().getStatus(), response.getBody().getStatus());
-        assertEquals(dadosOrdemServico().getData_inicial(), response.getBody().getData_inicial());
-        assertEquals(dadosOrdemServico().getData_final(), response.getBody().getData_final());
+        assertEquals(dadosOrdemServico().getDataInicial(), response.getBody().getDataInicial());
+        assertEquals(dadosOrdemServico().getDataFinal(), response.getBody().getDataFinal());
 
         assertEquals(dadosOrdemServico().getCliente().getId(), response.getBody().getCliente().getId());
         assertEquals(dadosOrdemServico().getCliente().getNome(), response.getBody().getCliente().getNome());
@@ -251,10 +251,10 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
                 dadosOrdemServico().getId(),
                 dadosOrdemServico().getDefeito(),
                 dadosOrdemServico().getDescricao(),
-                dadosOrdemServico().getLaudo_tecnico(),
+                dadosOrdemServico().getLaudoTecnico(),
                 dadosOrdemServico().getStatus(),
-                dadosOrdemServico().getData_inicial(),
-                dadosOrdemServico().getData_final(),
+                dadosOrdemServico().getDataInicial(),
+                dadosOrdemServico().getDataFinal(),
                 dadosOrdemServico().getCliente(),
                 dadosOrdemServico().getTecnicoResponsavel()
         );
@@ -262,10 +262,10 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
                 dadosOrdemServico().getId(),
                 dadosOrdemServico().getDefeito(),
                 dadosOrdemServico().getDescricao(),
-                dadosOrdemServico().getLaudo_tecnico(),
+                dadosOrdemServico().getLaudoTecnico(),
                 dadosOrdemServico().getStatus(),
-                dadosOrdemServico().getData_inicial(),
-                dadosOrdemServico().getData_final(),
+                dadosOrdemServico().getDataInicial(),
+                dadosOrdemServico().getDataFinal(),
                 dadosOrdemServico().getCliente(),
                 dadosOrdemServico().getTecnicoResponsavel()
         );

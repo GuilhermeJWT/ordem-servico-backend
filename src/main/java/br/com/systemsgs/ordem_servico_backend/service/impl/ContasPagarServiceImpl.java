@@ -62,7 +62,7 @@ public class ContasPagarServiceImpl implements ContasPagarService {
         modelContasPagar.setObservacao(modelContasPagarDTO.getObservacao());
         modelContasPagar.setValor(modelContasPagarDTO.getValor());
         modelContasPagar.setFormaPagamento(modelContasPagarDTO.getFormaPagamento());
-        modelContasPagar.setData_vencimento(modelContasPagarDTO.getData_vencimento());
+        modelContasPagar.setDataVencimento(modelContasPagarDTO.getDataVencimento());
         modelContasPagar.setStatusContas(modelContasPagarDTO.getStatusContas());
 
         return converteEntidadeEmResponse(contasPagarRepository.save(modelContasPagar));

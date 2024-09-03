@@ -28,7 +28,7 @@ public class ExceptionControllerAdvice {
     public ApiRestErrors handlerMethodNotValidException(MethodArgumentNotValidException methodArgumentNotValidException){
         List<String> errors =  methodArgumentNotValidException.getBindingResult().getAllErrors()
                 .stream().map(erro -> erro.getDefaultMessage())
-                .collect(Collectors.toList());
+                .toList();
 
         return new ApiRestErrors(errors);
     }

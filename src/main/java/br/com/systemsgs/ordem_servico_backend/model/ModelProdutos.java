@@ -28,14 +28,14 @@ public class ModelProdutos implements Serializable {
     private Integer quantidade;
 
     @Column(name = "quantidade_minima")
-    private Integer quantidade_minima;
+    private Integer quantidadeMinima;
 
     @Column(name = "preco_compra")
-    private BigDecimal preco_compra;
+    private BigDecimal precoCompra;
 
     @Column(name = "preco_venda")
-    private BigDecimal preco_venda;
+    private BigDecimal precoVenda;
 
     @Column(name = "codigo_barras", length = 30)
-    private String codigo_barras;
+    private String codigoBarras;
 }

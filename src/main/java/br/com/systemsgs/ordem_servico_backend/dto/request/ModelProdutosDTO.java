@@ -27,17 +27,17 @@ public class ModelProdutosDTO {
 
     @Positive(message = "{quantidade.minima.positiva}")
     @Min(value = 1,message = "{quantidade.minima}")
-    private Integer quantidade_minima;
+    private Integer quantidadeMinima;
 
     @Positive(message = "{preco.compra.valor.positivo}")
     @Min(value = 1, message = "{preco.compra.minimo}")
-    private BigDecimal preco_compra;
+    private BigDecimal precoCompra;
 
     @Positive(message = "{preco.venda.positivo}")
     @Min(value = 1, message = "{preco.venda.minimo}")
-    private BigDecimal preco_venda;
+    private BigDecimal precoVenda;
 
     @Min(value = 8, message = "{codigo.barras.minimo}")
-    private String codigo_barras;
+    private String codigoBarras;
 
 }

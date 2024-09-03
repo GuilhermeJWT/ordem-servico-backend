@@ -24,9 +24,9 @@ public class UtilProdutos {
 
     public void baixaEstoqueProdutos(ModelVendasDTO modelVendasDTO){
         var produtosVenda = produtoRepository.findAllById(modelVendasDTO.getItens().stream()
-                .map(idsProdutos -> idsProdutos.getId_produto()).collect(Collectors.toList()));
+                .map(idsProdutos -> idsProdutos.getIdProduto()).collect(Collectors.toList()));
         var quantidades = modelVendasDTO.getItens().stream()
-                .map(quantidadeProdutos -> quantidadeProdutos.getQuantidade()).collect(Collectors.toList());
+                .map(quantidadeProdutos -> quantidadeProdutos.getQuantidade()).toList();
 
         ListIterator<ModelProdutos> iterator = produtosVenda.listIterator();
         while (iterator.hasNext()) {
@@ -61,7 +61,7 @@ public class UtilProdutos {
             throw new RecursoNaoEncontradoException();
         }
 
-        return pesquisaProdutos.stream().map(p -> p.getDescricao()).collect(Collectors.toList());
+        return pesquisaProdutos.stream().map(p -> p.getDescricao()).toList();
     }
 
     public Optional<Integer> somaEstoqueAtualProdutos(){

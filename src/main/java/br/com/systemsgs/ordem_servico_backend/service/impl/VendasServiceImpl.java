@@ -19,7 +19,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CacheConfig(cacheNames = "vendas")
 @Service
@@ -50,7 +49,7 @@ public class VendasServiceImpl implements VendaService {
 
         var cliente = utilClientes.pesquisarClientePeloId(modelVendasDTO.getIdCliente());
         var tecnico = utilTecnicoResponsavel.pesquisarTecnicoPeloId(modelVendasDTO.getIdTecnicoResponsavel());
-        var ids = modelVendasDTO.getItens().stream().map(p -> p.getId_produto()).collect(Collectors.toList());
+        var ids = modelVendasDTO.getItens().stream().map(p -> p.getIdProduto()).toList();
         var produtos = utilProdutos.pesquisaListaProdutosPorIds(ids);
 
         setDadosVendas(modelVendasDTO, modelVendas, cliente, tecnico, modelItensVendas, produtos);
@@ -88,9 +87,9 @@ public class VendasServiceImpl implements VendaService {
         modelVendas.setTotalVenda(calculaTotalVenda(modelVendasDTO));
         modelVendas.setTotalItens(calculaTotalItens(modelVendasDTO));
         modelVendas.setItens(itensVenda(modelVendasDTO));
-        modelItensVendas.setProduto(produtos.stream().map(p -> p.getId()).collect(Collectors.toList()));
-        modelItensVendas.setQuantidade(produtos.stream().map(p -> p.getQuantidade()).collect(Collectors.toList()));
-        modelItensVendas.setValorProduto(produtos.stream().map(p -> p.getPreco_venda()).collect(Collectors.toList()));
+        modelItensVendas.setProduto(produtos.stream().map(p -> p.getId()).toList());
+        modelItensVendas.setQuantidade(produtos.stream().map(p -> p.getQuantidade()).toList());
+        modelItensVendas.setValorProduto(produtos.stream().map(p -> p.getPrecoVenda()).toList());
     }
 
     private BigDecimal calculaTotalVenda(ModelVendasDTO modelVendasDTO) {
@@ -104,14 +103,13 @@ public class VendasServiceImpl implements VendaService {
     }
 
     private List<ModelItensVendas> itensVenda(ModelVendasDTO modelVendasDTO){
-        var quantidade = modelVendasDTO.getItens().stream().map(q -> q.getQuantidade()).collect(Collectors.toList());
-        var valorProduto = modelVendasDTO.getItens().stream().map(v -> v.getValorProduto()).collect(Collectors.toList());
-        var produto = modelVendasDTO.getItens().stream().map(p -> p.getId_produto()).collect(Collectors.toList());
+        var quantidade = modelVendasDTO.getItens().stream().map(q -> q.getQuantidade()).toList();
+        var valorProduto = modelVendasDTO.getItens().stream().map(v -> v.getValorProduto()).toList();
+        var produto = modelVendasDTO.getItens().stream().map(p -> p.getIdProduto()).toList();
 
         List<Long> listaIds = produto;
-        List<ModelItensVendas> itensVendas = Arrays.asList(new ModelItensVendas(quantidade, valorProduto, listaIds));
 
-        return itensVendas;
+        return Arrays.asList(new ModelItensVendas(quantidade, valorProduto, listaIds));
     }
 
     private List<String> pegaDescricaoPedidos(ModelVendas modelVendas){

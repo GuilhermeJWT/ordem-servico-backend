@@ -42,7 +42,7 @@ public class OrdemServicoController {
     @GetMapping("/listar/v2/link")
     public CollectionModel<ModelOrdemServicoHateoas> listarOsComLink(){
         List<ModelOrdemServicoHateoas> listaOS = ordemServicoService.listarOS()
-                .stream().map(x -> mapper.map(x, ModelOrdemServicoHateoas.class)).collect(Collectors.toList());
+                .stream().map(x -> mapper.map(x, ModelOrdemServicoHateoas.class)).toList();
 
         for (ModelOrdemServicoHateoas modelOrdemServicoHateoas : listaOS) {
             Long osID = modelOrdemServicoHateoas.getId();

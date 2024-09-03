@@ -65,7 +65,7 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
 
         assertNotNull(response);
         assertEquals(dadosContasPagar().getId(), response.getId());
-        assertEquals(dadosContasPagar().getData_vencimento(), response.getData_vencimento());
+        assertEquals(dadosContasPagar().getDataVencimento(), response.getDataVencimento());
         assertEquals(dadosContasPagar().getValor(), response.getValor());
         assertEquals(dadosContasPagar().getObservacao(), response.getObservacao());
         assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getFormaPagamento());
@@ -103,7 +103,7 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
         assertThat(response.getContent().get(1)).isEqualTo(contasPagarResponse);
 
         assertEquals(dadosContasPagar().getId(), response.getContent().get(0).getId());
-        assertEquals(dadosContasPagar().getData_vencimento(), response.getContent().get(0).getData_vencimento());
+        assertEquals(dadosContasPagar().getDataVencimento(), response.getContent().get(0).getDataVencimento());
         assertEquals(dadosContasPagar().getValor(), response.getContent().get(0).getValor());
         assertEquals(dadosContasPagar().getObservacao(), response.getContent().get(0).getObservacao());
         assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getContent().get(0).getFormaPagamento());
@@ -124,7 +124,7 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
         assertEquals(ContasPagarResponse.class, response.get(0).getClass());
 
         assertEquals(dadosContasPagar().getId(), response.get(0).getId());
-        assertEquals(dadosContasPagar().getData_vencimento(), response.get(0).getData_vencimento());
+        assertEquals(dadosContasPagar().getDataVencimento(), response.get(0).getDataVencimento());
         assertEquals(dadosContasPagar().getValor(), response.get(0).getValor());
         assertEquals(dadosContasPagar().getObservacao(), response.get(0).getObservacao());
         assertEquals(dadosContasPagar().getFormaPagamento().name(), response.get(0).getFormaPagamento());
@@ -145,7 +145,7 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
 
         assertNotNull(response);
         assertEquals(dadosContasPagar().getId(), response.getId());
-        assertEquals(dadosContasPagar().getData_vencimento(), response.getData_vencimento());
+        assertEquals(dadosContasPagar().getDataVencimento(), response.getDataVencimento());
         assertEquals(dadosContasPagar().getValor(), response.getValor());
         assertEquals(dadosContasPagar().getObservacao(), response.getObservacao());
         assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getFormaPagamento());
@@ -176,7 +176,7 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
 
         assertNotNull(response);
         assertEquals(dadosContasPagar().getId(), response.getId());
-        assertEquals(dadosContasPagar().getData_vencimento(), response.getData_vencimento());
+        assertEquals(dadosContasPagar().getDataVencimento(), response.getDataVencimento());
         assertEquals(dadosContasPagar().getValor(), response.getValor());
         assertEquals(dadosContasPagar().getObservacao(), response.getObservacao());
         assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getFormaPagamento());
@@ -190,8 +190,8 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
     private void startContasPagar(){
         modelContasPagar = new ModelContasPagar(
                 dadosContasPagar().getId(),
-                dadosContasPagar().getData_vencimento(),
-                dadosContasPagar().getData_emissao(),
+                dadosContasPagar().getDataVencimento(),
+                dadosContasPagar().getDataEmissao(),
                 dadosContasPagar().getValor(),
                 dadosContasPagar().getObservacao(),
                 dadosContasPagar().getFormaPagamento(),
@@ -200,7 +200,7 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
         );
         modelContasPagarDTO = new ModelContasPagarDTO(
                 dadosContasPagar().getId(),
-                dadosContasPagar().getData_vencimento(),
+                dadosContasPagar().getDataVencimento(),
                 dadosContasPagar().getValor(),
                 dadosContasPagar().getObservacao(),
                 dadosContasPagar().getFormaPagamento(),
@@ -209,7 +209,7 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
         );
         contasPagarResponse = new ContasPagarResponse(
                 dadosContasPagar().getId(),
-                dadosContasPagar().getData_vencimento(),
+                dadosContasPagar().getDataVencimento(),
                 dadosContasPagar().getValor(),
                 dadosContasPagar().getObservacao(),
                 dadosContasPagar().getFormaPagamento().name(),

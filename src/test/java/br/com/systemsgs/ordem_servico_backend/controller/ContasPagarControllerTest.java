@@ -71,7 +71,7 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(ContasPagarResponse.class, response.getBody().get(0).getClass());
 
         assertEquals(dadosContasPagar().getId(), response.getBody().get(0).getId());
-        assertEquals(dadosContasPagar().getData_vencimento(), response.getBody().get(0).getData_vencimento());
+        assertEquals(dadosContasPagar().getDataVencimento(), response.getBody().get(0).getDataVencimento());
         assertEquals(dadosContasPagar().getValor(), response.getBody().get(0).getValor());
         assertEquals(dadosContasPagar().getObservacao(), response.getBody().get(0).getObservacao());
         assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getBody().get(0).getFormaPagamento());
@@ -95,7 +95,7 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(ContasPagarResponse.class, response.getBody().getClass());
 
         assertEquals(dadosContasPagar().getId(), response.getBody().getId());
-        assertEquals(dadosContasPagar().getData_vencimento(), response.getBody().getData_vencimento());
+        assertEquals(dadosContasPagar().getDataVencimento(), response.getBody().getDataVencimento());
         assertEquals(dadosContasPagar().getValor(), response.getBody().getValor());
         assertEquals(dadosContasPagar().getObservacao(), response.getBody().getObservacao());
         assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getBody().getFormaPagamento());
@@ -120,7 +120,7 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(ContasPagarResponse.class, response.getContent().get(0).getClass());
 
         assertEquals(dadosContasPagar().getId(), response.getContent().get(0).getId());
-        assertEquals(dadosContasPagar().getData_vencimento(), response.getContent().get(0).getData_vencimento());
+        assertEquals(dadosContasPagar().getDataVencimento(), response.getContent().get(0).getDataVencimento());
         assertEquals(dadosContasPagar().getValor(), response.getContent().get(0).getValor());
         assertEquals(dadosContasPagar().getObservacao(), response.getContent().get(0).getObservacao());
         assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getContent().get(0).getFormaPagamento());
@@ -183,7 +183,7 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(ContasPagarResponse.class, response.getBody().getClass());
 
         assertEquals(dadosContasPagar().getId(), response.getBody().getId());
-        assertEquals(dadosContasPagar().getData_vencimento(), response.getBody().getData_vencimento());
+        assertEquals(dadosContasPagar().getDataVencimento(), response.getBody().getDataVencimento());
         assertEquals(dadosContasPagar().getValor(), response.getBody().getValor());
         assertEquals(dadosContasPagar().getObservacao(), response.getBody().getObservacao());
         assertEquals(dadosContasPagar().getFormaPagamento().name(), response.getBody().getFormaPagamento());
@@ -207,7 +207,7 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
     private void startContasPagar(){
         modelContasPagarDTO = new ModelContasPagarDTO(
                 dadosContasPagar().getId(),
-                dadosContasPagar().getData_vencimento(),
+                dadosContasPagar().getDataVencimento(),
                 dadosContasPagar().getValor(),
                 dadosContasPagar().getObservacao(),
                 dadosContasPagar().getFormaPagamento(),
@@ -216,7 +216,7 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
         );
         contasPagarResponse = new ContasPagarResponse(
                 dadosContasPagar().getId(),
-                dadosContasPagar().getData_vencimento(),
+                dadosContasPagar().getDataVencimento(),
                 dadosContasPagar().getValor(),
                 dadosContasPagar().getObservacao(),
                 dadosContasPagar().getFormaPagamento().name(),

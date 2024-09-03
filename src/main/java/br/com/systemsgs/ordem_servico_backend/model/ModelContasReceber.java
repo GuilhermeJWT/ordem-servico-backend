@@ -33,13 +33,13 @@ public class ModelContasReceber implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
-    private Date data_vencimento;
+    private Date dataVencimento;
 
     @Column(name = "valor", nullable = false)
     private BigDecimal valor = BigDecimal.ZERO;
 
     @Column(name = "data_emissao")
-    private Date data_emissao = new Date();
+    private Date dataEmissao = new Date();
 
     @Column(name = "observacao", length = 250)
     private String observacao;

@@ -1,7 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.service;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasReceberDTO;
-import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasReceberResponse;
 import org.springframework.data.domain.Page;
 

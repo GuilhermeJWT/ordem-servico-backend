@@ -59,7 +59,7 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
     @DisplayName("Teste para Mockar os dados do Dashboard")
     @Test
     void retornaDadosDashboard() {
-        when(utilVendas.calculaTotalVendas()).thenReturn(dashboardResponse.getTotal_vendas());
+        when(utilVendas.calculaTotalVendas()).thenReturn(dashboardResponse.getTotalVendas());
         when(utilVendas.somaTotalItensVendidosTodoPeriodo()).thenReturn(dashboardResponse.getQuantidadeItensVendidosTodoPeriodo());
         when(utilClientes.somaQuantidadeClientesCadastrados()).thenReturn(dashboardResponse.getQuantidadeClientesCadastrados());
         when(utilProdutos.somaEstoqueAtualProdutos()).thenReturn(dashboardResponse.getQuantidadeProdutosEstoqueAtual());
@@ -73,7 +73,7 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
 
         DashboardResponse response = dashboardServiceImpl.retornaDadosDashboard();
 
-        assertEquals(dadosDashboard().getTotal_vendas(), response.getTotal_vendas());
+        assertEquals(dadosDashboard().getTotalVendas(), response.getTotalVendas());
         assertEquals(dadosDashboard().getQuantidadeItensVendidosTodoPeriodo(), response.getQuantidadeItensVendidosTodoPeriodo());
         assertEquals(dadosDashboard().getQuantidadeClientesCadastrados(), response.getQuantidadeClientesCadastrados());
         assertEquals(dadosDashboard().getQuantidadeProdutosEstoqueAtual(), response.getQuantidadeProdutosEstoqueAtual());
@@ -89,7 +89,7 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
     @DisplayName("Teste para Mockar os dados do Dashboard com valores Null - Zerados")
     @Test
     void retornaDadosDashboardZerados() {
-        when(utilVendas.calculaTotalVendas()).thenReturn(dashboardResponseZerado.getTotal_vendas());
+        when(utilVendas.calculaTotalVendas()).thenReturn(dashboardResponseZerado.getTotalVendas());
         when(utilVendas.somaTotalItensVendidosTodoPeriodo()).thenReturn(dashboardResponseZerado.getQuantidadeItensVendidosTodoPeriodo());
         when(utilClientes.somaQuantidadeClientesCadastrados()).thenReturn(dashboardResponseZerado.getQuantidadeClientesCadastrados());
         when(utilProdutos.somaEstoqueAtualProdutos()).thenReturn(dashboardResponseZerado.getQuantidadeProdutosEstoqueAtual());
@@ -103,7 +103,7 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
 
         DashboardResponse response = dashboardServiceImpl.retornaDadosDashboard();
 
-        assertEquals(dadosDashboardZerados().getTotal_vendas(), response.getTotal_vendas());
+        assertEquals(dadosDashboardZerados().getTotalVendas(), response.getTotalVendas());
         assertEquals(dadosDashboardZerados().getQuantidadeItensVendidosTodoPeriodo(), response.getQuantidadeItensVendidosTodoPeriodo());
         assertEquals(dadosDashboardZerados().getQuantidadeClientesCadastrados(), response.getQuantidadeClientesCadastrados());
         assertEquals(dadosDashboardZerados().getQuantidadeProdutosEstoqueAtual(), response.getQuantidadeProdutosEstoqueAtual());
@@ -118,7 +118,7 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
 
     private void startDashboard(){
         dashboardResponse = new DashboardResponse(
-                dadosDashboard().getTotal_vendas(),
+                dadosDashboard().getTotalVendas(),
                 dadosDashboard().getQuantidadeItensVendidosTodoPeriodo(),
                 dadosDashboard().getQuantidadeClientesCadastrados(),
                 dadosDashboard().getQuantidadeProdutosEstoqueAtual(),
@@ -131,7 +131,7 @@ class DashboardServiceImplTest extends ConfigDadosEstaticosEntidades {
                 dadosDashboard().getQuantidadeContasReceberVencidas()
         );
         dashboardResponseZerado = new DashboardResponse(
-                dadosDashboardZerados().getTotal_vendas(),
+                dadosDashboardZerados().getTotalVendas(),
                 dadosDashboardZerados().getQuantidadeItensVendidosTodoPeriodo(),
                 dadosDashboardZerados().getQuantidadeClientesCadastrados(),
                 dadosDashboardZerados().getQuantidadeProdutosEstoqueAtual(),

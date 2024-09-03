@@ -95,7 +95,7 @@ class UtilTecnicoResponsavelTest extends ConfigDadosEstaticosEntidades {
 
     @DisplayName("Teste lançar exception caso não existe um Técnico para validação")
     @Test
-    public void testValidaTecnicoExistenteNotFound() {
+     void testValidaTecnicoExistenteNotFound() {
         when(tecnicoRepository.findById(modelTecnicoResponsavelOptional.get().getId())).thenReturn(Optional.empty());
 
         assertThrows(TecnicoResponsavelNaoEncontradoException.class, () -> {
@@ -114,10 +114,10 @@ class UtilTecnicoResponsavelTest extends ConfigDadosEstaticosEntidades {
                 dadosOrdemServico().getId(),
                 dadosOrdemServico().getDefeito(),
                 dadosOrdemServico().getDescricao(),
-                dadosOrdemServico().getLaudo_tecnico(),
+                dadosOrdemServico().getLaudoTecnico(),
                 dadosOrdemServico().getStatus(),
-                dadosOrdemServico().getData_inicial(),
-                dadosOrdemServico().getData_final(),
+                dadosOrdemServico().getDataInicial(),
+                dadosOrdemServico().getDataFinal(),
                 dadosOrdemServico().getCliente(),
                 dadosOrdemServico().getTecnicoResponsavel());
     }

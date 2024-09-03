@@ -71,10 +71,10 @@ class ProdutoControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosProdutos().getId(), response.getBody().get(0).getId());
         assertEquals(dadosProdutos().getDescricao(), response.getBody().get(0).getDescricao());
         assertEquals(dadosProdutos().getQuantidade(), response.getBody().get(0).getQuantidade());
-        assertEquals(dadosProdutos().getQuantidade_minima(), response.getBody().get(0).getQuantidade_minima());
-        assertEquals(dadosProdutos().getPreco_compra(), response.getBody().get(0).getPreco_compra());
-        assertEquals(dadosProdutos().getPreco_venda(), response.getBody().get(0).getPreco_venda());
-        assertEquals(dadosProdutos().getCodigo_barras(), response.getBody().get(0).getCodigo_barras());
+        assertEquals(dadosProdutos().getQuantidadeMinima(), response.getBody().get(0).getQuantidadeMinima());
+        assertEquals(dadosProdutos().getPrecoCompra(), response.getBody().get(0).getPrecoCompra());
+        assertEquals(dadosProdutos().getPrecoVenda(), response.getBody().get(0).getPrecoVenda());
+        assertEquals(dadosProdutos().getCodigoBarras(), response.getBody().get(0).getCodigoBarras());
     }
 
     @DisplayName("Pesquisa um Produto pelo ID e testa o Retorno do Body - retorna 200")
@@ -95,10 +95,10 @@ class ProdutoControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosProdutos().getId(), response.getBody().getId());
         assertEquals(dadosProdutos().getDescricao(), response.getBody().getDescricao());
         assertEquals(dadosProdutos().getQuantidade(), response.getBody().getQuantidade());
-        assertEquals(dadosProdutos().getQuantidade_minima(), response.getBody().getQuantidade_minima());
-        assertEquals(dadosProdutos().getPreco_compra(), response.getBody().getPreco_compra());
-        assertEquals(dadosProdutos().getPreco_venda(), response.getBody().getPreco_venda());
-        assertEquals(dadosProdutos().getCodigo_barras(), response.getBody().getCodigo_barras());
+        assertEquals(dadosProdutos().getQuantidadeMinima(), response.getBody().getQuantidadeMinima());
+        assertEquals(dadosProdutos().getPrecoCompra(), response.getBody().getPrecoCompra());
+        assertEquals(dadosProdutos().getPrecoVenda(), response.getBody().getPrecoVenda());
+        assertEquals(dadosProdutos().getCodigoBarras(), response.getBody().getCodigoBarras());
     }
 
     @DisplayName("Pesquisa um Produto inexistente e retorna 404")
@@ -145,10 +145,10 @@ class ProdutoControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosProdutos().getId(), response.getBody().getId());
         assertEquals(dadosProdutos().getDescricao(), response.getBody().getDescricao());
         assertEquals(dadosProdutos().getQuantidade(), response.getBody().getQuantidade());
-        assertEquals(dadosProdutos().getQuantidade_minima(), response.getBody().getQuantidade_minima());
-        assertEquals(dadosProdutos().getPreco_compra(), response.getBody().getPreco_compra());
-        assertEquals(dadosProdutos().getPreco_venda(), response.getBody().getPreco_venda());
-        assertEquals(dadosProdutos().getCodigo_barras(), response.getBody().getCodigo_barras());
+        assertEquals(dadosProdutos().getQuantidadeMinima(), response.getBody().getQuantidadeMinima());
+        assertEquals(dadosProdutos().getPrecoCompra(), response.getBody().getPrecoCompra());
+        assertEquals(dadosProdutos().getPrecoVenda(), response.getBody().getPrecoVenda());
+        assertEquals(dadosProdutos().getCodigoBarras(), response.getBody().getCodigoBarras());
     }
 
     @DisplayName("Deleta um Produto e retorna 204")
@@ -170,19 +170,19 @@ class ProdutoControllerTest extends ConfigDadosEstaticosEntidades{
                 dadosProdutos().getId(),
                 dadosProdutos().getDescricao(),
                 dadosProdutos().getQuantidade(),
-                dadosProdutos().getQuantidade_minima(),
-                dadosProdutos().getPreco_compra(),
-                dadosProdutos().getPreco_venda(),
-                dadosProdutos().getCodigo_barras()
+                dadosProdutos().getQuantidadeMinima(),
+                dadosProdutos().getPrecoCompra(),
+                dadosProdutos().getPrecoVenda(),
+                dadosProdutos().getCodigoBarras()
         );
         modelProdutosDTO = new ModelProdutosDTO(
                 dadosProdutos().getId(),
                 dadosProdutos().getDescricao(),
                 dadosProdutos().getQuantidade(),
-                dadosProdutos().getQuantidade_minima(),
-                dadosProdutos().getPreco_compra(),
-                dadosProdutos().getPreco_venda(),
-                dadosProdutos().getCodigo_barras()
+                dadosProdutos().getQuantidadeMinima(),
+                dadosProdutos().getPrecoCompra(),
+                dadosProdutos().getPrecoVenda(),
+                dadosProdutos().getCodigoBarras()
         );
     }
 }

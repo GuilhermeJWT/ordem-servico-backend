@@ -64,10 +64,10 @@ class ProdutoServiceImplTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosProdutos().getId(), response.getId());
         assertEquals(dadosProdutos().getDescricao(), response.getDescricao());
         assertEquals(dadosProdutos().getQuantidade(), response.getQuantidade());
-        assertEquals(dadosProdutos().getQuantidade_minima(), response.getQuantidade_minima());
-        assertEquals(dadosProdutos().getPreco_compra(), response.getPreco_compra());
-        assertEquals(dadosProdutos().getPreco_venda(), response.getPreco_venda());
-        assertEquals(dadosProdutos().getCodigo_barras(), response.getCodigo_barras());
+        assertEquals(dadosProdutos().getQuantidadeMinima(), response.getQuantidadeMinima());
+        assertEquals(dadosProdutos().getPrecoCompra(), response.getPrecoCompra());
+        assertEquals(dadosProdutos().getPrecoVenda(), response.getPrecoVenda());
+        assertEquals(dadosProdutos().getCodigoBarras(), response.getCodigoBarras());
     }
 
     @DisplayName("Pesquisa um Produto e retorna 404")
@@ -97,10 +97,10 @@ class ProdutoServiceImplTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosProdutos().getId(), response.get(0).getId());
         assertEquals(dadosProdutos().getDescricao(), response.get(0).getDescricao());
         assertEquals(dadosProdutos().getQuantidade(), response.get(0).getQuantidade());
-        assertEquals(dadosProdutos().getQuantidade_minima(), response.get(0).getQuantidade_minima());
-        assertEquals(dadosProdutos().getPreco_compra(), response.get(0).getPreco_compra());
-        assertEquals(dadosProdutos().getPreco_venda(), response.get(0).getPreco_venda());
-        assertEquals(dadosProdutos().getCodigo_barras(), response.get(0).getCodigo_barras());
+        assertEquals(dadosProdutos().getQuantidadeMinima(), response.get(0).getQuantidadeMinima());
+        assertEquals(dadosProdutos().getPrecoCompra(), response.get(0).getPrecoCompra());
+        assertEquals(dadosProdutos().getPrecoVenda(), response.get(0).getPrecoVenda());
+        assertEquals(dadosProdutos().getCodigoBarras(), response.get(0).getCodigoBarras());
     }
 
     @DisplayName("Deve salvar um Produto")
@@ -114,10 +114,10 @@ class ProdutoServiceImplTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosProdutos().getId(), response.getId());
         assertEquals(dadosProdutos().getDescricao(), response.getDescricao());
         assertEquals(dadosProdutos().getQuantidade(), response.getQuantidade());
-        assertEquals(dadosProdutos().getQuantidade_minima(), response.getQuantidade_minima());
-        assertEquals(dadosProdutos().getPreco_compra(), response.getPreco_compra());
-        assertEquals(dadosProdutos().getPreco_venda(), response.getPreco_venda());
-        assertEquals(dadosProdutos().getCodigo_barras(), response.getCodigo_barras());
+        assertEquals(dadosProdutos().getQuantidadeMinima(), response.getQuantidadeMinima());
+        assertEquals(dadosProdutos().getPrecoCompra(), response.getPrecoCompra());
+        assertEquals(dadosProdutos().getPrecoVenda(), response.getPrecoVenda());
+        assertEquals(dadosProdutos().getCodigoBarras(), response.getCodigoBarras());
     }
 
     @DisplayName("Deleta um Produto com Sucesso")
@@ -141,10 +141,10 @@ class ProdutoServiceImplTest extends ConfigDadosEstaticosEntidades{
         assertEquals(dadosProdutos().getId(), response.getId());
         assertEquals(dadosProdutos().getDescricao(), response.getDescricao());
         assertEquals(dadosProdutos().getQuantidade(), response.getQuantidade());
-        assertEquals(dadosProdutos().getQuantidade_minima(), response.getQuantidade_minima());
-        assertEquals(dadosProdutos().getPreco_compra(), response.getPreco_compra());
-        assertEquals(dadosProdutos().getPreco_venda(), response.getPreco_venda());
-        assertEquals(dadosProdutos().getCodigo_barras(), response.getCodigo_barras());
+        assertEquals(dadosProdutos().getQuantidadeMinima(), response.getQuantidadeMinima());
+        assertEquals(dadosProdutos().getPrecoCompra(), response.getPrecoCompra());
+        assertEquals(dadosProdutos().getPrecoVenda(), response.getPrecoVenda());
+        assertEquals(dadosProdutos().getCodigoBarras(), response.getCodigoBarras());
     }
 
     private void startProduto(){
@@ -152,28 +152,28 @@ class ProdutoServiceImplTest extends ConfigDadosEstaticosEntidades{
                 dadosProdutos().getId(),
                 dadosProdutos().getDescricao(),
                 dadosProdutos().getQuantidade(),
-                dadosProdutos().getQuantidade_minima(),
-                dadosProdutos().getPreco_compra(),
-                dadosProdutos().getPreco_venda(),
-                dadosProdutos().getCodigo_barras()
+                dadosProdutos().getQuantidadeMinima(),
+                dadosProdutos().getPrecoCompra(),
+                dadosProdutos().getPrecoVenda(),
+                dadosProdutos().getCodigoBarras()
         );
         modelProdutosDTO = new ModelProdutosDTO(
                 dadosProdutos().getId(),
                 dadosProdutos().getDescricao(),
                 dadosProdutos().getQuantidade(),
-                dadosProdutos().getQuantidade_minima(),
-                dadosProdutos().getPreco_compra(),
-                dadosProdutos().getPreco_venda(),
-                dadosProdutos().getCodigo_barras()
+                dadosProdutos().getQuantidadeMinima(),
+                dadosProdutos().getPrecoCompra(),
+                dadosProdutos().getPrecoVenda(),
+                dadosProdutos().getCodigoBarras()
         );
         modelProdutosOptional = Optional.of(new ModelProdutos(
                 dadosProdutos().getId(),
                 dadosProdutos().getDescricao(),
                 dadosProdutos().getQuantidade(),
-                dadosProdutos().getQuantidade_minima(),
-                dadosProdutos().getPreco_compra(),
-                dadosProdutos().getPreco_venda(),
-                dadosProdutos().getCodigo_barras()
+                dadosProdutos().getQuantidadeMinima(),
+                dadosProdutos().getPrecoCompra(),
+                dadosProdutos().getPrecoVenda(),
+                dadosProdutos().getCodigoBarras()
         ));
     }
 }

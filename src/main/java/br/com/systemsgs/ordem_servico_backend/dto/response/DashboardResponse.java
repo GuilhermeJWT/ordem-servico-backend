@@ -16,7 +16,7 @@ import java.util.Optional;
 public class DashboardResponse {
 
     @JsonProperty("total_vendas")
-    private Optional<BigDecimal> total_vendas;
+    private Optional<BigDecimal> totalVendas;
 
     @JsonProperty("quantidade_itens_vendidos_todo_periodo")
     private Optional<Integer> quantidadeItensVendidosTodoPeriodo;

@@ -28,16 +28,16 @@ public class ModelOrdemServicoHateoas extends RepresentationModel<ModelOrdemServ
     private String descricao;
 
     @JsonProperty("laudo_tecnico")
-    private String laudo_tecnico;
+    private String laudoTecnico;
 
     @JsonProperty("status_os")
     private Status status;
 
     @JsonProperty("data_inicial")
-    private Date data_inicial;
+    private Date dataInicial;
 
     @JsonProperty("data_final")
-    private Date data_final;
+    private Date dataFinal;
 
     @JsonProperty("cliente")
     private ModelClientes cliente;

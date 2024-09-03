@@ -65,7 +65,7 @@ class ContasReceberControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(ContasReceberResponse.class, response.getBody().get(0).getClass());
 
         assertEquals(dadosContasReceber().getId(), response.getBody().get(0).getId());
-        assertEquals(dadosContasReceber().getData_vencimento(), response.getBody().get(0).getData_vencimento());
+        assertEquals(dadosContasReceber().getDataVencimento(), response.getBody().get(0).getDataVencimento());
         assertEquals(dadosContasReceber().getValor(), response.getBody().get(0).getValor());
         assertEquals(dadosContasReceber().getObservacao(), response.getBody().get(0).getObservacao());
         assertEquals(dadosContasReceber().getFormaPagamento().name(), response.getBody().get(0).getFormaPagamento());
@@ -90,7 +90,7 @@ class ContasReceberControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(ContasReceberResponse.class, response.getContent().get(0).getClass());
 
         assertEquals(dadosContasReceber().getId(), response.getContent().get(0).getId());
-        assertEquals(dadosContasReceber().getData_vencimento(), response.getContent().get(0).getData_vencimento());
+        assertEquals(dadosContasReceber().getDataVencimento(), response.getContent().get(0).getDataVencimento());
         assertEquals(dadosContasReceber().getValor(), response.getContent().get(0).getValor());
         assertEquals(dadosContasReceber().getObservacao(), response.getContent().get(0).getObservacao());
         assertEquals(dadosContasReceber().getFormaPagamento().name(), response.getContent().get(0).getFormaPagamento());
@@ -126,7 +126,7 @@ class ContasReceberControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(ContasReceberResponse.class, response.getBody().getClass());
 
         assertEquals(dadosContasReceber().getId(), response.getBody().getId());
-        assertEquals(dadosContasReceber().getData_vencimento(), response.getBody().getData_vencimento());
+        assertEquals(dadosContasReceber().getDataVencimento(), response.getBody().getDataVencimento());
         assertEquals(dadosContasReceber().getValor(), response.getBody().getValor());
         assertEquals(dadosContasReceber().getObservacao(), response.getBody().getObservacao());
         assertEquals(dadosContasReceber().getFormaPagamento().name(), response.getBody().getFormaPagamento());
@@ -178,7 +178,7 @@ class ContasReceberControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(ContasReceberResponse.class, response.getBody().getClass());
 
         assertEquals(dadosContasReceber().getId(), response.getBody().getId());
-        assertEquals(dadosContasReceber().getData_vencimento(), response.getBody().getData_vencimento());
+        assertEquals(dadosContasReceber().getDataVencimento(), response.getBody().getDataVencimento());
         assertEquals(dadosContasReceber().getValor(), response.getBody().getValor());
         assertEquals(dadosContasReceber().getObservacao(), response.getBody().getObservacao());
         assertEquals(dadosContasReceber().getFormaPagamento().name(), response.getBody().getFormaPagamento());
@@ -202,7 +202,7 @@ class ContasReceberControllerTest extends ConfigDadosEstaticosEntidades {
     private void startContasReceber(){
         modelContasReceberDTO = new ModelContasReceberDTO(
             dadosContasReceber().getId(),
-            dadosContasReceber().getData_vencimento(),
+            dadosContasReceber().getDataVencimento(),
             dadosContasReceber().getValor(),
             dadosContasReceber().getObservacao(),
             dadosContasReceber().getFormaPagamento(),
@@ -211,7 +211,7 @@ class ContasReceberControllerTest extends ConfigDadosEstaticosEntidades {
         );
         contasReceberResponse = new ContasReceberResponse(
             dadosContasReceber().getId(),
-            dadosContasReceber().getData_vencimento(),
+            dadosContasReceber().getDataVencimento(),
             dadosContasReceber().getValor(),
             dadosContasReceber().getObservacao(),
             dadosContasReceber().getFormaPagamento().name(),

@@ -131,7 +131,7 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
         assertNotNull(response);
 
         assertEquals(dadosContasReceber().getId(), response.getId());
-        assertEquals(dadosContasReceber().getData_vencimento(), response.getData_vencimento());
+        assertEquals(dadosContasReceber().getDataVencimento(), response.getDataVencimento());
         assertEquals(dadosContasReceber().getValor(), response.getValor());
         assertEquals(dadosContasReceber().getObservacao(), response.getObservacao());
         assertEquals(dadosContasReceber().getFormaPagamento().name(), response.getFormaPagamento());
@@ -156,7 +156,7 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
         assertNotNull(response);
 
         assertEquals(dadosContasReceber().getId(), response.getId());
-        assertEquals(dadosContasReceber().getData_vencimento(), response.getData_vencimento());
+        assertEquals(dadosContasReceber().getDataVencimento(), response.getDataVencimento());
         assertEquals(dadosContasReceber().getValor(), response.getValor());
         assertEquals(dadosContasReceber().getObservacao(), response.getObservacao());
         assertEquals(dadosContasReceber().getFormaPagamento().name(), response.getFormaPagamento());
@@ -181,9 +181,9 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
     private void startContasReceber(){
         modelContasReceber = new ModelContasReceber(
                 dadosContasReceber().getId(),
-                dadosContasReceber().getData_vencimento(),
+                dadosContasReceber().getDataVencimento(),
                 dadosContasReceber().getValor(),
-                dadosContasReceber().getData_emissao(),
+                dadosContasReceber().getDataEmissao(),
                 dadosContasReceber().getObservacao(),
                 dadosContasReceber().getFormaPagamento(),
                 dadosContasReceber().getStatusContasReceber(),
@@ -191,7 +191,7 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
         );
         modelContasReceberDTO = new ModelContasReceberDTO(
                 dadosContasReceber().getId(),
-                dadosContasReceber().getData_vencimento(),
+                dadosContasReceber().getDataVencimento(),
                 dadosContasReceber().getValor(),
                 dadosContasReceber().getObservacao(),
                 dadosContasReceber().getFormaPagamento(),
@@ -200,7 +200,7 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
         );
         contasReceberResponse = new ContasReceberResponse(
                 dadosContasReceber().getId(),
-                dadosContasReceber().getData_vencimento(),
+                dadosContasReceber().getDataVencimento(),
                 dadosContasReceber().getValor(),
                 dadosContasReceber().getObservacao(),
                 dadosContasReceber().getFormaPagamento().name(),
@@ -209,9 +209,9 @@ class ContasReceberServiceImplTest extends ConfigDadosEstaticosEntidades {
         );
         modelContasReceberOptional = Optional.of(new ModelContasReceber(
                 dadosContasReceber().getId(),
-                dadosContasReceber().getData_vencimento(),
+                dadosContasReceber().getDataVencimento(),
                 dadosContasReceber().getValor(),
-                dadosContasReceber().getData_emissao(),
+                dadosContasReceber().getDataEmissao(),
                 dadosContasReceber().getObservacao(),
                 dadosContasReceber().getFormaPagamento(),
                 dadosContasReceber().getStatusContasReceber(),

@@ -25,6 +25,6 @@ public class ModelItensVendasDTO {
 
     @NotNull(message = "{produto.obrigatorio")
     @JsonProperty("id_produto")
-    private Long id_produto;
+    private Long idProduto;
 
 }

@@ -58,7 +58,7 @@ public class ContasReceberServiceImpl implements ContasReceberService {
 
         var cliente = utilClientes.pesquisarClientePeloId(modelContasReceberDTO.getCodigoCliente());
 
-        modelContasReceber.setData_vencimento(modelContasReceberDTO.getData_vencimento());
+        modelContasReceber.setDataVencimento(modelContasReceberDTO.getDataVencimento());
         modelContasReceber.setValor(modelContasReceberDTO.getValor());
         modelContasReceber.setObservacao(modelContasReceberDTO.getObservacao());
         modelContasReceber.setFormaPagamento(modelContasReceberDTO.getFormaPagamento());

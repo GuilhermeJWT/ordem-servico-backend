@@ -31,7 +31,7 @@ public class ModelOrdemServico implements Serializable{
     private String descricao;
 
     @Column(name = "laudo_tecnico", length = 250)
-    private String laudo_tecnico;
+    private String laudoTecnico;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 30)
@@ -41,13 +41,13 @@ public class ModelOrdemServico implements Serializable{
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
     @Column(name = "data_inicial")
-    private Date data_inicial;
+    private Date dataInicial;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "dd/MM/yyyy")
     @Column(name = "data_final")
-    private Date data_final;
+    private Date dataFinal;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
