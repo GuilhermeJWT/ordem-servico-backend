@@ -10,7 +10,7 @@
 </ol>
 <H2>Tecnologias e ferramentas envolvidas no Projeto</h2>
 <ol>
-  <li>Java 17 - Spring Boot 3 - Porta 8081.</li>
+  <li>Java 17 - Spring Boot 3.</li>
   <li>Pipeline CI/CD - Jenkins.</li>
   <li>Qualidade do Código - SonarQube.</li>
   <li>Cobertura de Testes - Junit/Mockito - 161 Testes.</li>
@@ -19,6 +19,19 @@
   <li>Banco de Dados - PostgreSql.</li>
   <li>Migrations - Flyway.</li>
 </ol>
+<H2>Passos para rodar o projeto</H2>
+1º Clone o projeto no seu diretório local:
+
+```
+git clone git@github.com:GuilhermeJWT/ordem-servico-backend.git
+```
+
+2º Execute o projeto na sua IDE preferida, apenas configure um banco de dados para testar a aplicação, ou se preferir pode executar o docker compose que tudo já será configurado:
+
+```
+docker compose up -d
+```
+
 <H2>Pipeline CI/CD - Jenkins</h2>
 <p>No diretório raiz do projeto, possui o arquivo: <b>Jenkinsfile</b>, contendo todos os Stages da Pipeline.</p>
 <img src="https://github.com/user-attachments/assets/ec6c3aca-8d97-4573-8c9f-b7914212811d">
