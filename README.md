@@ -31,20 +31,21 @@ git clone git@github.com:GuilhermeJWT/ordem-servico-backend.git
 ```
 docker compose up -d
 ```
-3º Acessar a documentação do Swagger:
-
-```
-http://localhost:8085/swagger-ui/index.html#/
-```
-4º Execute o Maven:
+3º Execute o Maven:
 ```
 mvn clean install
 ```
 
-5º No diretório target/ execute o seguinte comando para executar o ambiente de <strong>dev</strong>:
+4º No diretório target/ execute o seguinte comando para executar o ambiente de <strong>dev</strong>:
 
 ```
 java -jar ordem-servico-backend.jar --spring.profiles.active=dev
+```
+
+5º Acessar a documentação do Swagger:
+
+```
+http://localhost:8085/swagger-ui/index.html#/
 ```
 Caso você queira testar os envios de E-mails de Contas a Pagar e Receber, você precisa criar uma senha no <a href="https://myaccount.google.com/u/0/signinoptions/twosv?pli=1&rapt=AEjHL4NTauyBmX88fhYXcX6aXS7sf7dIgXQsp6wsJzCQo-IeI8wv5jFkmG1nYJJumpBcuG9XmCB-EfS6txHP7deN4WrR0YjjjJ5i-BiIIws4mxHDD1_INwg" target="_blank">Google Account</a>, e alterar no <strong>application.properties.dev:</strong>
 
