@@ -1,5 +1,5 @@
 <H1>Ordem Serviço Backend</h1>
-<p>Desenvolvimento de toda a parte de regra de negócio do Sistema para uma Assistência Técnica, a parte visual será desenvolvida por um colega, todo o projeto será implantado para um cliente, foquei em todas as partes, desde o desenvolvimento até a implantação do projeto no servidor VPS e futuramente na AWS EC2 + RDS, o projeto está quase finalizado, contendo 39 endpoints para o estabelecimento, conforme foi solicitado pelo cliente, foquei muito nos testes para garantir a qualidade e manutenção do código futuramente.</p>
+<p>Desenvolvimento de toda a parte de regra de negócio do Sistema para uma Assistência Técnica. <br/><br/>A parte visual será desenvolvida por um colega, todo o projeto será implantado para um cliente, foquei em todas as partes, desde o desenvolvimento até a implantação do projeto no servidor VPS e futuramente na AWS EC2 + RDS, o projeto está quase finalizado, contendo 39 endpoints para o estabelecimento, conforme foi solicitado pelo cliente, foquei muito nos testes para garantir a qualidade e manutenção do código futuramente.</p>
 <H2>Funcionalidades e necessidades do projeto:</H2>
 <ol>
   <li>Realizar Vendas dos produtos da Assistência Técnica.</li>
@@ -30,6 +30,11 @@ git clone git@github.com:GuilhermeJWT/ordem-servico-backend.git
 
 ```
 docker compose up -d
+```
+3º Acessar a documentação Do Swagger:
+
+```
+http://localhost:8085/swagger-ui/index.html#/
 ```
 
 <H2>Pipeline CI/CD - Jenkins</h2>
