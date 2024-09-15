@@ -13,17 +13,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static br.com.systemsgs.ordem_servico_backend.config.GlobalApplicationConfiguration.ROTAS_PUBLICAS;
+
 @Configuration
 @EnableWebSecurity
 public class EnableWebSecurityConfiguration {
-
-    public static final String[] ROTAS_PUBLICAS = {
-            "/api/usuarios/v1/salvar",
-            "/api/usuarios/v1/login",
-            "/swagger-ui/**",
-            "/v3/api-docs/**",
-            "/swagger-ui.html"
-    };
 
     private final UserAuthenticationFilter userAuthenticationFilter;
 

@@ -31,6 +31,11 @@ public class ConfigDadosEstaticosEntidades {
     @MockBean
     private JwtTokenService jwtTokenService;
 
+    protected static final String TOKEN_TEST_INVALID = "ehbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+                                                "eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0" +
+                                                "IjoxNzI2NDAzMTQ4LCJleHAiOjE3MjY0MTAzNDgsInN1YiI6Imd1aXJvb" +
+                                                "WFubm9AZ21haWwuY29tIn0.0qe4sqwkfdQBhAv9NbB4DMzgxt";
+
     public List<String> mensagemErro(){
         List<String> msgErro = new ArrayList<>();
 
