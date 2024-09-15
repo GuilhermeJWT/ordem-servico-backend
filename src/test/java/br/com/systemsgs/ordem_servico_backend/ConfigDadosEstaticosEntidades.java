@@ -8,7 +8,11 @@ import br.com.systemsgs.ordem_servico_backend.enums.Status;
 import br.com.systemsgs.ordem_servico_backend.enums.StatusContas;
 import br.com.systemsgs.ordem_servico_backend.enums.TipoPessoa;
 import br.com.systemsgs.ordem_servico_backend.model.*;
+import br.com.systemsgs.ordem_servico_backend.security.JwtTokenService;
+import br.com.systemsgs.ordem_servico_backend.security.UserAuthenticationFilter;
 import lombok.Getter;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
@@ -18,7 +22,14 @@ import java.util.*;
 
 @ActiveProfiles(value = "test")
 @Getter
+@TestConfiguration
 public class ConfigDadosEstaticosEntidades {
+
+    @MockBean
+    private UserAuthenticationFilter userAuthenticationFilter;
+
+    @MockBean
+    private JwtTokenService jwtTokenService;
 
     public List<String> mensagemErro(){
         List<String> msgErro = new ArrayList<>();
