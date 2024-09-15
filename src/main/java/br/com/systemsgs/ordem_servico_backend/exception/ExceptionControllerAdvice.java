@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
@@ -63,6 +62,12 @@ public class ExceptionControllerAdvice {
         return new ApiRestErrors(new FornecedorNaoEncontradoException().getMessage());
     }
 
+    @ExceptionHandler(UsuarioNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiRestErrors usuarioNaoEncontradoException(){
+        return new ApiRestErrors(new UsuarioNaoEncontradoException().getMessage());
+    }
+
     @ExceptionHandler(RecursoNaoEncontradoException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiRestErrors recursoNaoEncontradoException(RecursoNaoEncontradoException recursoNaoEncontradoException){
@@ -97,5 +102,11 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiRestErrors emailDuplicadoException(EmailDuplicadoException emailDuplicadoException){
         return new ApiRestErrors(emailDuplicadoException.getMessage());
+    }
+
+    @ExceptionHandler(TokenInexistenteException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiRestErrors tokenInexistenteException(TokenInexistenteException tokenInexistenteException){
+        return new ApiRestErrors(tokenInexistenteException.getMessage());
     }
 }
