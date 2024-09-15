@@ -1,0 +1,1 @@
+alter table if exists usuarios_roles add constraint FKdw2n3hm82xua8ajmsmqouxkkl foreign key (user_id) references tbl_usuarios

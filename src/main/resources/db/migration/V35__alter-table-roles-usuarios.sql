@@ -1,0 +1,1 @@
+alter table if exists usuarios_roles add constraint FKj6m8fwv7oqv74fcehir1a9ffy foreign key (role_id) references roles
