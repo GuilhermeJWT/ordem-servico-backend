@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +8,12 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
-public class MessagesValidationConfiguration {
+public class GlobalApplicationConfiguration {
+
+    @Bean
+    public ModelMapper mapper(){
+        return new ModelMapper();
+    }
 
     @Bean
     public MessageSource messageSource() {
