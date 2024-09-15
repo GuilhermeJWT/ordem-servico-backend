@@ -20,18 +20,6 @@ import java.util.List;
 @Service
 public class UsuarioService {
 
-    /*@Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtTokenService jwtTokenService;
-
-    @Autowired
-    private EnableWebSecurityConfiguration enableWebSecurityConfiguration;*/
-
     private final UsuarioRepository usuarioRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenService jwtTokenService;
