@@ -11,6 +11,7 @@
 <H2>Tecnologias e ferramentas envolvidas no Projeto</h2>
 <ol>
   <li>Java 17 - Spring Boot 3.</li>
+  <li>Spring Security + Token JWT</li>
   <li>Pipeline CI/CD - Jenkins.</li>
   <li>Qualidade do Código - SonarQube.</li>
   <li>Cobertura de Testes - Junit/Mockito - 161 Testes.</li>
