@@ -6,6 +6,7 @@ import br.com.systemsgs.ordem_servico_backend.repository.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -35,6 +36,7 @@ class UserAuthenticationFilterTest extends ConfigDadosEstaticosEntidades {
         MockitoAnnotations.openMocks(this);
     }
 
+    @DisplayName("Teste para retornar Token Inexistente")
     @Test
     public void testDoFilterInternalTokenInexistente() throws Exception {
         HttpServletRequest request = mock(HttpServletRequest.class);
@@ -50,6 +52,7 @@ class UserAuthenticationFilterTest extends ConfigDadosEstaticosEntidades {
         verify(filterChain, never()).doFilter(any(), any());
     }
 
+    @DisplayName("Teste para retornar Token Inexistente porém Valido - Do Filter")
     @Test
     public void testDoFilterInternalTokenInexistentePorTokenInvalido() throws Exception {
         HttpServletRequest request = mock(HttpServletRequest.class);
