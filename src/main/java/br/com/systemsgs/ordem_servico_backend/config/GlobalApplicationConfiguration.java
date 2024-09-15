@@ -10,6 +10,15 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @Configuration
 public class GlobalApplicationConfiguration {
 
+    public static final String[] ROTAS_PUBLICAS = {
+            "/api/usuarios/v1/salvar",
+            "/api/usuarios/v1/login",
+            "/api/health/check",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-ui.html"
+    };
+
     @Bean
     public ModelMapper mapper(){
         return new ModelMapper();

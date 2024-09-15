@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static br.com.systemsgs.ordem_servico_backend.security.EnableWebSecurityConfiguration.ROTAS_PUBLICAS;
+import static br.com.systemsgs.ordem_servico_backend.config.GlobalApplicationConfiguration.ROTAS_PUBLICAS;
 
 @Component
 public class UserAuthenticationFilter extends OncePerRequestFilter {
