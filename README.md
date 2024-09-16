@@ -1,5 +1,5 @@
 <H1>Código Fonte - Ordem de Serviço Backend</h1>
-<p>Desenvolvimento de toda a parte de regra de negócio do Sistema para uma Assistência Técnica. <br/><br/>A parte visual será desenvolvida por um colega, todo o projeto será implantado para um cliente, foquei em todas as partes, desde o desenvolvimento até a implantação do projeto no servidor VPS e futuramente na AWS EC2 + RDS, o projeto está quase finalizado, contendo 39 endpoints para o estabelecimento, conforme foi solicitado pelo cliente, foquei muito nos testes para garantir a qualidade e manutenção do código futuramente.</p>
+<p>Desenvolvimento de toda a parte de regra de negócio do Sistema para uma Assistência Técnica. <br/><br/>A parte visual será desenvolvida por um colega, todo o projeto será implantado para um cliente, foquei em todas as partes, desde o desenvolvimento até a implantação do projeto no servidor VPS e futuramente na AWS EC2 + RDS, o projeto está quase finalizado, contendo 42 endpoints para o estabelecimento, conforme foi solicitado pelo cliente, foquei muito nos testes para garantir a qualidade e manutenção do código futuramente.</p>
 <H2>Funcionalidades e necessidades do projeto:</H2>
 <ol>
   <li>Realizar Vendas dos produtos da Assistência Técnica.</li>
@@ -14,7 +14,7 @@
   <li>Spring Security + Token JWT</li>
   <li>Pipeline CI/CD - Jenkins.</li>
   <li>Qualidade do Código - SonarQube.</li>
-  <li>Cobertura de Testes - Junit/Mockito - 161 Testes.</li>
+  <li>Cobertura de Testes - Junit/Mockito - 164 Testes.</li>
   <li>Observabilidade - Prometheus/Grafana (apenas nos primeiros meses)</li>
   <li>Deploy da imagem no Docker Hub e AWS EC2 + RDS.</li>
   <li>Banco de Dados - PostgreSql.</li>
