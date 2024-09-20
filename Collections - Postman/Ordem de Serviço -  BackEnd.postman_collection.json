@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "3b39ae2a-b890-481a-92d4-6b09f3a56d6f",
 		"name": "Ordem de Serviço -  BackEnd",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "14886998"
 	},
 	"item": [
@@ -12,18 +12,40 @@
 				{
 					"name": "Salvar Venda",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2ODc0NzI3LCJleHAiOjE3MjY4ODE5MjcsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.vuX8ZgsMlmwhoPqFirnuKzIi4gtoBf3rMLEc1HHl83o",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"desconto\" : 15,\n    \"id_cliente\" : 7,\n    \"id_tecnico_responsavel\" : 1,\n    \"itens\" : [{\n        \"id_produto\" : 6,\n        \"valor_produto\" : 158,\n        \"quantidade\" : 5\n        }\n     ]\n}",
+							"raw": "{\n    \"desconto\" : 15,\n    \"id_cliente\" : 7,\n    \"id_tecnico_responsavel\" : 1,\n    \"itens\" : [\n        {\n        \"id_produto\" : 1,\n        \"valor_produto\" : 50,\n        \"quantidade\" : 5\n        },\n        {\n        \"id_produto\" : 2,\n        \"valor_produto\" : 50,\n        \"quantidade\" : 5\n        }\n     ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "localhost:8081/api/v1/vendas/salvar"
+						"url": {
+							"raw": "localhost:8081/api/v1/vendas/salvar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"vendas",
+								"salvar"
+							]
+						}
 					},
 					"response": []
 				},
@@ -32,13 +54,30 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWUtb3JkZW0tc2Vydmljby1iYWNrZW5kIiwiaWF0IjoxNzIxMzEzODIwLCJleHAiOjE3MjEzMjEwMjAsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.H_eMLoeOJfMmvp_P3PzomF1KHeVWT1sPOjQ8hqJ5yXU"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2ODc0NzI3LCJleHAiOjE3MjY4ODE5MjcsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.vuX8ZgsMlmwhoPqFirnuKzIi4gtoBf3rMLEc1HHl83o",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/v1/vendas/pesquisar/18"
+						"url": {
+							"raw": "localhost:8081/api/v1/vendas/pesquisar/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"vendas",
+								"pesquisar",
+								"3"
+							]
+						}
 					},
 					"response": []
 				}
@@ -50,9 +89,32 @@
 				{
 					"name": "Listar Clientes",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2ODc0NzI3LCJleHAiOjE3MjY4ODE5MjcsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.vuX8ZgsMlmwhoPqFirnuKzIi4gtoBf3rMLEc1HHl83o",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/clientes/v1/listar"
+						"url": {
+							"raw": "localhost:8081/api/clientes/v1/listar/v1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"clientes",
+								"v1",
+								"listar",
+								"v1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -61,31 +123,76 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/clientes/v1/pesquisar/7"
+						"url": {
+							"raw": "localhost:8081/api/clientes/v1/pesquisar/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"clientes",
+								"v1",
+								"pesquisar",
+								"7"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Salvar Clientes",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2ODc0NzI3LCJleHAiOjE3MjY4ODE5MjcsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.vuX8ZgsMlmwhoPqFirnuKzIi4gtoBf3rMLEc1HHl83o",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nome\" : \"Guilherme Cliente\",\n    \"cpf\" : \"839.366.860-33\",\n    \"celular\" : \"19 98888888\",\n    \"email\" : \"clienteteste@gmail.com\",\n    \"endereco\" : \"Rua do Centro\",\n    \"cidade\" : \"Caconde\",\n    \"estado\" : \"SP\",\n    \"cep\" : \"13770-000\",\n    \"complemento\" : \"Perto da centro\"\n}",
+							"raw": "{\n    \"nome\" : \"Cliente 21\",\n    \"cpf\" : \"846.171.460-16\",\n    \"celular\" : \"19 98888888\",\n    \"email\" : \"cliente6teste@gmail.com\",\n    \"endereco\" : \"Rua do Centro\",\n    \"cidade\" : \"Caconde\",\n    \"estado\" : \"SP\",\n    \"cep\" : \"13770-000\",\n    \"complemento\" : \"Perto da centro\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "localhost:8081/api/clientes/v1/salvar"
+						"url": {
+							"raw": "localhost:8081/api/clientes/v1/salvar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"clientes",
+								"v1",
+								"salvar"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Atualizar Clientes",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2ODc0NzI3LCJleHAiOjE3MjY4ODE5MjcsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.vuX8ZgsMlmwhoPqFirnuKzIi4gtoBf3rMLEc1HHl83o",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -97,25 +204,127 @@
 								}
 							}
 						},
-						"url": "localhost:8081/api/clientes/v1/atualizar/7"
+						"url": {
+							"raw": "localhost:8081/api/clientes/v1/atualizar/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"clientes",
+								"v1",
+								"atualizar",
+								"7"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Deletar Cliente",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2ODc0NzI3LCJleHAiOjE3MjY4ODE5MjcsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.vuX8ZgsMlmwhoPqFirnuKzIi4gtoBf3rMLEc1HHl83o",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
-						"url": "localhost:8081/api/clientes/v1/deletar/7"
+						"url": {
+							"raw": "localhost:8081/api/clientes/v1/deletar/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"clientes",
+								"v1",
+								"deletar",
+								"7"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Listar Clientes - Hateoas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2ODc0NzI3LCJleHAiOjE3MjY4ODE5MjcsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.vuX8ZgsMlmwhoPqFirnuKzIi4gtoBf3rMLEc1HHl83o",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/clientes/v1/listar/v2/link"
+						"url": {
+							"raw": "localhost:8081/api/clientes/v1/listar/v2/link",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"clientes",
+								"v1",
+								"listar",
+								"v2",
+								"link"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Clientes - Paginação",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2ODc0NzI3LCJleHAiOjE3MjY4ODE5MjcsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.vuX8ZgsMlmwhoPqFirnuKzIi4gtoBf3rMLEc1HHl83o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/api/clientes/v1/listar/v2?page=1&size=10",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"clientes",
+								"v1",
+								"listar",
+								"v2"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -127,18 +336,63 @@
 				{
 					"name": "Listar Produtos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2ODc0NzI3LCJleHAiOjE3MjY4ODE5MjcsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.vuX8ZgsMlmwhoPqFirnuKzIi4gtoBf3rMLEc1HHl83o",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/produtos/v1/listar"
+						"url": {
+							"raw": "localhost:8081/api/produtos/v1/listar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"produtos",
+								"v1",
+								"listar"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Pesquisar Produto por ID",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2ODc0NzI3LCJleHAiOjE3MjY4ODE5MjcsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.vuX8ZgsMlmwhoPqFirnuKzIi4gtoBf3rMLEc1HHl83o",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/produtos/v1/pesquisar/1"
+						"url": {
+							"raw": "localhost:8081/api/produtos/v1/pesquisar/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"produtos",
+								"v1",
+								"pesquisar",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -156,7 +410,19 @@
 								}
 							}
 						},
-						"url": "localhost:8081/api/produtos/v1/salvar"
+						"url": {
+							"raw": "localhost:8081/api/produtos/v1/salvar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"produtos",
+								"v1",
+								"salvar"
+							]
+						}
 					},
 					"response": []
 				},
@@ -165,7 +431,20 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "localhost:8081/api/produtos/v1/deletar/4"
+						"url": {
+							"raw": "localhost:8081/api/produtos/v1/deletar/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"produtos",
+								"v1",
+								"deletar",
+								"4"
+							]
+						}
 					},
 					"response": []
 				},
@@ -183,7 +462,20 @@
 								}
 							}
 						},
-						"url": "localhost:8081/api/produtos/v1/atualizar/1"
+						"url": {
+							"raw": "localhost:8081/api/produtos/v1/atualizar/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"produtos",
+								"v1",
+								"atualizar",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -206,7 +498,19 @@
 								}
 							}
 						},
-						"url": "localhost:8081/api/os/v1/salvar"
+						"url": {
+							"raw": "localhost:8081/api/os/v1/salvar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"os",
+								"v1",
+								"salvar"
+							]
+						}
 					},
 					"response": []
 				},
@@ -215,7 +519,19 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/os/v1/listar"
+						"url": {
+							"raw": "localhost:8081/api/os/v1/listar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"os",
+								"v1",
+								"listar"
+							]
+						}
 					},
 					"response": []
 				},
@@ -224,7 +540,20 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/os/v1/pesquisar/11"
+						"url": {
+							"raw": "localhost:8081/api/os/v1/pesquisar/11",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"os",
+								"v1",
+								"pesquisar",
+								"11"
+							]
+						}
 					},
 					"response": []
 				},
@@ -233,7 +562,20 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "localhost:8081/api/os/v1/deletar/18"
+						"url": {
+							"raw": "localhost:8081/api/os/v1/deletar/18",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"os",
+								"v1",
+								"deletar",
+								"18"
+							]
+						}
 					},
 					"response": []
 				},
@@ -242,7 +584,21 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/os/v1/listar/v2/link"
+						"url": {
+							"raw": "localhost:8081/api/os/v1/listar/v2/link",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"os",
+								"v1",
+								"listar",
+								"v2",
+								"link"
+							]
+						}
 					},
 					"response": []
 				}
@@ -256,7 +612,19 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/dashboard/v1/dados"
+						"url": {
+							"raw": "localhost:8081/api/dashboard/v1/dados",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"dashboard",
+								"v1",
+								"dados"
+							]
+						}
 					},
 					"response": []
 				}
@@ -270,7 +638,19 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/contaspagar/v1/listar"
+						"url": {
+							"raw": "localhost:8081/api/contaspagar/v1/listar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contaspagar",
+								"v1",
+								"listar"
+							]
+						}
 					},
 					"response": []
 				},
@@ -279,7 +659,20 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/contaspagar/v1/pesquisar/7"
+						"url": {
+							"raw": "localhost:8081/api/contaspagar/v1/pesquisar/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contaspagar",
+								"v1",
+								"pesquisar",
+								"7"
+							]
+						}
 					},
 					"response": []
 				},
@@ -297,7 +690,19 @@
 								}
 							}
 						},
-						"url": "localhost:8081/api/contaspagar/v1/salvar"
+						"url": {
+							"raw": "localhost:8081/api/contaspagar/v1/salvar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contaspagar",
+								"v1",
+								"salvar"
+							]
+						}
 					},
 					"response": []
 				},
@@ -315,7 +720,20 @@
 								}
 							}
 						},
-						"url": "localhost:8081/api/contaspagar/v1/atualizar/7"
+						"url": {
+							"raw": "localhost:8081/api/contaspagar/v1/atualizar/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contaspagar",
+								"v1",
+								"atualizar",
+								"7"
+							]
+						}
 					},
 					"response": []
 				},
@@ -324,7 +742,52 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "localhost:8081/api/contaspagar/v1/deletar/9"
+						"url": {
+							"raw": "localhost:8081/api/contaspagar/v1/deletar/9",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contaspagar",
+								"v1",
+								"deletar",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Contas a Pagar - Paginação",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/api/contaspagar/v1/listar/v2?page=0&size=10",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contaspagar",
+								"v1",
+								"listar",
+								"v2"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -338,7 +801,19 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/fornecedores/v1/listar"
+						"url": {
+							"raw": "localhost:8081/api/fornecedores/v1/listar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"fornecedores",
+								"v1",
+								"listar"
+							]
+						}
 					},
 					"response": []
 				},
@@ -347,7 +822,20 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/fornecedores/v1/pesquisar/2"
+						"url": {
+							"raw": "localhost:8081/api/fornecedores/v1/pesquisar/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"fornecedores",
+								"v1",
+								"pesquisar",
+								"2"
+							]
+						}
 					},
 					"response": []
 				},
@@ -365,7 +853,19 @@
 								}
 							}
 						},
-						"url": "localhost:8081/api/fornecedores/v1/salvar"
+						"url": {
+							"raw": "localhost:8081/api/fornecedores/v1/salvar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"fornecedores",
+								"v1",
+								"salvar"
+							]
+						}
 					},
 					"response": []
 				},
@@ -383,7 +883,20 @@
 								}
 							}
 						},
-						"url": "localhost:8081/api/fornecedores/v1/atualizar/2"
+						"url": {
+							"raw": "localhost:8081/api/fornecedores/v1/atualizar/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"fornecedores",
+								"v1",
+								"atualizar",
+								"2"
+							]
+						}
 					},
 					"response": []
 				},
@@ -392,7 +905,62 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "localhost:8081/api/fornecedores/v1/deletar/3"
+						"url": {
+							"raw": "localhost:8081/api/fornecedores/v1/deletar/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"fornecedores",
+								"v1",
+								"deletar",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Fornecedores - Paginação",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2NDIxMzYyLCJleHAiOjE3MjY0Mjg1NjIsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.kjyqKv3n8mjOKFGmLry8F_lagG4Ndgi4b9iwetaHaoM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/api/fornecedores/v1/listar/v2?page=0&size=10",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"fornecedores",
+								"v1",
+								"listar",
+								"v2"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -404,9 +972,31 @@
 				{
 					"name": "Listar Contas a Receber",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJndWlsaGVybWVvcmRlbXNlcnZpY29iYWNrZW5kIiwiaWF0IjoxNzI2ODc0NzI3LCJleHAiOjE3MjY4ODE5MjcsInN1YiI6Imd1aXJvbWFubm9AZ21haWwuY29tIn0.vuX8ZgsMlmwhoPqFirnuKzIi4gtoBf3rMLEc1HHl83o",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/contasreceber/v1/listar"
+						"url": {
+							"raw": "localhost:8081/api/contasreceber/v1/listar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contasreceber",
+								"v1",
+								"listar"
+							]
+						}
 					},
 					"response": []
 				},
@@ -415,7 +1005,20 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8081/api/contasreceber/v1/pesquisar/13"
+						"url": {
+							"raw": "localhost:8081/api/contasreceber/v1/pesquisar/13",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contasreceber",
+								"v1",
+								"pesquisar",
+								"13"
+							]
+						}
 					},
 					"response": []
 				},
@@ -433,7 +1036,19 @@
 								}
 							}
 						},
-						"url": "localhost:8081/api/contasreceber/v1/salvar"
+						"url": {
+							"raw": "localhost:8081/api/contasreceber/v1/salvar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contasreceber",
+								"v1",
+								"salvar"
+							]
+						}
 					},
 					"response": []
 				},
@@ -451,7 +1066,20 @@
 								}
 							}
 						},
-						"url": "localhost:8081/api/contasreceber/v1/atualizar/14"
+						"url": {
+							"raw": "localhost:8081/api/contasreceber/v1/atualizar/14",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contasreceber",
+								"v1",
+								"atualizar",
+								"14"
+							]
+						}
 					},
 					"response": []
 				},
@@ -460,7 +1088,117 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "localhost:8081/api/contasreceber/v1/deletar/1"
+						"url": {
+							"raw": "localhost:8081/api/contasreceber/v1/deletar/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contasreceber",
+								"v1",
+								"deletar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listas Contas a Receber - Paginação",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/api/contasreceber/v1/listar/v2?page=0&size=10",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"contasreceber",
+								"v1",
+								"listar",
+								"v2"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Login Usuário - Autenticação",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"guiromanno@gmail.com\",\n    \"senha\" : \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/api/usuarios/v1/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"usuarios",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar Usuários",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"guiilhermetestelelele@gmail.com\",\n    \"senha\" : \"123\",\n    \"role\" : \"ROLE_ADMIN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/api/usuarios/v1/salvar",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"usuarios",
+								"v1",
+								"salvar"
+							]
+						}
 					},
 					"response": []
 				}
