@@ -43,11 +43,25 @@ mvn clean install
 java -jar ordem-servico-backend.jar --spring.profiles.active=dev
 ```
 
-5º Acessar a documentação do Swagger:
+5º Crie um novo usuário da Api, com E-mail e senha na seguinte rota:
+
+```
+localhost:8081/api/usuarios/v1/salvar
+```
+
+
+6º Acessar a documentação do Swagger:
 
 ```
 http://localhost:8085/swagger-ui/index.html#/
 ```
+
+7º Autenticar o seu usuário para poder testar todas as rotas do sistema, pegue o token e cole no campo <strong>Postman > Authorization > Bearer Token</strong> em todas as requisições do projeto:
+
+```
+localhost:8081/api/usuarios/v1/login
+```
+
 Caso você queira testar os envios de E-mails de Contas a Pagar e Receber, você precisa criar uma senha no <a href="https://myaccount.google.com/u/0/signinoptions/twosv?pli=1&rapt=AEjHL4NTauyBmX88fhYXcX6aXS7sf7dIgXQsp6wsJzCQo-IeI8wv5jFkmG1nYJJumpBcuG9XmCB-EfS6txHP7deN4WrR0YjjjJ5i-BiIIws4mxHDD1_INwg" target="_blank">Google Account</a>, e alterar no <strong>application.properties.dev:</strong>
 
 ```
