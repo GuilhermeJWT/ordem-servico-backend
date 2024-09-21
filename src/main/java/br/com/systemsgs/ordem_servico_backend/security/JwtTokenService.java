@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.security;
 
+import br.com.systemsgs.ordem_servico_backend.exception.errors.TokenExpiradoException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -43,7 +44,7 @@ public class JwtTokenService {
                     .verify(token)
                     .getSubject();
         } catch (JWTVerificationException exception){
-            throw new JWTVerificationException("Token inválido ou expirado!");
+                throw new TokenExpiradoException();
         }
     }
 

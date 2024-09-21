@@ -1,6 +1,7 @@
 package br.com.systemsgs.ordem_servico_backend.exception;
 
 import br.com.systemsgs.ordem_servico_backend.exception.errors.*;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -108,5 +109,11 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiRestErrors tokenInexistenteException(TokenInexistenteException tokenInexistenteException){
         return new ApiRestErrors(tokenInexistenteException.getMessage());
+    }
+
+    @ExceptionHandler(JWTVerificationException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiRestErrors tokenExpirado(TokenExpiradoException tokenExpiradoException){
+        return new ApiRestErrors(tokenExpiradoException.getMessage());
     }
 }
