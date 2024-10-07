@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -68,6 +69,7 @@ public class ContasReceberController {
         return ResponseEntity.ok().body(contasReceberService.alterarContasReceber(id, modelContasReceberDTO));
     }
 
+    @Secured({"ROLE_ADMIN"})
     @Operation(summary = "Deletar Contas a Receber", description = "Api para Deletar uma Conta a Receber por ID")
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<ContasReceberResponse> delete(@PathVariable Long id){

@@ -13,6 +13,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -87,6 +88,7 @@ public class OrdemServicoController {
         return ResponseEntity.ok().body(mapper.map(osAtualizada, ModelOrdemServicoDTO.class));
     }
 
+    @Secured({"ROLE_ADMIN"})
     @Operation(summary = "Deletar OS", description = "Api para Deletar uma OS por ID")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/deletar/{id}")
