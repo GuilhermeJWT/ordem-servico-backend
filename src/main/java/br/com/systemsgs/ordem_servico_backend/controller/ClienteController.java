@@ -4,9 +4,11 @@ import br.com.systemsgs.ordem_servico_backend.dto.request.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.hateoas.ModelClientesHateoas;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
+import br.com.systemsgs.ordem_servico_backend.relatorios.excel.GerarRelatorioExcel;
 import br.com.systemsgs.ordem_servico_backend.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,11 +35,13 @@ public class ClienteController {
 
     private final ClienteService clienteService;
     private final ModelMapper mapper;
+    private final GerarRelatorioExcel gerarRelatorioExcel;
 
     @Autowired
-    public ClienteController(ClienteService clienteService, ModelMapper mapper) {
+    public ClienteController(ClienteService clienteService, ModelMapper mapper, GerarRelatorioExcel gerarRelatorioExcel) {
         this.clienteService = clienteService;
         this.mapper = mapper;
+        this.gerarRelatorioExcel = gerarRelatorioExcel;
     }
 
     @Operation(summary = "Listar Clientes", description = "Api para listar todos os registro de Clientes")
@@ -102,5 +107,10 @@ public class ClienteController {
         clienteService.deletarCliente(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/relatorio/excel")
+    public ResponseEntity<byte[]> gerarRelatorio(HttpServletResponse response) throws IOException {
+        return gerarRelatorioExcel.gerarRelatorioExcel(response);
     }
 }
