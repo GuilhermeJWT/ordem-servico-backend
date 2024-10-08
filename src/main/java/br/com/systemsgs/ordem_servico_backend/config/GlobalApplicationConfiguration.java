@@ -12,8 +12,6 @@ public class GlobalApplicationConfiguration {
 
     public static final String[] ROTAS_PUBLICAS = {
             "/api/usuarios/v1/salvar",
-            "/api/clientes/v1/relatorio/excel",
-            "/api/clientes/v1/relatorio/pdf",
             "/api/usuarios/v1/login",
             "/api/health/check",
             "/swagger-ui/**",
