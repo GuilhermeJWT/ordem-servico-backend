@@ -4,9 +4,7 @@ import br.com.systemsgs.ordem_servico_backend.dto.request.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.hateoas.ModelClientesHateoas;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
-import br.com.systemsgs.ordem_servico_backend.relatorios.excel.GerarRelatorioExcel;
-import br.com.systemsgs.ordem_servico_backend.relatorios.pdf.GerarRelatorioPdf;
-import br.com.systemsgs.ordem_servico_backend.relatorios.pdf.impl.RelatorioClientesPdfImpl;
+import br.com.systemsgs.ordem_servico_backend.relatorios.GerarRelatorio;
 import br.com.systemsgs.ordem_servico_backend.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,15 +37,13 @@ public class ClienteController {
 
     private final ClienteService clienteService;
     private final ModelMapper mapper;
-    private final GerarRelatorioExcel gerarRelatorioExcel;
-    private final GerarRelatorioPdf gerarRelatorioPdf;
+    private final GerarRelatorio gerarRelatorio;
 
     @Autowired
-    public ClienteController(ClienteService clienteService, ModelMapper mapper, GerarRelatorioExcel gerarRelatorioExcel, GerarRelatorioPdf gerarRelatorioPdf) {
+    public ClienteController(ClienteService clienteService, ModelMapper mapper, GerarRelatorio gerarRelatorio) {
         this.clienteService = clienteService;
         this.mapper = mapper;
-        this.gerarRelatorioExcel = gerarRelatorioExcel;
-        this.gerarRelatorioPdf = gerarRelatorioPdf;
+        this.gerarRelatorio = gerarRelatorio;
     }
 
     @Operation(summary = "Listar Clientes", description = "Api para listar todos os registro de Clientes")
@@ -117,12 +113,12 @@ public class ClienteController {
 
     @GetMapping("/relatorio/excel")
     public ResponseEntity<byte[]> gerarRelatorio(HttpServletResponse response) throws IOException {
-        return gerarRelatorioExcel.gerarRelatorioExcel(response);
+        return gerarRelatorio.gerarRelatorioExcel(response);
     }
 
     @GetMapping("/relatorio/pdf")
     public ResponseEntity<byte[]> gerarRelatorioPdf(HttpServletResponse response) throws IOException {
-        byte[] pdfRelatorio = gerarRelatorioPdf.gerarRelatorioPdf();
+        byte[] pdfRelatorio = gerarRelatorio.gerarRelatorioPdf();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=relatorio-clientes.pdf");

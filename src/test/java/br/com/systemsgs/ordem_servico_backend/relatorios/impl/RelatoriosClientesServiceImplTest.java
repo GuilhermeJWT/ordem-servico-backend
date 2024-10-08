@@ -1,8 +1,8 @@
-package br.com.systemsgs.ordem_servico_backend.relatorios.excel.impl;
+package br.com.systemsgs.ordem_servico_backend.relatorios.impl;
 
 import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
-import br.com.systemsgs.ordem_servico_backend.relatorios.excel.GerarRelatorioExcel;
+import br.com.systemsgs.ordem_servico_backend.relatorios.GerarRelatorio;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Row;
@@ -31,10 +31,10 @@ import static org.mockito.Mockito.when;
 
 @ActiveProfiles(value = "test")
 @SpringBootTest
-class RelatorioClientesXlsImplTest extends ConfigDadosEstaticosEntidades {
+class RelatoriosClientesServiceImplTest extends ConfigDadosEstaticosEntidades {
 
     @InjectMocks
-    private RelatorioClientesXlsImpl relatorioClientesXls;
+    private RelatoriosClientesServiceImpl relatoriosClientesService;
 
     @Mock
     private ClienteRepository clienteRepository;
@@ -43,12 +43,12 @@ class RelatorioClientesXlsImplTest extends ConfigDadosEstaticosEntidades {
     private HttpServletResponse response;
 
     @Mock
-    private GerarRelatorioExcel gerarRelatorioExcel;
+    private GerarRelatorio gerarRelatorio;
 
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        relatorioClientesXls = new RelatorioClientesXlsImpl(clienteRepository);
+        relatoriosClientesService = new RelatoriosClientesServiceImpl(clienteRepository);
     }
 
     @DisplayName("Deve gerar um Relatório de Clientes para Excel - 200")
@@ -59,7 +59,7 @@ class RelatorioClientesXlsImplTest extends ConfigDadosEstaticosEntidades {
 
         when(clienteRepository.findAll()).thenReturn(Arrays.asList(cliente1, cliente2));
 
-        ResponseEntity<byte[]> responseEntity = relatorioClientesXls.gerarRelatorioExcel(response);
+        ResponseEntity<byte[]> responseEntity = relatoriosClientesService.gerarRelatorioExcel(response);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
@@ -75,7 +75,7 @@ class RelatorioClientesXlsImplTest extends ConfigDadosEstaticosEntidades {
 
         when(clienteRepository.findAll()).thenReturn(Arrays.asList(cliente1, cliente2));
 
-        ResponseEntity<byte[]> responseEntity = relatorioClientesXls.gerarRelatorioExcel(response);
+        ResponseEntity<byte[]> responseEntity = relatoriosClientesService.gerarRelatorioExcel(response);
 
         Workbook workbook = new XSSFWorkbook(new ByteArrayInputStream(responseEntity.getBody()));
         Sheet sheet = workbook.getSheetAt(0);
@@ -91,7 +91,7 @@ class RelatorioClientesXlsImplTest extends ConfigDadosEstaticosEntidades {
     void deveGerarCabecalhoCorretamente() throws IOException {
         when(clienteRepository.findAll()).thenReturn(List.of());
 
-        ResponseEntity<byte[]> responseEntity = relatorioClientesXls.gerarRelatorioExcel(response);
+        ResponseEntity<byte[]> responseEntity = relatoriosClientesService.gerarRelatorioExcel(response);
 
         Workbook workbook = new XSSFWorkbook(new ByteArrayInputStream(responseEntity.getBody()));
         Sheet sheet = workbook.getSheetAt(0);
