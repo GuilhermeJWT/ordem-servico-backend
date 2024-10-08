@@ -4,6 +4,9 @@ import br.com.systemsgs.ordem_servico_backend.ConfigDadosEstaticosEntidades;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.relatorios.GerarRelatorio;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -24,6 +27,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -105,5 +109,51 @@ class RelatoriosClientesServiceImplTest extends ConfigDadosEstaticosEntidades {
         assertEquals("Estado", headerRow.getCell(5).getStringCellValue());
         assertEquals("Cep", headerRow.getCell(6).getStringCellValue());
         assertEquals("Ativo", headerRow.getCell(7).getStringCellValue());
+    }
+
+    @DisplayName("Teste para gerar com sucesso o relatório de PDF de Clientes")
+    @Test
+    void gerarRelatorioPdfSucesso() throws IOException {
+        ModelClientes cliente1 = dadosClientes();
+        ModelClientes cliente2 = dadosClientes();
+
+        when(clienteRepository.findAll()).thenReturn(Arrays.asList(cliente1, cliente2));
+
+        byte[] pdfBytes = relatoriosClientesService.gerarRelatorioPdf();
+
+        assertNotNull(pdfBytes);
+        assertTrue(pdfBytes.length > 0);
+    }
+
+    @DisplayName("Teste para gerar um relatório vazio")
+    @Test
+    void gerarRelatorioPdfListaVazia() throws IOException {
+        List<ModelClientes> clientesMock = Collections.emptyList();
+
+        when(clienteRepository.findAll()).thenReturn(clientesMock);
+
+        byte[] pdfBytes = relatoriosClientesService.gerarRelatorioPdf();
+
+        assertNotNull(pdfBytes);
+        assertTrue(pdfBytes.length > 0);
+    }
+
+    @DisplayName("Teste para gerar o relatório com nome, id e nome dos clientes")
+    @Test
+    void gerarRelatorioPdfVerificarConteudoGerado() throws IOException {
+        ModelClientes cliente1 = dadosClientes();
+        ModelClientes cliente2 = dadosClientes();
+
+        when(clienteRepository.findAll()).thenReturn(Arrays.asList(cliente1, cliente2));
+
+        byte[] pdfBytes = relatoriosClientesService.gerarRelatorioPdf();
+
+        PdfReader reader = new PdfReader(new ByteArrayInputStream(pdfBytes));
+        PdfDocument pdfDoc = new PdfDocument(reader);
+        String pdfText = PdfTextExtractor.getTextFromPage(pdfDoc.getPage(1));
+
+        assertTrue(pdfText.contains("Relatório de Clientes"));
+        assertTrue(pdfText.contains(String.valueOf(cliente1.getId())));
+        assertTrue(pdfText.contains(cliente1.getNome()));
     }
 }

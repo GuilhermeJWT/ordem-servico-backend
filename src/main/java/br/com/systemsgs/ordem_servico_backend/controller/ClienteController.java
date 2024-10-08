@@ -112,7 +112,7 @@ public class ClienteController {
     }
 
     @GetMapping("/relatorio/excel")
-    public ResponseEntity<byte[]> gerarRelatorio(HttpServletResponse response) throws IOException {
+    public ResponseEntity<byte[]> gerarRelatorioExcel(HttpServletResponse response) throws IOException {
         return gerarRelatorio.gerarRelatorioExcel(response);
     }
 
