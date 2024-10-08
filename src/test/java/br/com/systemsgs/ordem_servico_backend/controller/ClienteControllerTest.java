@@ -272,6 +272,7 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
                 dadosClientes().getCpf(),
                 dadosClientes().getCelular(),
                 dadosClientes().getEmail(),
+                dadosClientes().isAtivo(),
                 dadosClientes().getEndereco(),
                 dadosClientes().getOrdemServicos()
         );
