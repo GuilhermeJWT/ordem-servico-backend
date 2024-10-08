@@ -5,6 +5,8 @@ import br.com.systemsgs.ordem_servico_backend.dto.hateoas.ModelClientesHateoas;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.relatorios.excel.GerarRelatorioExcel;
+import br.com.systemsgs.ordem_servico_backend.relatorios.pdf.GerarRelatorioPdf;
+import br.com.systemsgs.ordem_servico_backend.relatorios.pdf.impl.RelatorioClientesPdfImpl;
 import br.com.systemsgs.ordem_servico_backend.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -36,12 +40,14 @@ public class ClienteController {
     private final ClienteService clienteService;
     private final ModelMapper mapper;
     private final GerarRelatorioExcel gerarRelatorioExcel;
+    private final GerarRelatorioPdf gerarRelatorioPdf;
 
     @Autowired
-    public ClienteController(ClienteService clienteService, ModelMapper mapper, GerarRelatorioExcel gerarRelatorioExcel) {
+    public ClienteController(ClienteService clienteService, ModelMapper mapper, GerarRelatorioExcel gerarRelatorioExcel, GerarRelatorioPdf gerarRelatorioPdf) {
         this.clienteService = clienteService;
         this.mapper = mapper;
         this.gerarRelatorioExcel = gerarRelatorioExcel;
+        this.gerarRelatorioPdf = gerarRelatorioPdf;
     }
 
     @Operation(summary = "Listar Clientes", description = "Api para listar todos os registro de Clientes")
@@ -112,5 +118,15 @@ public class ClienteController {
     @GetMapping("/relatorio/excel")
     public ResponseEntity<byte[]> gerarRelatorio(HttpServletResponse response) throws IOException {
         return gerarRelatorioExcel.gerarRelatorioExcel(response);
+    }
+
+    @GetMapping("/relatorio/pdf")
+    public ResponseEntity<byte[]> gerarRelatorioPdf(HttpServletResponse response) throws IOException {
+        byte[] pdfRelatorio = gerarRelatorioPdf.gerarRelatorioPdf();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=relatorio-clientes.pdf");
+
+        return new ResponseEntity<>(pdfRelatorio, headers, HttpStatus.OK);
     }
 }

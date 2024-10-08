@@ -27,6 +27,7 @@ public class RelatorioClientesXlsImpl implements GerarRelatorioExcel {
         this.clienteRepository = clienteRepository;
     }
 
+    @Override
     public ResponseEntity<byte[]> gerarRelatorioExcel(HttpServletResponse response) throws IOException {
         List<ModelClientes> clientes = clienteRepository.findAll();
 
