@@ -184,6 +184,7 @@ public class ConfigDadosEstaticosEntidades {
         clienteResponse.setCpf("819.945.180-73"); //gerado no site: GERADOR DE CPF
         clienteResponse.setCelular("19 99999999");
         clienteResponse.setEmail("guilherme@gmail.com");
+        clienteResponse.setAtivo(true);
         clienteResponse.setEndereco(dadosEndereco());
         clienteResponse.setOrdemServicos(new ArrayList<>());
 

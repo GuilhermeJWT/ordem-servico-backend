@@ -35,6 +35,9 @@ public class ModelClientes implements Serializable {
     @Column(name = "email", length = 100)
     private String email;
 
+    @Column(name = "ativo")
+    private boolean ativo = true;
+
     @Embedded
     private ModelEndereco endereco;
 

@@ -6,6 +6,7 @@ import br.com.systemsgs.ordem_servico_backend.dto.request.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
+import br.com.systemsgs.ordem_servico_backend.relatorios.GerarRelatorio;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ClienteService;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,10 +61,12 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
     @Mock
     private ModelMapper mapper;
 
+    private GerarRelatorio gerarRelatorio;
+
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        clienteController = new ClienteController(clienteService, mapper);
+        clienteController = new ClienteController(clienteService, mapper, gerarRelatorio);
         startCliente();
     }
 
@@ -272,6 +275,7 @@ class ClienteControllerTest extends ConfigDadosEstaticosEntidades{
                 dadosClientes().getCpf(),
                 dadosClientes().getCelular(),
                 dadosClientes().getEmail(),
+                dadosClientes().isAtivo(),
                 dadosClientes().getEndereco(),
                 dadosClientes().getOrdemServicos()
         );
