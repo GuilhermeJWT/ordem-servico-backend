@@ -51,7 +51,7 @@ class RelatoriosClientesServiceImplTest extends ConfigDadosEstaticosEntidades {
 
     @DisplayName("Teste para gerar um relatório de Clientes")
     @Test
-    public void deveGerarRelatorioExcelComSucesso() throws IOException {
+    void deveGerarRelatorioExcelComSucesso() throws IOException {
         when(clienteRepository.findAll()).thenReturn(List.of(modelClientes));
 
         ResponseEntity<byte[]> responseEntity = relatoriosClientesService.gerarRelatorioExcel(response);
@@ -66,7 +66,7 @@ class RelatoriosClientesServiceImplTest extends ConfigDadosEstaticosEntidades {
 
     @DisplayName("Teste para gerar um relatório vazio")
     @Test
-    public void deveGerarRelatorioExcelComListaVazia() throws IOException {
+    void deveGerarRelatorioExcelComListaVazia() throws IOException {
         when(clienteRepository.findAll()).thenReturn(Arrays.asList());
 
         ResponseEntity<byte[]> responseEntity = relatoriosClientesService.gerarRelatorioExcel(response);
@@ -82,7 +82,7 @@ class RelatoriosClientesServiceImplTest extends ConfigDadosEstaticosEntidades {
 
     @DisplayName("Teste para configurar o cabeçalho do relatório")
     @Test
-    public void deveConfigurarCabecalhoCorretamente() throws IOException {
+    void deveConfigurarCabecalhoCorretamente() throws IOException {
         when(clienteRepository.findAll()).thenReturn(List.of(modelClientes));
 
         ResponseEntity<byte[]> responseEntity = relatoriosClientesService.gerarRelatorioExcel(response);
@@ -90,6 +90,32 @@ class RelatoriosClientesServiceImplTest extends ConfigDadosEstaticosEntidades {
         HttpHeaders headers = responseEntity.getHeaders();
         assertEquals("attachment; filename=relatorio-clientes.xlsx", headers.getFirst(HttpHeaders.CONTENT_DISPOSITION));
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @DisplayName("Teste para gerar um relatório Pdf")
+    @Test
+    void deveGerarRelatorioPdfComSucesso() throws IOException {
+        when(clienteRepository.findAll()).thenReturn(List.of(modelClientes));
+
+        byte[] pdfData = relatoriosClientesService.gerarRelatorioPdf();
+
+        assertNotNull(pdfData);
+        assertTrue(pdfData.length > 0);
+
+        verify(clienteRepository, times(1)).findAll();
+    }
+
+    @DisplayName("Teste oara gerar relatório com lista vazia")
+    @Test
+    void deveGerarRelatorioPdfComListaVazia() throws IOException {
+        when(clienteRepository.findAll()).thenReturn(Arrays.asList());
+
+        byte[] pdfData = relatoriosClientesService.gerarRelatorioPdf();
+
+        assertNotNull(pdfData);
+        assertTrue(pdfData.length > 0);
+
+        verify(clienteRepository, times(1)).findAll();
     }
 
     private void startCliente(){
