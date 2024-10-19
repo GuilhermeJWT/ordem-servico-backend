@@ -6,6 +6,7 @@ import br.com.systemsgs.ordem_servico_backend.dto.response.ContasReceberResponse
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarReceberNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasReceberRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ContasReceberService;
+import br.com.systemsgs.ordem_servico_backend.service.GerarRelatorioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,12 +43,15 @@ class ContasReceberControllerTest extends ConfigDadosEstaticosEntidades {
     private ContasReceberService contasReceberService;
 
     @Mock
+    private GerarRelatorioService gerarRelatorioService;
+
+    @Mock
     private ContasReceberRepository contasReceberRepository;
 
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        contasReceberController = new ContasReceberController(contasReceberService);
+        contasReceberController = new ContasReceberController(contasReceberService, gerarRelatorioService);
         startContasReceber();
     }
 
