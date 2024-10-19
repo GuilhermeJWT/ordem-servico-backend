@@ -7,6 +7,7 @@ import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarRecebe
 import br.com.systemsgs.ordem_servico_backend.repository.ContasPagarRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ContasPagarService;
 import br.com.systemsgs.ordem_servico_backend.service.GerarRelatorioService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,10 +19,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,6 +55,9 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
 
     @Mock
     private ModelMapper mapper;
+
+    @Mock
+    private HttpServletResponse response;
 
     @BeforeEach
     void setUp(){
@@ -206,6 +212,46 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(contasPagarService, times(1)).deletarContasPagar(dadosContasPagar().getId());
+    }
+
+    @DisplayName("Teste para gerar um relatório")
+    @Test
+    void deveGerarRelatorioExcelComSucesso() throws IOException {
+        byte[] excelBytes = new byte[]{1, 2, 3};
+        when(gerarRelatorioService.gerarRelatorioExcel(response)).thenReturn(new ResponseEntity<>(excelBytes, HttpStatus.OK));
+
+        ResponseEntity<byte[]> resultado = contasPagarController.gerarRelatorioExcel(response);
+
+        assertEquals(HttpStatus.OK, resultado.getStatusCode());
+        assertArrayEquals(excelBytes, resultado.getBody());
+        verify(gerarRelatorioService, times(1)).gerarRelatorioExcel(response);
+    }
+
+    @DisplayName("Teste para erro no relatório")
+    @Test
+    void deveRetornarErroAoGerarRelatorioExcel() throws IOException {
+        when(gerarRelatorioService.gerarRelatorioExcel(response)).thenThrow(new IOException("Erro ao tentar gerar o Arquivo/Relatório."));
+
+        assertThrows(IOException.class, () -> {contasPagarController.gerarRelatorioExcel(response);});
+
+        verify(gerarRelatorioService, times(1)).gerarRelatorioExcel(response);
+    }
+
+    @DisplayName("Teste para gerar relatório de Pdf")
+    @Test
+    void deveGerarRelatorioPdfComSucesso() throws IOException {
+        byte[] pdfBytes = new byte[]{10, 20, 30};
+        when(gerarRelatorioService.gerarRelatorioPdf()).thenReturn(pdfBytes);
+
+        ResponseEntity<byte[]> resultado = contasPagarController.gerarRelatorioPdf(response);
+
+        assertEquals(HttpStatus.OK, resultado.getStatusCode());
+        assertArrayEquals(pdfBytes, resultado.getBody());
+
+        HttpHeaders headers = resultado.getHeaders();
+        assertEquals("attachment; filename=relatorio-contas-pagar.pdf", headers.getFirst("Content-Disposition"));
+
+        verify(gerarRelatorioService, times(1)).gerarRelatorioPdf();
     }
 
     private void startContasPagar(){
