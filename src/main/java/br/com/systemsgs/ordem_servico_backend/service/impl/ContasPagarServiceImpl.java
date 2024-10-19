@@ -127,6 +127,7 @@ public class ContasPagarServiceImpl extends BaseRelatorioUtil implements ContasP
     public byte[] gerarRelatorioPdf() throws IOException {
         List<ModelContasPagar> contasPagar = contasPagarRepository.findAll();
         List<String[]> dados = new ArrayList<>();
+        float[] tamanhoColunas = {1, 3, 3, 2, 2, 3};
 
         for (ModelContasPagar conta : contasPagar) {
             String[] linha = {
@@ -139,7 +140,7 @@ public class ContasPagarServiceImpl extends BaseRelatorioUtil implements ContasP
             };
             dados.add(linha);
         }
-        return configuraRelatorioPdf(NOME_RELATORIO, COLUNAS, dados);
+        return configuraRelatorioPdf(NOME_RELATORIO, COLUNAS, dados, tamanhoColunas);
     }
 
     private List<ContasPagarResponse> converteListaContasResponse(List<ModelContasPagar> listModelsContasPagar){

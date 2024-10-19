@@ -52,7 +52,7 @@ public abstract class BaseRelatorioUtil {
         return outputStream.toByteArray();
     }
 
-    protected static byte[] configuraRelatorioPdf(String tituloRelatorio, String[] colunas, List<String[]> dados) throws IOException {
+    protected static byte[] configuraRelatorioPdf(String tituloRelatorio, String[] colunas, List<String[]> dados, float[] tamanhoColunas) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(byteArrayOutputStream);
         PdfDocument pdf = new PdfDocument(writer);
@@ -68,8 +68,7 @@ public abstract class BaseRelatorioUtil {
 
         document.add(new Paragraph("\n"));
 
-        float[] columnWidths = {1, 3, 3, 2, 2, 2, 2, 1.5f};
-        com.itextpdf.layout.element.Table table = new com.itextpdf.layout.element.Table(UnitValue.createPercentArray(columnWidths));
+        com.itextpdf.layout.element.Table table = new com.itextpdf.layout.element.Table(UnitValue.createPercentArray(tamanhoColunas));
         table.setWidth(UnitValue.createPercentValue(100));
 
         Style headerStyle = new Style()
