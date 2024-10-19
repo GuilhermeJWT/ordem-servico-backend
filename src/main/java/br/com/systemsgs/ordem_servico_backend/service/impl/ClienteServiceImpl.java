@@ -127,10 +127,8 @@ public class ClienteServiceImpl extends BaseRelatorioUtil implements ClienteServ
 
     public byte[] gerarRelatorioPdf() throws IOException {
         List<ModelClientes> clientes = clienteRepository.findAll();
-
-        String tituloRelatorio = "Relatório de Clientes";
-
         List<String[]> dados = new ArrayList<>();
+
         for (ModelClientes cliente : clientes) {
             String[] linha = {
                     String.valueOf(cliente.getId()),
@@ -145,6 +143,6 @@ public class ClienteServiceImpl extends BaseRelatorioUtil implements ClienteServ
             dados.add(linha);
         }
 
-        return configuraRelatorioPdf(tituloRelatorio, COLUNAS, dados);
+        return configuraRelatorioPdf(NOME_RELATORIO, COLUNAS, dados);
     }
 }
