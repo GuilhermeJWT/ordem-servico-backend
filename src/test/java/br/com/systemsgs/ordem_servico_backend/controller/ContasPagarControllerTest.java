@@ -6,6 +6,7 @@ import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarReceberNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasPagarRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ContasPagarService;
+import br.com.systemsgs.ordem_servico_backend.service.GerarRelatorioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,9 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
     private ContasPagarService contasPagarService;
 
     @Mock
+    private GerarRelatorioService gerarRelatorioService;
+
+    @Mock
     private ContasPagarRepository contasPagarRepository;
 
     @Mock
@@ -52,7 +56,7 @@ class ContasPagarControllerTest extends ConfigDadosEstaticosEntidades {
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        contasPagarController = new ContasPagarController(contasPagarService);
+        contasPagarController = new ContasPagarController(contasPagarService, gerarRelatorioService);
         startContasPagar();
     }
 

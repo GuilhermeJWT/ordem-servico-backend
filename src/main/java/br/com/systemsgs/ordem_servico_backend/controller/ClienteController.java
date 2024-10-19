@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
@@ -40,7 +41,8 @@ public class ClienteController {
     private final GerarRelatorioService gerarRelatorioService;
 
     @Autowired
-    public ClienteController(ClienteService clienteService, ModelMapper mapper, GerarRelatorioService gerarRelatorioService) {
+    public ClienteController(ClienteService clienteService, ModelMapper mapper,
+                             @Qualifier("clienteServiceImpl") GerarRelatorioService gerarRelatorioService) {
         this.clienteService = clienteService;
         this.mapper = mapper;
         this.gerarRelatorioService = gerarRelatorioService;
