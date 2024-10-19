@@ -1,4 +1,4 @@
-package br.com.systemsgs.ordem_servico_backend.relatorios.util;
+package br.com.systemsgs.ordem_servico_backend.util;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
