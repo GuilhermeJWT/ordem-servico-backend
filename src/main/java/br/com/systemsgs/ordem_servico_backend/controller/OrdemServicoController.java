@@ -3,20 +3,25 @@ package br.com.systemsgs.ordem_servico_backend.controller;
 import br.com.systemsgs.ordem_servico_backend.dto.hateoas.ModelOrdemServicoHateoas;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelOrdemServicoDTO;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
+import br.com.systemsgs.ordem_servico_backend.service.GerarRelatorioService;
 import br.com.systemsgs.ordem_servico_backend.service.OrdemServicoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,11 +36,15 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class OrdemServicoController {
 
     private final OrdemServicoService ordemServicoService;
+    private final GerarRelatorioService gerarRelatorioService;
     private final ModelMapper mapper;
 
     @Autowired
-    public OrdemServicoController(OrdemServicoService ordemServicoService, ModelMapper mapper) {
+    public OrdemServicoController(OrdemServicoService ordemServicoService,
+                                  @Qualifier("ordemServicoServiceImpl") GerarRelatorioService gerarRelatorioService,
+                                  ModelMapper mapper) {
         this.ordemServicoService = ordemServicoService;
+        this.gerarRelatorioService = gerarRelatorioService;
         this.mapper = mapper;
     }
 
@@ -95,5 +104,20 @@ public class OrdemServicoController {
     public ResponseEntity<ModelOrdemServicoDTO> deletarOS(@PathVariable Long id){
         ordemServicoService.deletarOS(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/relatorio/excel")
+    public ResponseEntity<byte[]> gerarRelatorioExcel(HttpServletResponse response) throws IOException {
+        return gerarRelatorioService.gerarRelatorioExcel(response);
+    }
+
+    @GetMapping("/relatorio/pdf")
+    public ResponseEntity<byte[]> gerarRelatorioPdf(HttpServletResponse response) throws IOException {
+        byte[] pdfRelatorio = gerarRelatorioService.gerarRelatorioPdf();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=relatorio-ordem-servico.pdf");
+
+        return new ResponseEntity<>(pdfRelatorio, headers, HttpStatus.OK);
     }
 }
