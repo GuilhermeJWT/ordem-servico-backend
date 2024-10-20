@@ -2,6 +2,7 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasReceberDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasReceberResponse;
+import br.com.systemsgs.ordem_servico_backend.enums.TipoRelatorio;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarReceberNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasReceber;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasReceberRepository;
@@ -141,7 +142,7 @@ public class ContasReceberServiceImpl extends BaseRelatorioUtil implements Conta
             };
             dados.add(linha);
         }
-        return configuraRelatorioPdf(NOME_RELATORIO, COLUNAS, dados, tamanhoColunas);
+        return configuraRelatorioPdf(NOME_RELATORIO, COLUNAS, dados, tamanhoColunas, TipoRelatorio.RETRATO);
     }
 
     private List<ContasReceberResponse> converteListaContasResponse(List<ModelContasReceber> listModelsContasReceber){

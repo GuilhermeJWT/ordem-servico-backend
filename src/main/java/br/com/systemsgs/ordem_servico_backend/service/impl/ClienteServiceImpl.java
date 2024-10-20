@@ -2,6 +2,7 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
+import br.com.systemsgs.ordem_servico_backend.enums.TipoRelatorio;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelEndereco;
@@ -144,6 +145,6 @@ public class ClienteServiceImpl extends BaseRelatorioUtil implements ClienteServ
             dados.add(linha);
         }
 
-        return configuraRelatorioPdf(NOME_RELATORIO, COLUNAS, dados, tamanhoColunas);
+        return configuraRelatorioPdf(NOME_RELATORIO, COLUNAS, dados, tamanhoColunas, TipoRelatorio.RETRATO);
     }
 }

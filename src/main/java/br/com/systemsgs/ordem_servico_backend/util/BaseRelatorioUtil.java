@@ -1,5 +1,6 @@
 package br.com.systemsgs.ordem_servico_backend.util;
 
+import br.com.systemsgs.ordem_servico_backend.enums.TipoRelatorio;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -52,11 +53,23 @@ public abstract class BaseRelatorioUtil {
         return outputStream.toByteArray();
     }
 
-    protected static byte[] configuraRelatorioPdf(String tituloRelatorio, String[] colunas, List<String[]> dados, float[] tamanhoColunas) throws IOException {
+    protected static byte[] configuraRelatorioPdf(String tituloRelatorio,
+                                                  String[] colunas,
+                                                  List<String[]> dados,
+                                                  float[] tamanhoColunas,
+                                                  TipoRelatorio tipoRelatorio) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(byteArrayOutputStream);
         PdfDocument pdf = new PdfDocument(writer);
-        Document document = new Document(pdf, PageSize.A4);
+        
+        Document document = null;
+
+        if(tipoRelatorio.equals(TipoRelatorio.RETRATO)){
+            document = new Document(pdf, PageSize.A4);
+        }else if(tipoRelatorio.equals(TipoRelatorio.PAISAGEM)){
+            document = new Document(pdf, PageSize.A4.rotate());
+        }
+
         document.setMargins(20, 20, 20, 20);
 
         Paragraph titulo = new Paragraph(tituloRelatorio)
