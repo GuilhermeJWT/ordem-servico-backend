@@ -2,12 +2,16 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelClientesDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ClienteResponse;
+import br.com.systemsgs.ordem_servico_backend.enums.TipoRelatorio;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ClienteNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelEndereco;
 import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ClienteService;
+import br.com.systemsgs.ordem_servico_backend.service.GerarRelatorioService;
+import br.com.systemsgs.ordem_servico_backend.util.BaseRelatorioUtil;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -19,13 +23,21 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @CacheConfig(cacheNames = "clientes")
 @Service
-public class ClienteServiceImpl implements ClienteService {
+public class ClienteServiceImpl extends BaseRelatorioUtil implements ClienteService, GerarRelatorioService {
+
+    private static final String NOME_RELATORIO = "Relatório de Clientes";
+    private static final String[] COLUNAS = {"ID", "Nome", "Email", "Telefone", "Cidade", "Estado", "Cep", "Ativo"};
 
     private final ClienteRepository clienteRepository;
     private final UtilClientes utilClientes;
@@ -91,5 +103,48 @@ public class ClienteServiceImpl implements ClienteService {
         BeanUtils.copyProperties(modelClientesDTO, clientePesquisado, "id");
 
         return clienteRepository.save(clientePesquisado);
+    }
+
+    @Override
+    public ResponseEntity<byte[]> gerarRelatorioExcel(HttpServletResponse response) throws IOException {
+        List<ModelClientes> clientes = clienteRepository.findAll();
+
+        byte[] excelData = configuraRelatorioExcel(NOME_RELATORIO,clientes, COLUNAS, (row, cliente) -> {
+            row.createCell(0).setCellValue(cliente.getId());
+            row.createCell(1).setCellValue(cliente.getNome());
+            row.createCell(2).setCellValue(cliente.getEmail());
+            row.createCell(3).setCellValue(cliente.getCelular());
+            row.createCell(4).setCellValue(cliente.getEndereco().getCidade());
+            row.createCell(5).setCellValue(cliente.getEndereco().getEndereco());
+            row.createCell(6).setCellValue(cliente.getEndereco().getCep());
+            row.createCell(7).setCellValue(cliente.isAtivo() ? "Ativo" : "Inativo");
+        });
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=relatorio-clientes.xlsx");
+
+        return new ResponseEntity<>(excelData, headers, HttpStatus.OK);
+    }
+
+    public byte[] gerarRelatorioPdf() throws IOException {
+        List<ModelClientes> clientes = clienteRepository.findAll();
+        List<String[]> dados = new ArrayList<>();
+        float[] tamanhoColunas = {1, 3, 3, 2, 2, 2, 2, 2};
+
+        for (ModelClientes cliente : clientes) {
+            String[] linha = {
+                    String.valueOf(cliente.getId()),
+                    cliente.getNome(),
+                    cliente.getEmail(),
+                    cliente.getCelular(),
+                    cliente.getEndereco().getCidade(),
+                    cliente.getEndereco().getEndereco(),
+                    cliente.getEndereco().getCep(),
+                    cliente.isAtivo() ? "Ativo" : "Inativo"
+            };
+            dados.add(linha);
+        }
+
+        return configuraRelatorioPdf(NOME_RELATORIO, COLUNAS, dados, tamanhoColunas, TipoRelatorio.RETRATO);
     }
 }

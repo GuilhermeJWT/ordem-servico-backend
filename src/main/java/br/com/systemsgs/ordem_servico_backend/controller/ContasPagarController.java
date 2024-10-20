@@ -3,16 +3,22 @@ package br.com.systemsgs.ordem_servico_backend.controller;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasPagarDTO;
 import br.com.systemsgs.ordem_servico_backend.service.ContasPagarService;
+import br.com.systemsgs.ordem_servico_backend.service.GerarRelatorioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -24,10 +30,13 @@ import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration
 public class ContasPagarController {
 
     private final ContasPagarService contasPagarService;
+    private final GerarRelatorioService gerarRelatorioService;
 
     @Autowired
-    public ContasPagarController(ContasPagarService contasPagarService) {
+    public ContasPagarController(ContasPagarService contasPagarService,
+                                 @Qualifier("contasPagarServiceImpl") GerarRelatorioService gerarRelatorioService) {
         this.contasPagarService = contasPagarService;
+        this.gerarRelatorioService = gerarRelatorioService;
     }
 
     @Operation(summary = "Listar Contas a Pagar", description = "Api para listar todos os registro de Contas a Pagar")
@@ -76,5 +85,20 @@ public class ContasPagarController {
         contasPagarService.deletarContasPagar(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/relatorio/excel")
+    public ResponseEntity<byte[]> gerarRelatorioExcel(HttpServletResponse response) throws IOException {
+        return gerarRelatorioService.gerarRelatorioExcel(response);
+    }
+
+    @GetMapping("/relatorio/pdf")
+    public ResponseEntity<byte[]> gerarRelatorioPdf(HttpServletResponse response) throws IOException {
+        byte[] pdfRelatorio = gerarRelatorioService.gerarRelatorioPdf();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=relatorio-contas-pagar.pdf");
+
+        return new ResponseEntity<>(pdfRelatorio, headers, HttpStatus.OK);
     }
 }

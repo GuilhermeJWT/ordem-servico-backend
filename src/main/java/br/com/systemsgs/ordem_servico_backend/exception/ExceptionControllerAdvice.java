@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -43,6 +44,12 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestErrors internalServerErroException(){
         return new ApiRestErrors(new ErroInternoException().getMessage());
+    }
+
+    @ExceptionHandler(IOException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestErrors ioException(){
+        return new ApiRestErrors(new IOExceptionFile().getMessage());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)

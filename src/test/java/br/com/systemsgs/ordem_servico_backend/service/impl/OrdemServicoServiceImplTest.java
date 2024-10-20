@@ -7,11 +7,11 @@ import br.com.systemsgs.ordem_servico_backend.exception.errors.RecursoNaoEncontr
 import br.com.systemsgs.ordem_servico_backend.model.ModelClientes;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
 import br.com.systemsgs.ordem_servico_backend.model.ModelTecnicoResponsavel;
-import br.com.systemsgs.ordem_servico_backend.repository.ClienteRepository;
 import br.com.systemsgs.ordem_servico_backend.repository.OrdemServicoRepository;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
 import br.com.systemsgs.ordem_servico_backend.util.UtilOrdemServico;
 import br.com.systemsgs.ordem_servico_backend.util.UtilTecnicoResponsavel;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,8 +20,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,10 +63,10 @@ class OrdemServicoServiceImplTest extends ConfigDadosEstaticosEntidades{
     private UtilTecnicoResponsavel utilTecnicoResponsavel;
 
     @Mock
-    private ClienteRepository clienteRepository;
+    private ModelMapper mapper;
 
     @Mock
-    private ModelMapper mapper;
+    private HttpServletResponse response;
 
     @BeforeEach
     void setUp() {
@@ -250,6 +255,75 @@ class OrdemServicoServiceImplTest extends ConfigDadosEstaticosEntidades{
 
         ordemServicoServiceImpl.deletarOS(dadosOrdemServico().getId());
         verify(ordemServicoRepository, times(1)).deleteById(anyLong());
+    }
+
+    @DisplayName("Teste para gerar um relatório de Ordem de Serviço")
+    @Test
+    void deveGerarRelatorioExcelComSucesso() throws IOException {
+        when(ordemServicoRepository.findAll()).thenReturn(List.of(modelOrdemServico));
+
+        ResponseEntity<byte[]> responseEntity = ordemServicoServiceImpl.gerarRelatorioExcel(response);
+
+        assertNotNull(responseEntity);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("attachment; filename=relatorio-ordem-servico.xlsx", responseEntity.getHeaders().getFirst(HttpHeaders.CONTENT_DISPOSITION));
+        assertNotNull(responseEntity.getBody());
+
+        verify(ordemServicoRepository, times(1)).findAll();
+    }
+
+    @DisplayName("Teste para gerar um relatório vazio")
+    @Test
+    void deveGerarRelatorioExcelComListaVazia() throws IOException {
+        when(ordemServicoRepository.findAll()).thenReturn(Arrays.asList());
+
+        ResponseEntity<byte[]> responseEntity = ordemServicoServiceImpl.gerarRelatorioExcel(response);
+
+        assertNotNull(responseEntity);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("attachment; filename=relatorio-ordem-servico.xlsx", responseEntity.getHeaders().getFirst(HttpHeaders.CONTENT_DISPOSITION));
+        assertNotNull(responseEntity.getBody());
+        assertTrue(responseEntity.getBody().length > 0);
+
+        verify(ordemServicoRepository, times(1)).findAll();
+    }
+
+    @DisplayName("Teste para configurar o cabeçalho do relatório")
+    @Test
+    void deveConfigurarCabecalhoCorretamente() throws IOException {
+        when(ordemServicoRepository.findAll()).thenReturn(List.of(modelOrdemServico));
+
+        ResponseEntity<byte[]> responseEntity = ordemServicoServiceImpl.gerarRelatorioExcel(response);
+
+        HttpHeaders headers = responseEntity.getHeaders();
+        assertEquals("attachment; filename=relatorio-ordem-servico.xlsx", headers.getFirst(HttpHeaders.CONTENT_DISPOSITION));
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @DisplayName("Teste para gerar um relatório Pdf")
+    @Test
+    void deveGerarRelatorioPdfComSucesso() throws IOException {
+        when(ordemServicoRepository.findAll()).thenReturn(List.of(modelOrdemServico));
+
+        byte[] pdfData = ordemServicoServiceImpl.gerarRelatorioPdf();
+
+        assertNotNull(pdfData);
+        assertTrue(pdfData.length > 0);
+
+        verify(ordemServicoRepository, times(1)).findAll();
+    }
+
+    @DisplayName("Teste oara gerar relatório com lista vazia")
+    @Test
+    void deveGerarRelatorioPdfComListaVazia() throws IOException {
+        when(ordemServicoRepository.findAll()).thenReturn(Arrays.asList());
+
+        byte[] pdfData = ordemServicoServiceImpl.gerarRelatorioPdf();
+
+        assertNotNull(pdfData);
+        assertTrue(pdfData.length > 0);
+
+        verify(ordemServicoRepository, times(1)).findAll();
     }
 
     private void startOrdemServico(){

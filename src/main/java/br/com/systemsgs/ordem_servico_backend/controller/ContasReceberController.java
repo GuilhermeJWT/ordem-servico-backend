@@ -3,16 +3,22 @@ package br.com.systemsgs.ordem_servico_backend.controller;
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasReceberDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasReceberResponse;
 import br.com.systemsgs.ordem_servico_backend.service.ContasReceberService;
+import br.com.systemsgs.ordem_servico_backend.service.GerarRelatorioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -24,10 +30,13 @@ import static br.com.systemsgs.ordem_servico_backend.config.SwaggerConfiguration
 public class ContasReceberController {
 
     private final ContasReceberService contasReceberService;
+    private final GerarRelatorioService gerarRelatorioService;
 
     @Autowired
-    public ContasReceberController(ContasReceberService contasReceberService) {
+    public ContasReceberController(ContasReceberService contasReceberService,
+                                   @Qualifier("contasReceberServiceImpl") GerarRelatorioService gerarRelatorioService) {
         this.contasReceberService = contasReceberService;
+        this.gerarRelatorioService = gerarRelatorioService;
     }
 
     @Operation(summary = "Listar Contas a Receber", description = "Api para listar todos os registro de Contas a Receber")
@@ -76,5 +85,20 @@ public class ContasReceberController {
         contasReceberService.deletarContasReceber(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/relatorio/excel")
+    public ResponseEntity<byte[]> gerarRelatorioExcel(HttpServletResponse response) throws IOException {
+        return gerarRelatorioService.gerarRelatorioExcel(response);
+    }
+
+    @GetMapping("/relatorio/pdf")
+    public ResponseEntity<byte[]> gerarRelatorioPdf(HttpServletResponse response) throws IOException {
+        byte[] pdfRelatorio = gerarRelatorioService.gerarRelatorioPdf();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=relatorio-contas-receber.pdf");
+
+        return new ResponseEntity<>(pdfRelatorio, headers, HttpStatus.OK);
     }
 }

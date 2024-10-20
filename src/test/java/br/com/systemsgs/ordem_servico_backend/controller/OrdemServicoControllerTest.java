@@ -6,7 +6,9 @@ import br.com.systemsgs.ordem_servico_backend.dto.request.ModelOrdemServicoDTO;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.RecursoNaoEncontradoException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelOrdemServico;
 import br.com.systemsgs.ordem_servico_backend.repository.OrdemServicoRepository;
+import br.com.systemsgs.ordem_servico_backend.service.GerarRelatorioService;
 import br.com.systemsgs.ordem_servico_backend.service.OrdemServicoService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,10 +19,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,15 +53,21 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
     private OrdemServicoService ordemServicoService;
 
     @Mock
+    private GerarRelatorioService gerarRelatorioService;
+
+    @Mock
     private OrdemServicoRepository ordemServicoRepository;
 
     @Mock
     private ModelMapper mapper;
 
+    @Mock
+    private HttpServletResponse response;
+
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        ordemServicoController = new OrdemServicoController(ordemServicoService, mapper);
+        ordemServicoController = new OrdemServicoController(ordemServicoService, gerarRelatorioService, mapper);
         startOrdemServico();
     }
 
@@ -244,6 +254,46 @@ class OrdemServicoControllerTest extends ConfigDadosEstaticosEntidades{
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(ordemServicoService, times(1)).deletarOS(anyLong());
+    }
+
+    @DisplayName("Teste para gerar um relatório")
+    @Test
+    void deveGerarRelatorioExcelComSucesso() throws IOException {
+        byte[] excelBytes = new byte[]{1, 2, 3};
+        when(gerarRelatorioService.gerarRelatorioExcel(response)).thenReturn(new ResponseEntity<>(excelBytes, HttpStatus.OK));
+
+        ResponseEntity<byte[]> resultado = ordemServicoController.gerarRelatorioExcel(response);
+
+        assertEquals(HttpStatus.OK, resultado.getStatusCode());
+        assertArrayEquals(excelBytes, resultado.getBody());
+        verify(gerarRelatorioService, times(1)).gerarRelatorioExcel(response);
+    }
+
+    @DisplayName("Teste para erro no relatório")
+    @Test
+    void deveRetornarErroAoGerarRelatorioExcel() throws IOException {
+        when(gerarRelatorioService.gerarRelatorioExcel(response)).thenThrow(new IOException("Erro ao tentar gerar o Arquivo/Relatório."));
+
+        assertThrows(IOException.class, () -> {ordemServicoController.gerarRelatorioExcel(response);});
+
+        verify(gerarRelatorioService, times(1)).gerarRelatorioExcel(response);
+    }
+
+    @DisplayName("Teste para gerar relatório de Pdf")
+    @Test
+    void deveGerarRelatorioPdfComSucesso() throws IOException {
+        byte[] pdfBytes = new byte[]{10, 20, 30};
+        when(gerarRelatorioService.gerarRelatorioPdf()).thenReturn(pdfBytes);
+
+        ResponseEntity<byte[]> resultado = ordemServicoController.gerarRelatorioPdf(response);
+
+        assertEquals(HttpStatus.OK, resultado.getStatusCode());
+        assertArrayEquals(pdfBytes, resultado.getBody());
+
+        HttpHeaders headers = resultado.getHeaders();
+        assertEquals("attachment; filename=relatorio-ordem-servico.pdf", headers.getFirst("Content-Disposition"));
+
+        verify(gerarRelatorioService, times(1)).gerarRelatorioPdf();
     }
 
     private void startOrdemServico(){

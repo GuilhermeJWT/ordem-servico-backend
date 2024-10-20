@@ -2,11 +2,15 @@ package br.com.systemsgs.ordem_servico_backend.service.impl;
 
 import br.com.systemsgs.ordem_servico_backend.dto.request.ModelContasReceberDTO;
 import br.com.systemsgs.ordem_servico_backend.dto.response.ContasReceberResponse;
+import br.com.systemsgs.ordem_servico_backend.enums.TipoRelatorio;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarReceberNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasReceber;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasReceberRepository;
 import br.com.systemsgs.ordem_servico_backend.service.ContasReceberService;
+import br.com.systemsgs.ordem_servico_backend.service.GerarRelatorioService;
+import br.com.systemsgs.ordem_servico_backend.util.BaseRelatorioUtil;
 import br.com.systemsgs.ordem_servico_backend.util.UtilClientes;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -18,13 +22,21 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @CacheConfig(cacheNames = "contasreceber")
 @Service
-public class ContasReceberServiceImpl implements ContasReceberService {
+public class ContasReceberServiceImpl extends BaseRelatorioUtil implements ContasReceberService, GerarRelatorioService {
+
+    private static final String NOME_RELATORIO = "Relatório de Contas a Receber";
+    private static final String[] COLUNAS = {"ID", "Data Emissão", "Data Vencimento", "Valor", "Status", "Cliente"};
 
     private final ContasReceberRepository contasReceberRepository;
     private final UtilClientes utilClientes;
@@ -94,6 +106,45 @@ public class ContasReceberServiceImpl implements ContasReceberService {
         contasReceberRepository.deleteById(id);
     }
 
+    @Override
+    public ResponseEntity<byte[]> gerarRelatorioExcel(HttpServletResponse response) throws IOException {
+        List<ModelContasReceber> contasReceber = contasReceberRepository.findAll();
+
+        byte[] excelData = configuraRelatorioExcel(NOME_RELATORIO,contasReceber, COLUNAS, (row, conta) -> {
+            row.createCell(0).setCellValue(conta.getId());
+            row.createCell(1).setCellValue(conta.getDataEmissao());
+            row.createCell(2).setCellValue(conta.getDataVencimento());
+            row.createCell(3).setCellValue(String.valueOf(conta.getValor()));
+            row.createCell(4).setCellValue(String.valueOf(conta.getStatusContasReceber()));
+            row.createCell(5).setCellValue(conta.getCliente().getNome());
+        });
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=relatorio-contas-receber.xlsx");
+
+        return new ResponseEntity<>(excelData, headers, HttpStatus.OK);
+    }
+
+    @Override
+    public byte[] gerarRelatorioPdf() throws IOException {
+        List<ModelContasReceber> contasReceber = contasReceberRepository.findAll();
+        List<String[]> dados = new ArrayList<>();
+        float[] tamanhoColunas = {1, 3, 3, 2, 2, 3};
+
+        for (ModelContasReceber conta : contasReceber) {
+            String[] linha = {
+                    String.valueOf(conta.getId()),
+                    String.valueOf(conta.getDataEmissao()),
+                    String.valueOf(conta.getDataVencimento()),
+                    String.valueOf(conta.getValor()),
+                    String.valueOf(conta.getStatusContasReceber()),
+                    String.valueOf(conta.getCliente().getNome())
+            };
+            dados.add(linha);
+        }
+        return configuraRelatorioPdf(NOME_RELATORIO, COLUNAS, dados, tamanhoColunas, TipoRelatorio.RETRATO);
+    }
+
     private List<ContasReceberResponse> converteListaContasResponse(List<ModelContasReceber> listModelsContasReceber){
         return listModelsContasReceber.stream().map(modelContasReceber -> mapper.map(modelContasReceber, ContasReceberResponse.class)).toList();
     }
@@ -101,5 +152,4 @@ public class ContasReceberServiceImpl implements ContasReceberService {
     private ContasReceberResponse converteEntidadeEmResponse(ModelContasReceber modelContasReceber){
         return mapper.map(modelContasReceber, ContasReceberResponse.class);
     }
-
 }

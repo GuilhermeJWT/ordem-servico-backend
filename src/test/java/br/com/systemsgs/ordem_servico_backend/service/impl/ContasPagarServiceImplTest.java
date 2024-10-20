@@ -6,7 +6,9 @@ import br.com.systemsgs.ordem_servico_backend.dto.response.ContasPagarResponse;
 import br.com.systemsgs.ordem_servico_backend.exception.errors.ContasPagarReceberNaoEncontradaException;
 import br.com.systemsgs.ordem_servico_backend.model.ModelContasPagar;
 import br.com.systemsgs.ordem_servico_backend.repository.ContasPagarRepository;
+import br.com.systemsgs.ordem_servico_backend.service.GerarRelatorioService;
 import br.com.systemsgs.ordem_servico_backend.util.UtilFornecedores;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +20,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +53,12 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
 
     @Mock
     private ModelMapper modelMapper;
+
+    @Mock
+    private GerarRelatorioService gerarRelatorioService;
+
+    @Mock
+    private HttpServletResponse response;
 
     @BeforeEach
     void setUp() {
@@ -185,6 +197,75 @@ class ContasPagarServiceImplTest extends ConfigDadosEstaticosEntidades {
 
         verify(contasPagarRepository, times(1)).findById(modelContasPagar.getId());
         verify(contasPagarRepository, times(1)).save(any(ModelContasPagar.class));
+    }
+
+    @DisplayName("Teste para gerar um relatório de Contas a Pagar")
+    @Test
+    void deveGerarRelatorioExcelComSucesso() throws IOException {
+        when(contasPagarRepository.findAll()).thenReturn(List.of(modelContasPagar));
+
+        ResponseEntity<byte[]> responseEntity = contasPagarService.gerarRelatorioExcel(response);
+
+        assertNotNull(responseEntity);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("attachment; filename=relatorio-contas-pagar.xlsx", responseEntity.getHeaders().getFirst(HttpHeaders.CONTENT_DISPOSITION));
+        assertNotNull(responseEntity.getBody());
+
+        verify(contasPagarRepository, times(1)).findAll();
+    }
+
+    @DisplayName("Teste para gerar um relatório vazio")
+    @Test
+    void deveGerarRelatorioExcelComListaVazia() throws IOException {
+        when(contasPagarRepository.findAll()).thenReturn(Arrays.asList());
+
+        ResponseEntity<byte[]> responseEntity = contasPagarService.gerarRelatorioExcel(response);
+
+        assertNotNull(responseEntity);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("attachment; filename=relatorio-contas-pagar.xlsx", responseEntity.getHeaders().getFirst(HttpHeaders.CONTENT_DISPOSITION));
+        assertNotNull(responseEntity.getBody());
+        assertTrue(responseEntity.getBody().length > 0);
+
+        verify(contasPagarRepository, times(1)).findAll();
+    }
+
+    @DisplayName("Teste para configurar o cabeçalho do relatório")
+    @Test
+    void deveConfigurarCabecalhoCorretamente() throws IOException {
+        when(contasPagarRepository.findAll()).thenReturn(List.of(modelContasPagar));
+
+        ResponseEntity<byte[]> responseEntity = contasPagarService.gerarRelatorioExcel(response);
+
+        HttpHeaders headers = responseEntity.getHeaders();
+        assertEquals("attachment; filename=relatorio-contas-pagar.xlsx", headers.getFirst(HttpHeaders.CONTENT_DISPOSITION));
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @DisplayName("Teste para gerar um relatório Pdf")
+    @Test
+    void deveGerarRelatorioPdfComSucesso() throws IOException {
+        when(contasPagarRepository.findAll()).thenReturn(List.of(modelContasPagar));
+
+        byte[] pdfData = contasPagarService.gerarRelatorioPdf();
+
+        assertNotNull(pdfData);
+        assertTrue(pdfData.length > 0);
+
+        verify(contasPagarRepository, times(1)).findAll();
+    }
+
+    @DisplayName("Teste oara gerar relatório com lista vazia")
+    @Test
+    void deveGerarRelatorioPdfComListaVazia() throws IOException {
+        when(contasPagarRepository.findAll()).thenReturn(Arrays.asList());
+
+        byte[] pdfData = contasPagarService.gerarRelatorioPdf();
+
+        assertNotNull(pdfData);
+        assertTrue(pdfData.length > 0);
+
+        verify(contasPagarRepository, times(1)).findAll();
     }
 
     private void startContasPagar(){
