@@ -7,6 +7,7 @@
   <li>Cadastro de Clientes,Produtos, Fornecedores e Estoque da Assistência Técnica.</li>
   <li>Módulo de cadastro de Contas a Pagar e Receber.</li>
   <li>Notifica por E-mail Contas a Pagar e Receber vencidas.</li>
+  <li>Relatórios em PDF e Excel.</li>
 </ol>
 <H2>Tecnologias e ferramentas envolvidas no Projeto</h2>
 <ol>
